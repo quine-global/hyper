@@ -3322,10 +3322,10 @@ electron-link@^0.6.0:
     resolve "^1.19.0"
     source-map "^0.7.3"
 
-electron-mksnapshot@29.3.0:
-  version "29.3.0"
-  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-29.3.0.tgz#6cff15ff6909c3633a345e8cf8241122a2397996"
-  integrity sha512-rnUnfa6N4Rv1kLWnhTsugEkAPjFVDhNs3/SOzRswAlVTvfRzgNpolYBqAZTp/Eg3k7YAC0qUztJ3cLUraDDGog==
+electron-mksnapshot@^23.3.9:
+  version "23.3.13"
+  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-23.3.13.tgz#90709aeab5549b75e7b6d162721e1f20c968c2d6"
+  integrity sha512-IrJYN87AFjXLT6AbE9s7AAY/QYKhT6MVGGcwVqzNvjkZiZOOAapffBnJPhSmqxAY0uUrNrPw5D2CYK9sFc2KPA==
   dependencies:
     "@electron/get" "^2.0.1"
     extract-zip "^2.0.0"
@@ -3350,10 +3350,10 @@ electron-to-chromium@^1.5.4:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.13.tgz#1abf0410c5344b2b829b7247e031f02810d442e6"
   integrity sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==
 
-electron@22.3.25:
-  version "22.3.25"
-  resolved "https://registry.npmjs.org/electron/-/electron-22.3.25.tgz#a9a70b63a6712c658cd7fab343129b2a78450f80"
-  integrity sha512-AjrP7bebMs/IPsgmyowptbA7jycTkrJC7jLZTb5JoH30PkBC6pZx/7XQ0aDok82SsmSiF4UJDOg+HoLrEBiqmg==
+electron@23.3.9:
+  version "23.3.9"
+  resolved "https://registry.npmjs.org/electron/-/electron-23.3.9.tgz#5b322245f66bb729a9c2a8dd67462eead8fe2b46"
+  integrity sha512-dUhWG7Lljms0CfiifP/IVGHLTi8wmHpCOEO3Gyy/PhRyN0/nBsqg/0PnOD4BmM1GdeAFd/KjI/aeJhkdJxNagw==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^16.11.26"
