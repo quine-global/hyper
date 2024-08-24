@@ -5,7 +5,6 @@ updates:
   schedule:
     interval: weekly
     time: '11:00'
-  open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
   groups:
@@ -18,7 +17,6 @@ updates:
   schedule:
     interval: weekly
     time: '11:00'
-  open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
   groups:
