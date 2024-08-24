@@ -1190,10 +1190,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/retry@*":
-  version "0.12.0"
-  resolved "https://registry.npmjs.org/@types/retry/-/retry-0.12.0.tgz#2b35eccfcee7d38cd72ad99232fbd58bffb3c84d"
-  integrity sha512-wWKOClTTiizcZhXnPY4wikVAwmdYHp8q6DmC+EJUzAMsycb7HB32Kh9RN4+0gExjmPmZSAQjgURXIGATPegAvA==
+"@types/retry@*", "@types/retry@0.12.5":
+  version "0.12.5"
+  resolved "https://registry.npmjs.org/@types/retry/-/retry-0.12.5.tgz#f090ff4bd8d2e5b940ff270ab39fd5ca1834a07e"
+  integrity sha512-3xSjTp3v03X/lSQLkczaN9UIEwJMoMCA1+Nb5HfbJEQWogdeQIyVtTvxPXDQjZ5zws8rFQfVfRdz03ARihPJgw==
 
 "@types/seamless-immutable@7.1.19":
   version "7.1.19"
