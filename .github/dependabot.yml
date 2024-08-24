@@ -8,6 +8,11 @@ updates:
   open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
+  groups:
+    minorAndPatch:
+      update-types:
+        - "minor"
+        - "patch"
 - package-ecosystem: npm
   directory: "/app"
   schedule:
@@ -16,6 +21,11 @@ updates:
   open-pull-requests-limit: 30
   target-branch: canary
   versioning-strategy: increase
+  groups:
+    minorAndPatch:
+      update-types:
+        - "minor"
+        - "patch"
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
