@@ -12,7 +12,7 @@
     "test:unit": "ava",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "test:e2e": "ava --config ava-e2e.config.js",
-    "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky install && yarn run generate-schema",
+    "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && electron-builder install-app-deps && yarn run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky init && yarn run generate-schema",
     "rebuild-node-pty": "electron-rebuild -f -o node-pty -m target",
     "dist": "yarn run build && electron-builder",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer",
@@ -20,7 +20,8 @@
     "v8-snapshot:arch": "yarn run mk-snapshot && yarn run cp-snapshot",
     "mk-snapshot": "cross-env ELECTRON_CUSTOM_VERSION=$npm_package_devDependencies_electron node node_modules/electron-mksnapshot/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
-    "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required"
+    "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required",
+    "prepare": "husky"
   },
   "license": "MIT",
   "author": {
@@ -121,7 +122,8 @@
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "7.35.0",
-    "husky": "9.1.5",
+    "husky": "^9.1.5",
+    "husky-init": "^8.0.0",
     "inquirer": "10.1.8",
     "node-addon-api": "8.1.0",
     "null-loader": "4.0.1",
