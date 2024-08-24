@@ -7,7 +7,7 @@ defaults:
   run:
     shell: bash
 env:
-  NODE_VERSION: 18.x
+  NODE_VERSION: 20.x
 jobs:
   build:
     runs-on: ${{matrix.os}}
@@ -100,7 +100,7 @@ jobs:
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
-          name: e2e
+          name: e2e-${{ matrix.os }}-${{ strategy.job-index }}
           path: dist/tmp/*.png
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
