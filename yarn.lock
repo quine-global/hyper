@@ -1244,12 +1244,12 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^20.16.1":
-  version "20.16.1"
-  resolved "https://registry.npmjs.org/@types/node/-/node-20.16.1.tgz#0b44b15271d0e2191ca68faf1fbe506e06aed732"
-  integrity sha512-zJDo7wEadFtSyNz5QITDfRcrhqDvQI1xQNQ0VoizPjM/dVAODqqIUWbJPkvsxmTI0MYRGRikcdjMPhOssnPejQ==
+"@types/node@~18.18.0":
+  version "18.18.14"
+  resolved "https://registry.npmjs.org/@types/node/-/node-18.18.14.tgz#26771c647f2842af57eb96191cd615d845164295"
+  integrity sha512-iSOeNeXYNYNLLOMDSVPvIFojclvMZ/HDY2dU17kUlcsOsSQETbWIslJbYLZgA+ox8g2XQwSHKTkght1a5X26lQ==
   dependencies:
-    undici-types "~6.19.2"
+    undici-types "~5.26.4"
 
 "@types/normalize-package-data@^2.4.1":
   version "2.4.1"
@@ -1626,6 +1626,11 @@
   version "4.2.2"
   resolved "https://registry.npmjs.org/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
+
+"@yarnpkg/lockfile@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@yarnpkg/lockfile/-/lockfile-1.1.0.tgz#e77a97fbd345b76d83245edcd17d393b1b41fb31"
+  integrity sha512-GpSwvyXOcOOlV70vbnzjj4fW5xW/FdUF6nQEt1ENy7m4ZCczi1+/buVUPAqmGfqznsORNFzUMjctTIp8a9tuCQ==
 
 abbrev@^1.0.0:
   version "1.1.1"
@@ -3265,10 +3270,10 @@ electron-link@^0.6.0:
     resolve "^1.19.0"
     source-map "^0.7.3"
 
-electron-mksnapshot@27.3.11:
-  version "27.3.11"
-  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-27.3.11.tgz#3afccc7debbc12b0d8d6e2364be66b3a4487e0a4"
-  integrity sha512-k69qZ3L6TfCApamhB3yXT8W3jAr/BR/7zs6s+b9da9OtG5VbDPrVW3gHjXCnSXt1h8QacjnLsfxtldBxrccieA==
+electron-mksnapshot@^28.3.0:
+  version "28.3.3"
+  resolved "https://registry.npmjs.org/electron-mksnapshot/-/electron-mksnapshot-28.3.3.tgz#96124bf81b24724d90f0b4190b7159fc66682f1a"
+  integrity sha512-XFDDOCPmxkbrowCmhh4QQX/az57/aBaj/mfmD1iuXjf2220YrN9Z+r4ymLqcDehLtoZER/iHPzzSgd6gb8CT1A==
   dependencies:
     "@electron/get" "^2.0.1"
     extract-zip "^2.0.0"
@@ -3293,10 +3298,10 @@ electron-to-chromium@^1.5.4:
   resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.13.tgz#1abf0410c5344b2b829b7247e031f02810d442e6"
   integrity sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==
 
-electron@27.3.11:
-  version "27.3.11"
-  resolved "https://registry.npmjs.org/electron/-/electron-27.3.11.tgz#af215af2964dda612e401adb6e217fdf47472fca"
-  integrity sha512-E1SiyEoI8iW5LW/MigCr7tJuQe7+0105UjqY7FkmCD12e2O6vtUbQ0j05HaBh2YgvkcEVgvQ2A8suIq5b5m6Gw==
+electron@28.3.3:
+  version "28.3.3"
+  resolved "https://registry.npmjs.org/electron/-/electron-28.3.3.tgz#2df898f653c4f77b66b4cf3eeba79d8bea6d03c0"
+  integrity sha512-ObKMLSPNhomtCOBAxFS8P2DW/4umkh72ouZUlUKzXGtYuPzgr1SYhskhFWgzAsPtUzhL2CzyV2sfbHcEW4CXqw==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^18.11.18"
@@ -6294,10 +6299,10 @@ nested-error-stacks@^2.1.1:
   resolved "https://registry.npmjs.org/nested-error-stacks/-/nested-error-stacks-2.1.1.tgz#26c8a3cee6cc05fbcf1e333cd2fc3e003326c0b5"
   integrity sha512-9iN1ka/9zmX1ZvLV9ewJYEk9h7RyRRtqdK0woXcqohu8EWIerfPUjYJPg0ULy0UqP7cslmdGc8xKDJcojlKiaw==
 
-node-abi@^3.45.0:
-  version "3.47.0"
-  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.47.0.tgz#6cbfa2916805ae25c2b7156ca640131632eb05e8"
-  integrity sha512-2s6B2CWZM//kPgwnuI0KrYwNjfdByE25zvAaEpq9IH4zcNsarH8Ihu/UuX6XMPEogDAxkuUFeZn60pXNHAqn3A==
+node-abi@^3.45.0, node-abi@^3.67.0:
+  version "3.67.0"
+  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.67.0.tgz#1d159907f18d18e18809dbbb5df47ed2426a08df"
+  integrity sha512-bLn/fU/ALVBE9wj+p4Y21ZJWYFjUXLXPi/IewyLZkx3ApxKDNBWCKdReeKOtD8dWpOdDCeMyLh6ZewzcLsG2Nw==
   dependencies:
     semver "^7.3.5"
 
@@ -7621,9 +7626,9 @@ semver@7.6.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.8, semver
   integrity sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==
 
 semver@^5.6.0:
-  version "5.7.1"
-  resolved "https://registry.npmjs.org/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
-  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
+  version "5.7.2"
+  resolved "https://registry.npmjs.org/semver/-/semver-5.7.2.tgz#48d55db737c3287cd4835e17fa13feace1c41ef8"
+  integrity sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==
 
 semver@^6.2.0, semver@^6.3.1:
   version "6.3.1"
@@ -8724,6 +8729,15 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
+
+uuaw@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/uuaw/-/uuaw-1.2.2.tgz#91bf437762de8c5251f4898e7de579629758c657"
+  integrity sha512-mlSpW6fy1TOTYPB6Q9wuTtjwbC8Crw4j/dGy3EwJhtx6bCI1Ji/fisfuIPUOX+wFfghkCcvFVv3uhF0Xf2Zvtw==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    chalk "^4.0.0"
+    semver "^7.3.8"
 
 uuid@10.0.0:
   version "10.0.0"
