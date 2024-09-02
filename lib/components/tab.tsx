@@ -2,7 +2,7 @@ import React, {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
 
 import type {TabProps} from '../../typings/hyper';
 
-const Tab = forwardRef<HTMLLIElement, TabProps>((props, forwardedRef) => {
+const Tab = (props: TabProps) => {
   const handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
 
@@ -172,7 +172,7 @@ const Tab = forwardRef<HTMLLIElement, TabProps>((props, forwardedRef) => {
       `}</style>
     </>
   );
-});
+};
 
 Tab.displayName = 'Tab';
 
