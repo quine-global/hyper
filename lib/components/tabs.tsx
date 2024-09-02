@@ -1,4 +1,5 @@
 import React, {forwardRef, useEffect, useState} from 'react';
+
 import debounce from 'lodash/debounce';
 
 import type {ITab, TabsProps} from '../../typings/hyper';
@@ -15,20 +16,20 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
 
   const [shouldFocusCounter, setShouldFocusCounter] = useState({
     index: 0,
-    when: undefined as (Date | undefined)
+    when: undefined as Date | undefined
   });
 
-  const scrollToActiveTab = debounce((tabs: ITab[]) => {
-    const activeTab = tabs.findIndex(t => t.isActive);
+  const scrollToActiveTab = debounce((currTabs: ITab[]) => {
+    const activeTab = currTabs.findIndex((t) => t.isActive);
     setShouldFocusCounter({
       index: activeTab,
       when: new Date()
-    })
+    });
   }, 100);
 
   useEffect(() => {
-    scrollToActiveTab(tabs)
-  }, [tabs, tabs.length])
+    scrollToActiveTab(tabs);
+  }, [tabs, tabs.length]);
 
   const hide = !isMac && tabs.length === 1;
 
@@ -50,7 +51,7 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
                 hasActivity,
                 onSelect: onChange.bind(null, uid),
                 onClose: onClose.bind(null, uid),
-                lastFocused: undefined as (Date | undefined),
+                lastFocused: undefined as Date | undefined
               });
               if (shouldFocusCounter.index === i) {
                 tabProps.lastFocused = shouldFocusCounter.when;
@@ -110,7 +111,8 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
           overflow-x: auto;
         }
 
-        .tabs_list::-webkit-scrollbar, .tabs_list::-webkit-scrollbar-button {
+        .tabs_list::-webkit-scrollbar,
+        .tabs_list::-webkit-scrollbar-button {
           display: none;
         }
 

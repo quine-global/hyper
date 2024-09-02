@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useImperativeHandle, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import type {TabProps} from '../../typings/hyper';
 
@@ -24,10 +24,10 @@ const Tab = (props: TabProps) => {
   useEffect(() => {
     if (props.lastFocused) {
       ref?.current?.scrollIntoView({
-        behavior: "smooth"
-      })
+        behavior: 'smooth'
+      });
     }
-  }, [props.lastFocused,])
+  }, [props.lastFocused]);
 
   const {isActive, isFirst, isLast, borderColor, hasActivity} = props;
 
