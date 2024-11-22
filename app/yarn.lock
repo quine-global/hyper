@@ -819,10 +819,10 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-recast@0.23.6:
-  version "0.23.6"
-  resolved "https://registry.npmjs.org/recast/-/recast-0.23.6.tgz#198fba74f66143a30acc81929302d214ce4e3bfa"
-  integrity sha512-9FHoNjX1yjuesMwuthAmPKabxYQdOgihFYmT5ebXfYGBcnqXZf3WOVz+5foEZ8Y83P4ZY6yQD5GMmtV+pgCCAQ==
+recast@0.23.9:
+  version "0.23.9"
+  resolved "https://registry.npmjs.org/recast/-/recast-0.23.9.tgz#587c5d3a77c2cfcb0c18ccce6da4361528c2587b"
+  integrity sha512-Hx/BGIbwj+Des3+xy5uAtAbdCyqK9y9wbBcDFDYanLS9JnMqf7OeF87HQwUimE87OEc72mr6tkKUKMBBL+hF9Q==
   dependencies:
     ast-types "^0.16.1"
     esprima "~4.0.0"
