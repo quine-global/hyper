@@ -16,10 +16,10 @@ jobs:
     strategy:
       matrix:
         os:
-          - ubuntu-latest
-          #TODO re-enable these:
+          #TODO re-enable this:
           #- macos-latest
-          #- windows-latest
+          - ubuntu-latest
+          - windows-latest
       fail-fast: false
     steps:
       - name: Checkout
