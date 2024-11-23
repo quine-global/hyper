@@ -17,8 +17,8 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
+          - macos-latest
           #TODO re-enable these:
-          #- macos-latest
           #- windows-latest
       fail-fast: false
     steps:
