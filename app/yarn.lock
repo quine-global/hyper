@@ -1015,10 +1015,10 @@ node-gyp@^10.2.0:
     tar "^6.2.1"
     which "^4.0.0"
 
-node-pty@1.1.0-beta21:
-  version "1.1.0-beta21"
-  resolved "https://registry.npmjs.org/node-pty/-/node-pty-1.1.0-beta21.tgz#d75c1dfe4ff2c173459c974df72e91a4eae6dc52"
-  integrity sha512-FYpnY9g8qMQLTpqyeY9NVli6YfCWwvG6v6gmaDBbPjlc1VMp/+Zivq0SStDrRr1aciGnFCZzpL0BzdMnmbDnAw==
+node-pty@1.1.0-beta27:
+  version "1.1.0-beta27"
+  resolved "https://registry.npmjs.org/node-pty/-/node-pty-1.1.0-beta27.tgz#08a76876d345a03dd181f0b81fa7eb26e31b39b3"
+  integrity sha512-r0nRVgunspo/cBmf/eR+ultBrclxqldaL6FhiTLEmC4VcyKJxhluRK5d8EtbHYPLt8DqPKMnCakJDxreQynpnw==
   dependencies:
     node-addon-api "^7.1.0"
 
