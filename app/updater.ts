@@ -94,7 +94,7 @@ const updater = (win: BrowserWindow) => {
   const {rpc} = win;
 
   const onupdate = (ev: Event, releaseNotes: string, releaseName: string, date: Date, updateUrl: string) => {
-    const releaseUrl = updateUrl || `https://github.com/vercel/hyper/releases/tag/${releaseName}`;
+    const releaseUrl = updateUrl || `https://github.com/quine-global/hyper/releases/tag/${releaseName}`;
     rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !isLinux});
   };
 
