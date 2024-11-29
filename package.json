@@ -1,7 +1,7 @@
 {
   "name": "hyper",
   "version": "4.0.0q-canary.6",
-  "repository": "zeit/hyper",
+  "repository": "quine-global/hyper",
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "cross-env ELECTRONMON_LOGLEVEL=error electronmon target",
