@@ -1,6 +1,6 @@
 {
   "name": "hyper",
-  "version": "4.0.0q-canary.6",
+  "version": "4.0.0-q-canary.6",
   "repository": "quine-global/hyper",
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
