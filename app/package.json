@@ -8,7 +8,7 @@
     "name": "ZEIT, Inc.",
     "email": "team@zeit.co"
   },
-  "repository": "zeit/hyper",
+  "repository": "quine-global/hyper",
   "scripts": {
     "postinstall": "npx patch-package"
   },
