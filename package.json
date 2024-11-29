@@ -88,7 +88,7 @@
     "@electron/notarize": "^2.5.0",
     "@types/args": "5.0.3",
     "@types/async-retry": "1.4.9",
-    "@types/color": "3.0.6",
+    "@types/color": "4.2.0",
     "@types/columnify": "^1.5.4",
     "@types/fs-extra": "11.0.4",
     "@types/lodash": "^4.17.13",
