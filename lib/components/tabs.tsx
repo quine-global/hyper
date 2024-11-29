@@ -1,6 +1,8 @@
-import React, {forwardRef} from 'react';
+import React, {forwardRef, useEffect, useState} from 'react';
 
-import type {TabsProps} from '../../typings/hyper';
+import debounce from 'lodash/debounce';
+
+import type {ITab, TabsProps} from '../../typings/hyper';
 import {decorate, getTabProps} from '../utils/plugins';
 
 import DropdownButton from './new-tab';
@@ -11,6 +13,23 @@ const isMac = /Mac/.test(navigator.userAgent);
 
 const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
   const {tabs = [], borderColor, onChange, onClose, fullScreen} = props;
+
+  const [shouldFocusCounter, setShouldFocusCounter] = useState({
+    index: 0,
+    when: undefined as Date | undefined
+  });
+
+  const scrollToActiveTab = debounce((currTabs: ITab[]) => {
+    const activeTab = currTabs.findIndex((t) => t.isActive);
+    setShouldFocusCounter({
+      index: activeTab,
+      when: new Date()
+    });
+  }, 100);
+
+  useEffect(() => {
+    scrollToActiveTab(tabs);
+  }, [tabs, tabs.length]);
 
   const hide = !isMac && tabs.length === 1;
 
@@ -31,8 +50,12 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
                 isActive,
                 hasActivity,
                 onSelect: onChange.bind(null, uid),
-                onClose: onClose.bind(null, uid)
+                onClose: onClose.bind(null, uid),
+                lastFocused: undefined as Date | undefined
               });
+              if (shouldFocusCounter.index === i) {
+                tabProps.lastFocused = shouldFocusCounter.when;
+              }
               return <Tab key={`tab-${uid}`} {...tabProps} />;
             })}
           </ul>
@@ -85,6 +108,12 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
           flex-flow: row;
           margin-left: ${isMac ? '76px' : '0'};
           flex-grow: 1;
+          overflow-x: auto;
+        }
+
+        .tabs_list::-webkit-scrollbar,
+        .tabs_list::-webkit-scrollbar-button {
+          display: none;
         }
 
         .tabs_fullScreen {
