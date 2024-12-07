@@ -17,6 +17,7 @@ jobs:
           #- macos-latest
           #- ubuntu-latest
           - ubuntu-selfhosted
+          - self-hosted
           #- macos-latest
           #TODO re-enable these:
           #- windows-latest
