@@ -16,7 +16,7 @@ jobs:
         os:
           #- macos-latest
           #- ubuntu-latest
-          - self-hosted
+          - ubuntu-selfhosted
           #- macos-latest
           #TODO re-enable these:
           #- windows-latest
@@ -121,7 +121,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
 
   build-linux-arm:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
