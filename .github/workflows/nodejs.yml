@@ -121,7 +121,7 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
 
   build-linux-arm:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-selfhosted
     strategy:
       matrix:
         include:
