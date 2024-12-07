@@ -14,9 +14,10 @@ jobs:
     strategy:
       matrix:
         os:
-          - macos-latest
-          - ubuntu-latest
-          - macos-latest
+          #- macos-latest
+          #- ubuntu-latest
+          - ubuntu-selfhosted
+          #- macos-latest
           #TODO re-enable these:
           #- windows-latest
       fail-fast: false
