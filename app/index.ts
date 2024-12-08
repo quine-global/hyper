@@ -238,6 +238,6 @@ app.on('open-file', (_event, path) => {
 
 app.on('open-url', (_event, sshUrl) => {
   GetWindow((win: BrowserWindow) => {
-    win.rpc.emit('open ssh', parseUrl(sshUrl));
+    win.rpc.emit('open ssh', parseUrl(sshUrl) as any);
   });
 });
