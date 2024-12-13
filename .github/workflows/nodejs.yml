@@ -8,7 +8,6 @@ defaults:
     shell: bash
 env:
   NODE_VERSION: 20.x
-  DEBUG:"pw:browser*"
 jobs:
   build:
     runs-on: ${{matrix.os}}
@@ -96,6 +95,7 @@ jobs:
           run: yarn run test:e2e
         env:
           SHELL: /bin/bash
+          DEBUG:"pw:browser*"
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
