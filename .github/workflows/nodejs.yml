@@ -16,7 +16,6 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
-          - macos-latest
           #TODO re-enable these:
           #- windows-latest
       fail-fast: false
@@ -84,7 +83,6 @@ jobs:
             dist/*.snap
             dist/*.AppImage
             dist/*.deb
-            dist/*.rpm
             dist/*.pacman
             dist/*.exe
       - name: Run E2E Tests
@@ -97,6 +95,7 @@ jobs:
           run: yarn run test:e2e
         env:
           SHELL: /bin/bash
+          DEBUG:"pw:browser*"
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
@@ -181,7 +180,7 @@ jobs:
           sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
           npm_config_arch=armv7l yarn run v8-snapshot:arch
       - name: Build
-        run: yarn run electron-builder -l deb rpm AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
+        run: yarn run electron-builder -l deb AppImage pacman --${{ matrix.name }} -c electron-builder-linux-ci.json
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
