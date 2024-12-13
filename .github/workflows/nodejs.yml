@@ -8,7 +8,7 @@ defaults:
     shell: bash
 env:
   NODE_VERSION: 20.x
-  DEBUG=pw:browser*
+  DEBUG:"pw:browser*"
 jobs:
   build:
     runs-on: ${{matrix.os}}
