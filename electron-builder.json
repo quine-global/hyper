@@ -35,7 +35,9 @@
         "arm64"
       ]
     },
-    "rfc3161TimeStampServer": "http://timestamp.comodoca.com"
+    "signtoolOptions": {
+      "timeStampServer": "http://timestamp.comodoca.com"
+    }
   },
   "nsis": {
     "include": "build/win/installer.nsh",
