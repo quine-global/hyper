@@ -33,9 +33,6 @@ test.before(async () => {
     executablePath: pathToBinary
   });
   await app.firstWindow();
-
-  const timeoutSeconds = 90;
-  await new Promise((resolve) => setTimeout(resolve, timeoutSeconds * 1000));
 });
 
 test.after(async () => {
