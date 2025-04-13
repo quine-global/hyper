@@ -93,7 +93,10 @@ jobs:
         if: runner.os == 'Linux'
         uses: GabrielBB/xvfb-action@v1.6
         with:
-          run: yarn run test:e2e
+          run: |
+            chown root:root ${{ github.workspace }}/dist/linux-unpacked/chrome-sandbox
+            chmod 4755 ${{ github.workspace }}/dist/linux-unpacked/chrome-sandbox
+            yarn run test:e2e
         env:
           SHELL: /bin/bash
           DEBUG: "pw:browser*"
