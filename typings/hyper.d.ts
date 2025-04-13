@@ -230,6 +230,7 @@ export type TabProps = {
   onClose: () => void;
   onSelect: () => void;
   text: string;
+  lastFocused: Date | undefined;
 } & extensionProps;
 
 export type ITab = {
