@@ -33,7 +33,6 @@ test.before(async () => {
     executablePath: pathToBinary
   });
   await app.firstWindow();
-  await new Promise((resolve) => setTimeout(resolve, 15000));
 });
 
 test.after(async () => {

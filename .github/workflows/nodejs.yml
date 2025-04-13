@@ -16,7 +16,6 @@ jobs:
         os:
           - macos-latest
           - ubuntu-latest
-          - macos-latest
           #TODO re-enable these:
           #- windows-latest
       fail-fast: false
@@ -77,14 +76,14 @@ jobs:
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: artifact-1-${{ runner.os }}
           path: |
             dist/*.dmg
             dist/*.snap
             dist/*.AppImage
             dist/*.deb
-            dist/*.rpm
             dist/*.pacman
             dist/*.exe
       - name: Run E2E Tests
@@ -92,11 +91,13 @@ jobs:
         run: yarn run test:e2e --verbose
       - name: Run E2E Tests on Linux
         if: runner.os == 'Linux'
-        uses: GabrielBB/xvfb-action@v1.6
+        uses: GabrielBB/xvfb-action@v1.7
         with:
-          run: yarn run test:e2e
+          run: |
+            yarn run test:e2e
         env:
           SHELL: /bin/bash
+          DEBUG: "pw:browser*"
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
@@ -185,8 +186,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Archive Build Artifacts
-        uses: LabhanshAgrawal/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
+          name: artifact-4-${{ runner.os }}--${{ matrix.name }}
           path: |
             dist/*.snap
             dist/*.AppImage
