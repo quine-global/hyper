@@ -42,6 +42,7 @@ exports.default = async (context) => {
       ? `${context.appOutDir}/Hyper.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources`
       : context.appOutDir;
   copySnapshot(pathToElectron, archToCopy);
+  useLoaderScriptFix(context);
 };
 
 if (require.main === module) {
@@ -50,4 +51,34 @@ if (require.main === module) {
   if ((process.arch.startsWith('arm') ? 'arm64' : 'x64') === archToCopy) {
     copySnapshot(pathToElectron, archToCopy);
   }
+}
+
+
+// copied and modified from https://github.com/gergof/electron-builder-sandbox-fix/blob/master/lib/index.js
+// copied and modified from https://github.com/Adamant-im/adamant-im/blob/7b20272a717833ffb0b49b034ab9974118fc59ec/scripts/electron/sandboxFix.js
+
+const useLoaderScriptFix = async (params) => {
+  if (params.electronPlatformName !== 'linux') {
+    // this fix is only required on linux
+    return
+  }
+
+  const executable = path.join(params.appOutDir, params.packager.executableName)
+
+  const loaderScript = `#!/usr/bin/env bash
+set -u
+SCRIPT_DIR="$( cd "$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
+exec "$SCRIPT_DIR/${params.packager.executableName}.bin" "--no-sandbox" "$@"
+`
+
+  try {
+    await fs.rename(executable, executable + '.bin')
+    await fs.writeFile(executable, loaderScript)
+    await fs.chmod(executable, 0o755)
+  } catch (e) {
+    console.error('failed to create loader for sandbox fix: ' + e.message, chalk.red)
+    throw new Error('Failed to create loader for sandbox fix')
+  }
+
+  log('sandbox fix successfully applied', chalk.green)
 }
