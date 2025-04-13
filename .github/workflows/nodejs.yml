@@ -95,7 +95,7 @@ jobs:
           run: yarn run test:e2e
         env:
           SHELL: /bin/bash
-          DEBUG:"pw:browser*"
+          DEBUG: "pw:browser*"
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
