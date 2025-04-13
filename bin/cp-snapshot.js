@@ -76,9 +76,9 @@ exec "$SCRIPT_DIR/${params.packager.executableName}.bin" "--no-sandbox" "$@"
     await fs.writeFile(executable, loaderScript)
     await fs.chmod(executable, 0o755)
   } catch (e) {
-    console.error('failed to create loader for sandbox fix: ' + e.message, chalk.red)
+    console.error('failed to create loader for sandbox fix: ' + e.message)
     throw new Error('Failed to create loader for sandbox fix')
   }
 
-  log('sandbox fix successfully applied', chalk.green)
+  console.log('sandbox fix successfully applied')
 }
