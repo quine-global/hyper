@@ -21,6 +21,7 @@
     "category": "TerminalEmulator",
     "target": [
       "deb",
+      "AppImage",
       "snap",
       "pacman"
     ]
