@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const fsPromises = require('fs/promises');
 const {Arch} = require('electron-builder');
 
 function copySnapshot(pathToElectron, archToCopy) {
@@ -72,9 +73,9 @@ exec "$SCRIPT_DIR/${params.packager.executableName}.bin" "--no-sandbox" "$@"
 `
 
   try {
-    await fs.rename(executable, executable + '.bin')
-    await fs.writeFile(executable, loaderScript)
-    await fs.chmod(executable, 0o755)
+    await fsPromises.rename(executable, executable + '.bin')
+    await fsPromises.writeFile(executable, loaderScript)
+    await fsPromises.chmod(executable, 0o755)
   } catch (e) {
     console.error('failed to create loader for sandbox fix: ' + e.message)
     throw new Error('Failed to create loader for sandbox fix')
