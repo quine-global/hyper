@@ -234,7 +234,7 @@ const main = (argv: string[]) => {
     options['stdio'] = 'ignore';
     if (process.platform === 'darwin') {
       //Use `open` to prevent multiple Hyper process
-      const cmd = `open -b co.zeit.hyper ${args_}`;
+      const cmd = `open -b com.quinefoundation.hyper ${args_}`;
       const opts = {
         env
       };

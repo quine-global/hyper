@@ -211,7 +211,7 @@ function syncPackageJSON() {
     description: 'Auto-generated from `hyper.json`!',
     private: true,
     version: '0.0.1',
-    repository: 'vercel/hyper',
+    repository: 'quine-global/hyper',
     license: 'MIT',
     homepage: 'https://hyper.is',
     dependencies

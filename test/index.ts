@@ -33,7 +33,6 @@ test.before(async () => {
     executablePath: pathToBinary
   });
   await app.firstWindow();
-  await new Promise((resolve) => setTimeout(resolve, 5000));
 });
 
 test.after(async () => {
@@ -51,5 +50,11 @@ test.after(async () => {
 });
 
 test('see if dev tools are open', async (t) => {
-  t.false(await app.evaluate(({webContents}) => !!webContents.getFocusedWebContents()?.isDevToolsOpened()));
+  const result = app.evaluate(({webContents}) => {
+    const focused = webContents.getFocusedWebContents();
+    const isDevOpen = focused?.isDevToolsOpened();
+    return Boolean(isDevOpen);
+  });
+
+  t.false(await result);
 });
