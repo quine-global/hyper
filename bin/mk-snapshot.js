@@ -9,6 +9,11 @@ const excludedModules = {};
 
 const crossArchDirs = ['clang_x86_v8_arm', 'clang_x64_v8_arm64', 'win_clang_x64'];
 
+const archMap = {
+  x64: 'x86_64',
+  arm64: 'arm64'
+};
+
 async function main() {
   const baseDirPath = path.resolve(__dirname, '..');
 
@@ -41,11 +46,19 @@ async function main() {
     }
   }
 
+  const startupBlobPath = path.join(outputBlobPath, 'snapshot_blob.bin');
+
   console.log(`Generating startup blob in "${outputBlobPath}"`);
-  childProcess.execFileSync(
-    path.resolve(__dirname, '..', 'node_modules', '.bin', 'mksnapshot' + (process.platform === 'win32' ? '.cmd' : '')),
-    [snapshotScriptPath, '--output_dir', outputBlobPath]
+  const res = childProcess.execFileSync(
+    path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.cmd' : '')),
+    [
+      '--startup-src=' + snapshotScriptPath,
+      '--startup-blob=' + startupBlobPath,
+      `--target-arch=${archMap[process.env.npm_config_arch]}`,
+      //'--v8-context-snapshot=' + v8SnapshotPath
+    ]
   );
+  console.log('result:', res.toString())
 }
 
 main().catch((err) => console.error(err));

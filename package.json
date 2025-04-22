@@ -2,6 +2,9 @@
   "name": "hyper",
   "version": "4.0.0-q-canary.6",
   "repository": "quine-global/hyper",
+  "engines": {
+    "node": "20.11.0"
+  },
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "cross-env ELECTRONMON_LOGLEVEL=error electronmon target",
@@ -38,6 +41,7 @@
     "clsx": "2.1.1",
     "color": "4.2.3",
     "columnify": "1.6.0",
+    "electron-rebuild": "^3.2.9",
     "css-loader": "7.1.2",
     "got": "12.4.1",
     "json-loader": "0.5.7",
@@ -108,10 +112,10 @@
     "copy-webpack-plugin": "12.0.2",
     "cpy-cli": "^5.0.0",
     "cross-env": "7.0.3",
-    "electron": "28.3.3",
+    "electron": "34.5.1",
+    "electron-mksnapshot": "34.5.1",
     "electron-builder": "26.0.13",
     "electron-link": "^0.6.0",
-    "electron-mksnapshot": "^33.4.9",
     "electronmon": "^2.0.3",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",

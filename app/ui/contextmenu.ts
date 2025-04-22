@@ -30,7 +30,7 @@ const contextMenuTemplate = (
   const commandKeys = getCommandKeys(getDecoratedKeymaps());
   const _shell = shellMenu(
     commandKeys,
-    execCommand,
+    (command, focusedWindow) => execCommand(command, focusedWindow as BrowserWindow | undefined),
     getProfiles().map((p) => p.name)
   ).submenu as MenuItemConstructorOptions[];
   const _edit = editMenu(commandKeys, execCommand).submenu.filter(filterCutCopy.bind(null, selection));

@@ -29,11 +29,7 @@ function getPathToElectron() {
 }
 
 function getV8ContextFileName(archToCopy) {
-  if (process.platform === 'darwin') {
-    return `v8_context_snapshot${archToCopy === 'arm64' ? '.arm64' : '.x86_64'}.bin`;
-  } else {
-    return `v8_context_snapshot.bin`;
-  }
+  return `snapshot_blob.bin`;
 }
 
 exports.default = async (context) => {
