@@ -1,12 +1,12 @@
 import {app, Menu} from 'electron';
-import type {BrowserWindow} from 'electron';
+import type {BaseWindow} from 'electron';
 
 import {openConfig, getConfig} from './config';
 import {updatePlugins} from './plugins';
 import {installCLI} from './utils/cli-install';
 import * as systemContextMenu from './utils/system-context-menu';
 
-const commands: Record<string, (focusedWindow?: BrowserWindow) => void> = {
+const commands: Record<string, (focusedWindow?: any) => void> = {
   'window:new': () => {
     // If window is created on the same tick, it will consume event too
     setTimeout(app.createWindow, 0);
@@ -162,7 +162,7 @@ getConfig().profiles.forEach((profile) => {
   };
 });
 
-export const execCommand = (command: string, focusedWindow?: BrowserWindow) => {
+export const execCommand = (command: string, focusedWindow?: BaseWindow) => {
   const fn = commands[command];
   if (fn) {
     fn(focusedWindow);
