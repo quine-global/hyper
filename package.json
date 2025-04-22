@@ -1,6 +1,6 @@
 {
   "name": "quine-electron-drag-click",
-  "version": "1.0.6",
+  "version": "1.0.6b",
   "description": "A native module that propagates click events to draggable areas in Electron on macOS.",
   "main": "index.js",
   "scripts": {
