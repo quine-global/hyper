@@ -65,7 +65,7 @@ export const createMenu = (
     ...(process.platform === 'darwin' ? [darwinMenu(commandKeys, execCommand, showAbout)] : []),
     shellMenu(
       commandKeys,
-      execCommand,
+      (command, focusedWindow) => execCommand(command, focusedWindow as BrowserWindow | undefined),
       getConfig().profiles.map((p) => p.name)
     ),
     editMenu(commandKeys, execCommand),

@@ -1,8 +1,8 @@
-import type {BaseWindow, MenuItemConstructorOptions} from 'electron';
+import type {BaseWindow, BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
 const windowMenu = (
   commandKeys: Record<string, string>,
-  execCommand: (command: string, focusedWindow?: BaseWindow) => void
+  execCommand: (command: string, focusedWindow?: BrowserWindow) => void
 ): MenuItemConstructorOptions => {
   // Generating tab:jump array
   const tabJump: MenuItemConstructorOptions[] = [];
@@ -37,14 +37,14 @@ const windowMenu = (
             label: 'Previous',
             accelerator: commandKeys['tab:prev'],
             click: (item, focusedWindow) => {
-              execCommand('tab:prev', focusedWindow);
+              execCommand('tab:prev', focusedWindow as BrowserWindow);
             }
           },
           {
             label: 'Next',
             accelerator: commandKeys['tab:next'],
             click: (item, focusedWindow) => {
-              execCommand('tab:next', focusedWindow);
+              execCommand('tab:next', focusedWindow as BrowserWindow);
             }
           },
           {
@@ -63,14 +63,14 @@ const windowMenu = (
             label: 'Previous',
             accelerator: commandKeys['pane:prev'],
             click: (item, focusedWindow) => {
-              execCommand('pane:prev', focusedWindow);
+              execCommand('pane:prev', focusedWindow as BrowserWindow);
             }
           },
           {
             label: 'Next',
             accelerator: commandKeys['pane:next'],
             click: (item, focusedWindow) => {
-              execCommand('pane:next', focusedWindow);
+              execCommand('pane:next', focusedWindow as BrowserWindow);
             }
           }
         ]
@@ -84,7 +84,7 @@ const windowMenu = (
       {
         label: 'Toggle Always on Top',
         click: (item, focusedWindow) => {
-          execCommand('window:toggleKeepOnTop', focusedWindow);
+          execCommand('window:toggleKeepOnTop', focusedWindow as BrowserWindow);
         }
       },
       {
