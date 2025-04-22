@@ -1,8 +1,8 @@
-import React, {forwardRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import type {TabProps} from '../../typings/hyper';
 
-const Tab = forwardRef<HTMLLIElement, TabProps>((props, ref) => {
+const Tab = (props: TabProps) => {
   const handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
 
@@ -18,6 +18,16 @@ const Tab = forwardRef<HTMLLIElement, TabProps>((props, ref) => {
       props.onClose();
     }
   };
+
+  const ref = useRef<HTMLLIElement>(null);
+
+  useEffect(() => {
+    if (props.lastFocused) {
+      ref?.current?.scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+  }, [props.lastFocused]);
 
   const {isActive, isFirst, isLast, borderColor, hasActivity} = props;
 
@@ -60,6 +70,7 @@ const Tab = forwardRef<HTMLLIElement, TabProps>((props, ref) => {
           list-style-type: none;
           flex-grow: 1;
           position: relative;
+          min-width: 10em;
         }
 
         .tab_tab:hover {
@@ -161,7 +172,7 @@ const Tab = forwardRef<HTMLLIElement, TabProps>((props, ref) => {
       `}</style>
     </>
   );
-});
+};
 
 Tab.displayName = 'Tab';
 
