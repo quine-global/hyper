@@ -1,5 +1,5 @@
 import {app, Menu} from 'electron';
-import type {BaseWindow, BrowserWindow} from 'electron';
+import type {BrowserWindow} from 'electron';
 
 import {openConfig, getConfig} from './config';
 import {updatePlugins} from './plugins';

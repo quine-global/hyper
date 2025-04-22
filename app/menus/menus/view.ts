@@ -1,4 +1,4 @@
-import type {BaseWindow, BrowserWindow, MenuItemConstructorOptions} from 'electron';
+import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
 const viewMenu = (
   commandKeys: Record<string, string>,
