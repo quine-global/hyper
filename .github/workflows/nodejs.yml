@@ -13,9 +13,11 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
+        include:
+          - os: macos-latest
+            name: macos
+          - os: ubuntu-latest
+            name: ubuntu
           #TODO re-enable these:
           #- windows-latest
       fail-fast: false
