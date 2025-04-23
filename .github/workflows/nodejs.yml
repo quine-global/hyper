@@ -18,8 +18,8 @@ jobs:
             name: macos
           - os: ubuntu-latest
             name: ubuntu
-          #TODO re-enable these:
-          #- windows-latest
+          - os: windows-latest
+            name: win
       fail-fast: false
     steps:
       - name: Checkout
