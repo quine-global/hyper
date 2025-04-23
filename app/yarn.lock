@@ -1219,10 +1219,10 @@ queue@6.0.2:
   dependencies:
     inherits "~2.0.3"
 
-quine-electron-drag-click@1.0.6c:
-  version "1.0.6-c"
-  resolved "https://registry.npmjs.org/quine-electron-drag-click/-/quine-electron-drag-click-1.0.6-c.tgz#a35df10f73e9a655046fbfdc6f632f237ee26042"
-  integrity sha512-nhgkJAPrvbjmwFE6huqPHR2lg/OlnFMwtpHyvV0BAJZtUZkxJN7+idIzQu035McR0p9hfN8p+fmBXI4hsUWHEQ==
+quine-electron-drag-click@1.0.6d:
+  version "1.0.6-d"
+  resolved "https://registry.npmjs.org/quine-electron-drag-click/-/quine-electron-drag-click-1.0.6-d.tgz#210fc244fdf3a11b3ad1b2e2d7d7670176b5e19b"
+  integrity sha512-2geemTnPP3GuEGzOR/IbbXbTf+JX/VERjerA4r2TuXYHSanNiEbMWSSZ2wD8RllOnp/tBIE+O4CmmPfJ86rYQQ==
   dependencies:
     bindings "^1.5.0"
     node-addon-api "^3.0.2"
