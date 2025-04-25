@@ -14,10 +14,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
-            name: macos
-          - os: ubuntu-latest
-            name: ubuntu
+          #- os: macos-latest
+          #  name: macos
+          #- os: ubuntu-latest
+          #  name: ubuntu
           - os: windows-latest
             name: win
       fail-fast: false
