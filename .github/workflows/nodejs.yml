@@ -80,7 +80,7 @@ jobs:
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: hyper-${{ runner.os }}-${{ matrix.name }}
+          name: hyper-${{ runner.os }}-${{ matrix.name }}-${{ github.run_number }}
           path: |
             dist/*.dmg
             dist/*.snap
@@ -103,7 +103,7 @@ jobs:
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
-          name: e2e-${{ matrix.os }}-${{ strategy.job-index }}
+          name: e2e-${{ matrix.os }}-${{ strategy.job-index }}-${{ github.run_number }}
           path: dist/tmp/*.png
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
@@ -114,7 +114,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
-          name: pr_num
+          name: pr_num-${{ github.run_number }}
           path: ./pr_num.txt
       - uses: actions/cache/save@v4
         if: github.event_name == 'push'
@@ -190,7 +190,7 @@ jobs:
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: hyper-${{ runner.os }}-${{ matrix.name }}
+          name: hyper-${{ runner.os }}-${{ matrix.name }}-${{ github.run_number }}
           path: |
             dist/*.snap
             dist/*.AppImage
