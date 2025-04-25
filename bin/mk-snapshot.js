@@ -49,18 +49,18 @@ async function main() {
   const startupBlobPath = path.join(outputBlobPath, 'snapshot_blob.bin');
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
-  childProcess.execSync(
+  console.log(childProcess.execSync(
     'ls',
     [path.resolve(__dirname, '..', 'node_modules')]
-  );
-  childProcess.execSync(
+  ).toString());
+  console.log(childProcess.execSync(
     'ls',
     [path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot')]
-  );
-  childProcess.execSync(
+  ).toString());
+  console.log(childProcess.execSync(
     'ls',
     [path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin')]
-  );
+  ).toString());
   const res = childProcess.execFileSync(
     path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.cmd' : '')),
     [
