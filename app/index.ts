@@ -141,7 +141,7 @@ app.on('ready', () =>
 
         const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn, profileName);
         windowSet.add(hwin);
-        void hwin.loadURL(url)
+        void hwin.loadURL(url);
 
         hwin.once('ready-to-show', () => {
           hwin.show();
