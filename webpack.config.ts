@@ -99,8 +99,7 @@ const config: webpack.Configuration[] = [
         }
       ]
     },
-    externals: {
-    },
+    externals: {},
     plugins: [
       new webpack.IgnorePlugin({resourceRegExp: /.*\.js.map$/i}),
 

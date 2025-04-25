@@ -50,7 +50,7 @@ async function main() {
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
   const res = childProcess.execFileSync(
-    path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.cmd' : '')),
+    path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.exe' : '')),
     [
       '--startup-src=' + snapshotScriptPath,
       '--startup-blob=' + startupBlobPath,
