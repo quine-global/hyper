@@ -57,6 +57,24 @@ jobs:
           matrix-os: macos-latest
           matrix-name: macos
           upload-artifact: false
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    concurrency:
+      group: build-win-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-os: windows-latest
+          matrix-name: win
+          upload-artifact: false
   
   # ARM Linux:
 
