@@ -1,0 +1,104 @@
+name: 'Build'
+description: 'Builds, tests, and packages the app for release'
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Fix node-gyp and Python
+      shell: bash
+      run: |
+        if [[ "$RUNNER_OS" == "macOS" ]]; then
+          brew install python-setuptools python-packaging
+        else
+          python3 -m pip install packaging setuptools
+        fi
+
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      shell: bash
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache/restore@v4
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install dependencies
+      shell: bash
+      run: yarn install
+      env:
+        npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp/bin/node-gyp.js' }}
+
+    - name: Install libarchive-tools
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install libarchive-tools
+
+    - name: Lint and Run Unit Tests
+      shell: bash
+      run: yarn run test
+
+    - name: Getting Build Icon
+      if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
+      shell: bash
+      run: |
+        cp build/canary.ico build/icon.ico
+        cp build/canary.icns build/icon.icns
+
+    - name: Build
+      shell: bash
+      run: |
+        if [ -z "$CSC_LINK" ] ; then unset CSC_LINK ; fi
+        if [ -z "$CSC_KEY_PASSWORD" ] ; then unset CSC_KEY_PASSWORD ; fi
+        if [ -z "$WIN_CSC_LINK" ] ; then unset WIN_CSC_LINK ; fi
+        if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
+        if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
+        if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
+        yarn run dist
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+        CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+        WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+        WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+        APPLE_ID: ${{ secrets.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
+    - name: Archive Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: hyper-${{ runner.os }}
+        path: |
+          dist/*.dmg
+          dist/*.snap
+          dist/*.AppImage
+          dist/*.deb
+          dist/*.pacman
+          dist/*.exe
+
+    - name: Run E2E Tests (non-Linux)
+      if: runner.os != 'Linux'
+      shell: bash
+      run: yarn run test:e2e --verbose
+
+    - name: Run E2E Tests on Linux
+      if: runner.os == 'Linux'
+      uses: GabrielBB/xvfb-action@v1.7
+      with:
+        run: |
+          yarn run test

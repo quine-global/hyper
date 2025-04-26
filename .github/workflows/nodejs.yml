@@ -24,10 +24,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
+
       - name: Fix node-gyp and Python
         run: |
           if [[ "$RUNNER_OS" == "macOS" ]]; then
@@ -35,31 +37,38 @@ jobs:
           else
             python3 -m pip install $EXTRA_ARGS packaging setuptools
           fi
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache/restore@v4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+
       - name: Install
         run: yarn install
         env:
           npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+
       - name: Install libarchive-tools
         if: runner.os == 'Linux'
         run: |
           sudo apt update
           sudo apt install libarchive-tools
+
       - name: Lint and Run Unit Tests
         run: yarn run test
+
       - name: Getting Build Icon
         if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
         run: |
           cp build/canary.ico build/icon.ico
           cp build/canary.icns build/icon.icns
+
       - name: Build
         run: |
           if [ -z "$CSC_LINK" ] ; then unset CSC_LINK ; fi
@@ -77,6 +86,7 @@ jobs:
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
       - name: Archive Build Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -88,9 +98,11 @@ jobs:
             dist/*.deb
             dist/*.pacman
             dist/*.exe
+
       - name: Run E2E Tests
         if: runner.os != 'Linux'
         run: yarn run test:e2e --verbose
+
       - name: Run E2E Tests on Linux
         if: runner.os == 'Linux'
         uses: GabrielBB/xvfb-action@v1.7
@@ -100,22 +112,26 @@ jobs:
         env:
           SHELL: /bin/bash
           DEBUG: "pw:browser*"
+
       - name: Archive E2E test screenshot
         uses: actions/upload-artifact@v4
         with:
           name: e2e-${{ matrix.os }}-${{ strategy.job-index }}
           path: dist/tmp/*.png
+
       - name: Save the pr number in an artifact
         if: github.event_name == 'pull_request'
         env:
           PR_NUM: ${{ github.event.number }}
         run: echo $PR_NUM > pr_num.txt
+
       - name: Upload the pr num
         uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
           name: pr_num
           path: ./pr_num.txt
+
       - uses: actions/cache/save@v4
         if: github.event_name == 'push'
         with:

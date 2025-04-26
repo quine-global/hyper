@@ -1,0 +1,59 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-ubuntu:
+    name: Build Ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+    steps:
+      - uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+  upload-release:
+    name: Upload and Create Release
+    needs:
+      - build-ubuntu
+      - build-macos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+
+      - name: List downloaded artifacts
+        run: ls -R ./artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Release ${{ github.ref_name }}
+          tag_name: ${{ github.ref }}
+          files: |
+            artifacts/**/*.dmg
+            artifacts/**/*.snap
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb
+            artifacts/**/*.pacman
+            artifacts/**/*.exe
+            artifacts/**/*.png
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
