@@ -134,6 +134,12 @@ jobs:
 
       - name: List downloaded artifacts
         run: ls -R ./artifacts
+      
+      - name: Ensure non-empty artifacts
+        run: |
+          find artifacts/ -type f -empty -delete
+          echo "Cleaned up any zero-byte files."
+          ls -R artifacts/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
