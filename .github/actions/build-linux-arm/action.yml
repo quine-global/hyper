@@ -1,0 +1,113 @@
+name: 'Build Linux ARM'
+description: 'Cross-compiles Hyper app for ARMv7l and ARM64 using arm-runner'
+inputs:
+  node-version:
+    description: 'Node.js version to use'
+    required: true
+  matrix-name:
+    description: 'Matrix name (arch)'
+    required: true
+  matrix-cpu:
+    description: 'CPU architecture'
+    required: true
+  matrix-image:
+    description: 'Base OS image for ARM emulation'
+    required: true
+  upload-artifact:
+    description: 'Whether to upload artifacts'
+    required: false
+    default: 'true'
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Fix node-gyp and Python
+      shell: bash
+      run: |
+        python3 -m pip install packaging setuptools
+
+    - name: Get yarn cache directory path
+      shell: bash
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache/restore@v4
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install dependencies and tools
+      shell: bash
+      run: |
+        yarn install
+        sudo apt update
+        sudo apt install libarchive-tools
+
+    - name: Compile
+      shell: bash
+      run: yarn run build
+
+    - name: Rebuild node-pty for ARM
+      uses: pguyot/arm-runner-action@v2.6.5
+      with:
+        image_additional_mb: 2000
+        base_image: ${{ inputs.matrix-image }}
+        cpu: ${{ inputs.matrix-cpu }}
+        shell: bash
+        copy_artifact_path: target/node_modules/node-pty
+        copy_artifact_dest: target/node_modules
+        commands: |
+          wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
+          tar -xJf node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
+          sudo cp node-v18.16.0-linux-${{ inputs.matrix-name }}/* /usr/local/ -R
+          npm run rebuild-node-pty
+
+    - name: Chown rebuilt node-pty
+      shell: bash
+      run: |
+        sudo chown -R $USER:$USER target/node_modules/node-pty
+
+    - name: Prepare v8 snapshot (only armv7l)
+      if: ${{ inputs.matrix-name == 'armv7l' }}
+      shell: bash
+      run: |
+        sudo dpkg --add-architecture i386
+        sudo apt update
+        sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
+        npm_config_arch=armv7l yarn run v8-snapshot:arch
+
+    - name: Build final Electron App for ARM
+      shell: bash
+      run: |
+        yarn run electron-builder -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
+      env:
+        GH_TOKEN: ${{ env.GH_TOKEN }}
+
+    - name: Archive Build Artifacts
+      if: ${{ inputs.upload-artifact == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: hyper-linux-${{ inputs.matrix-name }}
+        path: |
+          dist/*.snap
+          dist/*.AppImage
+          dist/*.deb
+          dist/*.rpm
+          dist/*.pacman
+
+#    - name: Run E2E Tests on Linux
+#      if: runner.os == 'Linux'
+#      uses: GabrielBB/xvfb-action@v1.7
+#      with:
+#        run: |
+#          yarn run test
+#

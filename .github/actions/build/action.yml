@@ -10,6 +10,10 @@ inputs:
   matrix-os:
     description: 'Matrix OS'
     required: true
+  upload-artifact:
+    description: 'Whether to upload artifacts'
+    required: false
+    default: 'true'
 runs:
   using: 'composite'
   steps:
@@ -138,21 +142,19 @@ runs:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
 
+    - name: Archive Build Artifacts
+      if: ${{ inputs.upload-artifact == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: hyper-${{ runner.os }}
+        path: |
+          dist/*.dmg
+          dist/*.snap
+          dist/*.AppImage
+          dist/*.deb
+          dist/*.pacman
+          dist/*.exe
 
-
-
-#    - name: Archive Build Artifacts
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: hyper-${{ runner.os }}
-#        path: |
-#          dist/*.dmg
-#          dist/*.snap
-#          dist/*.AppImage
-#          dist/*.deb
-#          dist/*.pacman
-#          dist/*.exe
-#
 #    - name: Run E2E Tests (non-Linux)
 #      if: runner.os != 'Linux'
 #      shell: bash

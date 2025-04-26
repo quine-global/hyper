@@ -34,6 +34,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: ubuntu-latest
           matrix-name: ubuntu
+          upload-artifact: true
 
   build-macos:
     name: Build macOS
@@ -48,12 +49,67 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: macos-latest
           matrix-name: macos
+          upload-artifact: true
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-os: windows-latest
+          matrix-name: win
+          upload-artifact: true
+
+  # ARM Linux:
+
+  build-linux-armv7l:
+    name: Build Linux ARMv7l
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ARMv7l
+        uses: ./.github/actions/build-linux-arm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-name: armv7l
+          matrix-cpu: cortex-a8
+          matrix-image: raspios_lite:latest
+          upload-artifact: true
+
+  build-linux-arm64:
+    name: Build Linux ARM64
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ARM64
+        uses: ./.github/actions/build-linux-arm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-name: arm64
+          matrix-cpu: cortex-a53
+          matrix-image: raspios_lite_arm64:latest
+          upload-artifact: true
+
+  ###
 
   upload-release:
     name: Upload and Create Release
     needs:
       - build-ubuntu
       - build-macos
+      - build-windows
+      - build-linux-armv7l
+      - build-linux-arm64
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
