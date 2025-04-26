@@ -15,8 +15,9 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
         cache: "yarn"
-    
+
     - name: Install Yarn
+      shell: bash
       run: npm install -g yarn
 
     - name: Fix node-gyp and Python
