@@ -71,13 +71,13 @@ runs:
         if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
         yarn run dist
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-        CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-        WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-        WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-        APPLE_ID: ${{ secrets.APPLE_ID }}
-        APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+        GH_TOKEN: ${{ env.GITHUB_TOKEN }}
+        CSC_LINK: ${{ env.MAC_CERT_P12_BASE64 }}
+        CSC_KEY_PASSWORD: ${{ env.MAC_CERT_P12_PASSWORD }}
+        WIN_CSC_LINK: ${{ env.WIN_CERT_P12_BASE64 }}
+        WIN_CSC_KEY_PASSWORD: ${{ env.WIN_CERT_P12_PASSWORD }}
+        APPLE_ID: ${{ env.APPLE_ID }}
+        APPLE_APP_SPECIFIC_PASSWORD: ${{ env.APPLE_PASSWORD }}
 
     - name: Archive Build Artifacts
       uses: actions/upload-artifact@v4
