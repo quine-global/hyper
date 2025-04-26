@@ -16,6 +16,7 @@ runs:
         node-version: ${{ env.NODE_VERSION }}
 
     - name: Fix node-gyp and Python
+      shell: bash
       run: |
         if [[ "$RUNNER_OS" == "macOS" ]]; then
           brew install python-setuptools python-packaging
@@ -24,6 +25,7 @@ runs:
         fi
 
     - name: Get yarn cache directory path
+      shell: bash
       id: yarn-cache-dir-path
       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
@@ -35,20 +37,24 @@ runs:
           ${{ runner.os }}-yarn-
 
     - name: Install
+      shell: bash
       run: yarn install
       env:
         npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
 
     - name: Install libarchive-tools
+      shell: bash
       if: runner.os == 'Linux'
       run: |
         sudo apt update
         sudo apt install libarchive-tools
 
     - name: Lint and Run Unit Tests
+      shell: bash
       run: yarn run test
 
     - name: Getting Build Icon
+      shell: bash
       if: github.ref == 'refs/heads/canary' || github.base_ref == 'canary'
       run: |
         cp build/canary.ico build/icon.ico
@@ -86,6 +92,7 @@ runs:
           dist/*.exe
 
     - name: Run E2E Tests
+      shell: bash
       if: runner.os != 'Linux'
       run: yarn run test:e2e --verbose
 
@@ -106,6 +113,7 @@ runs:
         path: dist/tmp/*.png
 
     - name: Save the pr number in an artifact
+      shell: bash
       if: github.event_name == 'pull_request'
       env:
         PR_NUM: ${{ github.event.number }}
