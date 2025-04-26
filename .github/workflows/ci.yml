@@ -14,12 +14,12 @@ concurrency:
 env:
   NODE_VERSION: 20.11.0
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
-  CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
-  WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
-  WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
-  APPLE_ID: ${{ secrets.APPLE_ID }}
-  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+#  CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+#  CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+#  WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+#  WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+#  APPLE_ID: ${{ secrets.APPLE_ID }}
+#  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
 jobs:
   build-ubuntu:
@@ -34,6 +34,9 @@ jobs:
 
       - name: Build
         uses: ./.github/actions/build
+        env:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: ubuntu-latest
@@ -52,6 +55,9 @@ jobs:
 
       - name: Build
         uses: ./.github/actions/build
+        env:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: macos-latest
@@ -70,6 +76,9 @@ jobs:
 
       - name: Build
         uses: ./.github/actions/build
+        env:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: windows-latest
@@ -90,6 +99,9 @@ jobs:
 
       - name: Build ARMv7l
         uses: ./.github/actions/build-linux-arm
+        env:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-name: armv7l
@@ -109,6 +121,9 @@ jobs:
 
       - name: Build ARM64
         uses: ./.github/actions/build-linux-arm
+        env:
+          NODE_VERSION: ${{ env.NODE_VERSION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-name: arm64
