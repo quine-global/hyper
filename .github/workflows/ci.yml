@@ -1,0 +1,117 @@
+name: Node CI
+on:
+  push:
+    branches:
+  workflow_dispatch:
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20.11.0
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  CSC_LINK: ${{ secrets.MAC_CERT_P12_BASE64 }}
+  CSC_KEY_PASSWORD: ${{ secrets.MAC_CERT_P12_PASSWORD }}
+  WIN_CSC_LINK: ${{ secrets.WIN_CERT_P12_BASE64 }}
+  WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CERT_P12_PASSWORD }}
+  APPLE_ID: ${{ secrets.APPLE_ID }}
+  APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
+
+jobs:
+  build-ubuntu:
+    name: Build Ubuntu
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-ubuntu-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-os: ubuntu-latest
+          matrix-name: ubuntu
+          upload-artifact: false
+
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+    concurrency:
+      group: build-macos-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-os: macos-latest
+          matrix-name: macos
+          upload-artifact: false
+
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+    concurrency:
+      group: build-win-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build
+        uses: ./.github/actions/build
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-os: windows-latest
+          matrix-name: win
+          upload-artifact: false
+  
+  # ARM Linux:
+
+  build-linux-armv7l:
+    name: Build Linux ARMv7l
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-linux-armv7l-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ARMv7l
+        uses: ./.github/actions/build-linux-arm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-name: armv7l
+          matrix-cpu: cortex-a8
+          matrix-image: raspios_lite:latest
+          upload-artifact: false
+
+  build-linux-arm64:
+    name: Build Linux ARM64
+    runs-on: ubuntu-latest
+    concurrency:
+      group: build-linux-arm64-${{ github.ref }}
+      cancel-in-progress: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ARM64
+        uses: ./.github/actions/build-linux-arm
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          matrix-name: arm64
+          matrix-cpu: cortex-a53
+          matrix-image: raspios_lite_arm64:latest
+          upload-artifact: false
