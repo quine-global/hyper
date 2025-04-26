@@ -32,6 +32,8 @@ jobs:
         uses: ./.github/actions/build
         with:
           node-version: ${{ env.NODE_VERSION }}
+          matrix-os: ubuntu-latest
+          matrix-name: ubuntu
 
   build-macos:
     name: Build macOS
@@ -44,6 +46,8 @@ jobs:
         uses: ./.github/actions/build
         with:
           node-version: ${{ env.NODE_VERSION }}
+          matrix-os: macos-latest
+          matrix-name: macos
 
   upload-release:
     name: Upload and Create Release

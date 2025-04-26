@@ -4,6 +4,12 @@ inputs:
   node-version:
     description: 'Node.js version to use'
     required: true
+  matrix-name:
+    description: 'Matrix Name'
+    required: true
+  matrix-os:
+    description: 'Matrix OS'
+    required: true
 runs:
   using: 'composite'
   steps:
