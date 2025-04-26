@@ -8,7 +8,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -25,6 +25,9 @@ jobs:
   build-ubuntu:
     name: Build Ubuntu
     runs-on: ubuntu-latest
+    concurrency:
+      group: build-ubuntu-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,6 +43,9 @@ jobs:
   build-macos:
     name: Build macOS
     runs-on: macos-latest
+    concurrency:
+      group: build-macos-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -57,6 +63,9 @@ jobs:
   build-linux-armv7l:
     name: Build Linux ARMv7l
     runs-on: ubuntu-latest
+    concurrency:
+      group: build-linux-armv7l-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -73,6 +82,9 @@ jobs:
   build-linux-arm64:
     name: Build Linux ARM64
     runs-on: ubuntu-latest
+    concurrency:
+      group: build-linux-arm64-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
