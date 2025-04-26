@@ -88,7 +88,7 @@ runs:
     - name: Archive Build Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: hyper-${{ runner.os }}-${{ matrix.name }}
+        name: hyper-${{ runner.os }}-${{ inputs.matrix-name }}
         path: |
           dist/*.dmg
           dist/*.snap
@@ -115,7 +115,7 @@ runs:
     - name: Archive E2E test screenshot
       uses: actions/upload-artifact@v4
       with:
-        name: e2e-${{ matrix.os }}-${{ strategy.job-index }}
+        name: e2e-${{ inputs.matrix-os }}-${{ strategy.job-index }}
         path: dist/tmp/*.png
 
     - name: Save the pr number in an artifact
