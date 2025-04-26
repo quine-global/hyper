@@ -139,10 +139,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           files: |
             artifacts/**/*.dmg
             artifacts/**/*.snap
