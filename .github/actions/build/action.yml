@@ -119,9 +119,6 @@ runs:
 
     - name: Run E2E Tests
       shell: bash
-      env:
-        # Due to permissions issues, Windows needs cache turned off
-        AVA_CACHE: ${{ runner.os == 'Windows' && 'false' || 'true' }}
       if: runner.os != 'Linux'
       run: yarn run test:e2e --verbose
 

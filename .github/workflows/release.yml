@@ -69,6 +69,8 @@ jobs:
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Due to permissions issues, Windows needs cache turned off
+          AVA_CACHE: false
         with:
           node-version: ${{ env.NODE_VERSION }}
           matrix-os: windows-latest
