@@ -88,7 +88,9 @@ runs:
         if [ -z "$WIN_CSC_KEY_PASSWORD" ] ; then unset WIN_CSC_KEY_PASSWORD ; fi
         if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
         if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
-        yarn run dist
+
+        # Retry if there's a fetch failure
+        yarn run dist || yarn run dist || yarn run dist
       env:
         GH_TOKEN: ${{ env.GH_TOKEN }}
         CSC_LINK: ${{ env.MAC_CERT_P12_BASE64 }}
