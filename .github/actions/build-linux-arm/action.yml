@@ -50,6 +50,12 @@ runs:
         restore-keys: |
           ${{ runner.os }}-yarn-
 
+    - name: Delete old electron headers
+      # These can sometimes be present on a freshly-provisioned github runner, so remove them
+      shell: bash
+      run: |
+        rm -rf ~/.electron-gyp || true
+
     - name: Install dependencies and tools
       shell: bash
       run: |
