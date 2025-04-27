@@ -156,4 +156,3 @@ jobs:
             artifacts/**/*.deb
             artifacts/**/*.pacman
             artifacts/**/*.exe
-            artifacts/**/*.png
