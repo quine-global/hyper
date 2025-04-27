@@ -137,9 +137,19 @@ jobs:
       
       - name: Ensure non-empty artifacts
         run: |
-          find artifacts/ -type f -empty -delete
+          echo "Checking for zero-byte files in artifacts/..."
+          find artifacts/ -type f -empty -print -delete
           echo "Cleaned up any zero-byte files."
+          echo "Remaining files:"
           ls -R artifacts/
+
+      - name: Dump release assets for debugging
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub CLI needs this
+        run: |
+          echo "Fetching release assets for tag: ${{ github.ref_name }}"
+          gh release view "${{ github.ref_name }}" --json assets --jq '.assets[] | "\(.name) - \(.url)"'
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -148,6 +158,7 @@ jobs:
           ACTIONS_STEP_DEBUG: true
         with:
           preserve_order: true
+          overwrite: true
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
