@@ -1,6 +1,7 @@
 <p align="center">
-<img alt="hyper - modern web-based terminal" height=150 src="https://github.com/user-attachments/assets/ec782bdb-b7fc-4119-8453-e67f9a40258c">
+<img alt="hyper - modern web-based terminal" height=150 src="https://github.com/user-attachments/assets/8424520b-5ad7-4cd5-bad0-1f36bd8f2480">
 </p>
+
 
 <p>
   <a aria-label="Vercel logo" href="https://vercel.com">
