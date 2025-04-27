@@ -72,7 +72,11 @@ runs:
           wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
           tar -xJf node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
           sudo cp node-v18.16.0-linux-${{ inputs.matrix-name }}/* /usr/local/ -R
+
+          cd ..
           npm run rebuild-node-pty
+
+          cd target
           yarn add --dev electron-rebuild
           ./node_modules/.bin/electron-rebuild
 
