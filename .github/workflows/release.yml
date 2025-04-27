@@ -162,6 +162,7 @@ jobs:
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          draft: true
           files: |
             artifacts/**/*.dmg
             artifacts/**/*.snap
