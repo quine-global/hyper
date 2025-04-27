@@ -1,6 +1,8 @@
-![](https://assets.vercel.com/image/upload/v1549723846/repositories/hyper/hyper-3-repo-banner.png)
-
 <p align="center">
+<img alt="hyper - modern web-based terminal" height=150 src="https://github.com/user-attachments/assets/ec782bdb-b7fc-4119-8453-e67f9a40258c">
+</p>
+
+<p>
   <a aria-label="Vercel logo" href="https://vercel.com">
     <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=vercel&labelColor=000000&logoWidth=20">
   </a>
