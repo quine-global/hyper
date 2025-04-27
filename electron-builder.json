@@ -1,5 +1,5 @@
 {
-  "appId": "com.quinefoundation.hyper",
+  "appId": "com.quineglobal.hyper",
   "afterSign": "./bin/notarize.js",
   "afterPack": "./bin/cp-snapshot.js",
   "directories": {
