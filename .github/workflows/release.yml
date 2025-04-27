@@ -145,7 +145,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
+          ACTIONS_STEP_DEBUG: true
         with:
+          preserve_order: true
           name: Release ${{ github.ref_name }}
           tag_name: ${{ github.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
