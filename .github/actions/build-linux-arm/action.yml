@@ -77,8 +77,7 @@ runs:
           npm run rebuild-node-pty
 
           cd target
-          yarn add --dev electron-rebuild
-          ./node_modules/.bin/electron-rebuild
+          npx electron-rebuild
 
     - name: Compile
       shell: bash
