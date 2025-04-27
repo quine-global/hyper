@@ -24,6 +24,11 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ env.NODE_VERSION }}
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
     - name: Fix node-gyp and Python
       shell: bash
@@ -58,6 +63,10 @@ runs:
       run: |
         sudo apt update
         sudo apt install libarchive-tools
+  
+    - name: Rebuild native modules for Electron
+      shell: bash
+      run: npx electron-rebuild
 
     - name: Lint and Run Unit Tests
       shell: bash

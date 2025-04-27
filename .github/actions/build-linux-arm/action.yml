@@ -28,6 +28,11 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
     - name: Fix node-gyp and Python
       shell: bash
       run: |
@@ -51,30 +56,34 @@ runs:
         yarn install
         sudo apt update
         sudo apt install libarchive-tools
-
-    - name: Compile
-      shell: bash
-      run: yarn run build
-
-    - name: Rebuild node-pty for ARM
+    
+    - name: Rebuild node-pty and all native modules for ARM
       uses: pguyot/arm-runner-action@v2.6.5
       with:
         image_additional_mb: 2000
         base_image: ${{ inputs.matrix-image }}
         cpu: ${{ inputs.matrix-cpu }}
         shell: bash
-        copy_artifact_path: target/node_modules/node-pty
-        copy_artifact_dest: target/node_modules
+        copy_artifact_path: target
+        copy_artifact_dest: target
         commands: |
+          cd target
+          # TODO upgrade node to 20.11.0 to match NODE_VERSION
           wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
           tar -xJf node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
           sudo cp node-v18.16.0-linux-${{ inputs.matrix-name }}/* /usr/local/ -R
           npm run rebuild-node-pty
+          yarn add --dev electron-rebuild
+          ./node_modules/.bin/electron-rebuild
 
-    - name: Chown rebuilt node-pty
+    - name: Compile
+      shell: bash
+      run: yarn run build
+
+    - name: Chown rebuilt node_modules
       shell: bash
       run: |
-        sudo chown -R $USER:$USER target/node_modules/node-pty
+        sudo chown -R $USER:$USER target/node_modules
 
     - name: Prepare v8 snapshot (only armv7l)
       if: ${{ inputs.matrix-name == 'armv7l' }}
@@ -84,7 +93,7 @@ runs:
         sudo apt update
         sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
         npm_config_arch=armv7l yarn run v8-snapshot:arch
-
+    
     - name: Build final Electron App for ARM
       shell: bash
       run: |
