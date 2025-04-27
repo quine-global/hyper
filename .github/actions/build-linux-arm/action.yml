@@ -101,7 +101,7 @@ runs:
     - name: Build final Electron App for ARM
       shell: bash
       run: |
-        yarn run electron-builder -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
+        yarn run electron-builder -p never -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
       env:
         GH_TOKEN: ${{ env.GH_TOKEN }}
 
