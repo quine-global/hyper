@@ -11,6 +11,7 @@ function copySnapshot(pathToElectron, archToCopy) {
   const pathToBlobV8 = path.resolve(__dirname, '..', 'cache', archToCopy, v8ContextFileName);
 
   console.log('Copying v8 snapshots from', pathToBlob, 'to', pathToElectron);
+  fs.mkdirSync(pathToElectron, { recursive: true });
   fs.copyFileSync(pathToBlob, path.join(pathToElectron, snapshotFileName));
   fs.copyFileSync(pathToBlobV8, path.join(pathToElectron, v8ContextFileName));
 }

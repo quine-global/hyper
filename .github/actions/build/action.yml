@@ -55,9 +55,7 @@ runs:
 
     - name: Install
       shell: bash
-      run: yarn install
-      env:
-        npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
+      run: yarn install --immutable
 
     - name: Install libarchive-tools
       shell: bash
