@@ -15,5 +15,7 @@ process.env.ELECTRON_CUSTOM_VERSION = version;
 const downloadScript = pnp.resolveToUnqualified("electron-mksnapshot/download-mksnapshot.js", __filename);
 const mkSnapshotScript = path.resolve(__dirname, "../bin/mk-snapshot.js");
 
-execSync(`node ${downloadScript}`, { stdio: "inherit" });
+execSync(`node ${downloadScript}`, {
+  stdio: "inherit",
+});
 execSync(`node ${mkSnapshotScript}`, { stdio: "inherit" });
