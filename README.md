@@ -65,7 +65,9 @@ Regardless of the platform you are working on, you will need to have Yarn instal
 1. Install necessary packages:
   * Windows
     - Install Visual Studio Build Tools manually. Download: https://aka.ms/vs/17/release/vs_BuildTools.exe
-    - Open it and choose Desktop development with C++.
+    - Open it and choose:
+      - Desktop development with C++
+      - Under individual components: MSVC Spectre-mitigated libraries for your architecture
     - maybe? at command prompt: setx GYP_MSVS_VERSION 2022
   * macOS
     - Once you have installed Yarn, you can skip this section!
