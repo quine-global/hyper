@@ -68,6 +68,7 @@ const RAW_RUNTIME_STATE =
           ["@xterm/addon-web-links", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:0.11.0"],\
           ["@xterm/addon-webgl", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:0.18.0"],\
           ["@xterm/xterm", "npm:5.5.0"],\
+          ["acorn", "npm:8.14.1"],\
           ["args", "npm:5.0.3"],\
           ["ava", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#https://github.com/quine-global/ava.git#commit=38aebe3badef8d54f68e8315e9849cfa83d531fe"],\
           ["babel-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:9.2.1"],\
@@ -96,6 +97,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-lodash", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.4.0"],\
           ["eslint-plugin-prettier", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:5.2.6"],\
           ["eslint-plugin-react", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.37.2"],\
+          ["fs-extra", "npm:11.3.0"],\
           ["got", "npm:12.4.1"],\
           ["husky", "npm:9.1.7"],\
           ["husky-init", "npm:8.0.0"],\
@@ -8057,6 +8059,7 @@ const RAW_RUNTIME_STATE =
           ["@xterm/addon-web-links", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:0.11.0"],\
           ["@xterm/addon-webgl", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:0.18.0"],\
           ["@xterm/xterm", "npm:5.5.0"],\
+          ["acorn", "npm:8.14.1"],\
           ["args", "npm:5.0.3"],\
           ["ava", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#https://github.com/quine-global/ava.git#commit=38aebe3badef8d54f68e8315e9849cfa83d531fe"],\
           ["babel-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:9.2.1"],\
@@ -8085,6 +8088,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-lodash", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.4.0"],\
           ["eslint-plugin-prettier", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:5.2.6"],\
           ["eslint-plugin-react", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.37.2"],\
+          ["fs-extra", "npm:11.3.0"],\
           ["got", "npm:12.4.1"],\
           ["husky", "npm:9.1.7"],\
           ["husky-init", "npm:8.0.0"],\

@@ -2545,7 +2545,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.13.0, acorn@npm:^8.14.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.13.0, acorn@npm:^8.14.0, acorn@npm:^8.14.1, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.14.1
   resolution: "acorn@npm:8.14.1"
   bin:
@@ -5689,7 +5689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-extra@npm:^11.1.1":
+"fs-extra@npm:^11.1.1, fs-extra@npm:^11.3.0":
   version: 11.3.0
   resolution: "fs-extra@npm:11.3.0"
   dependencies:
@@ -6405,6 +6405,7 @@ __metadata:
     "@xterm/addon-web-links": "npm:0.11.0"
     "@xterm/addon-webgl": "npm:0.18.0"
     "@xterm/xterm": "npm:5.5.0"
+    acorn: "npm:^8.14.1"
     args: "npm:5.0.3"
     ava: "https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe"
     babel-loader: "npm:9.2.1"
@@ -6433,6 +6434,7 @@ __metadata:
     eslint-plugin-lodash: "npm:^7.4.0"
     eslint-plugin-prettier: "npm:^5.2.1"
     eslint-plugin-react: "npm:7.37.2"
+    fs-extra: "npm:^11.3.0"
     got: "npm:12.4.1"
     husky: "npm:^9.1.7"
     husky-init: "npm:^8.0.0"
@@ -6476,6 +6478,9 @@ __metadata:
     uuid: "npm:10.0.0"
     webpack: "npm:5.96.1"
     webpack-cli: "npm:5.1.4"
+  dependenciesMeta:
+    electron-mksnapshot@34.5.1:
+      unplugged: true
   languageName: unknown
   linkType: soft
 

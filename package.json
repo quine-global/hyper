@@ -110,6 +110,7 @@
     "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.21.0",
+    "acorn": "^8.14.1",
     "babel-loader": "9.2.1",
     "concurrently": "9.1.0",
     "copy-webpack-plugin": "12.0.2",
@@ -130,6 +131,7 @@
     "eslint-plugin-lodash": "^7.4.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "7.37.2",
+    "fs-extra": "^11.3.0",
     "husky": "^9.1.7",
     "husky-init": "^8.0.0",
     "inquirer": "10.1.8",
@@ -160,5 +162,10 @@
     "@types/retry": "0.12.5",
     "node-abi": "^3.67.0"
   },
-  "packageManager": "yarn@4.9.1"
+  "packageManager": "yarn@4.9.1",
+  "dependenciesMeta": {
+    "electron-mksnapshot@34.5.1": {
+      "unplugged": true
+    }
+  }
 }
