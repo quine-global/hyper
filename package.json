@@ -24,7 +24,7 @@
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer && node ./bin/rimraf-standalone.js ./target && node ./bin/rimraf-standalone.js ./dist",
     "v8-snapshot": "cross-env npm_config_arch=x64 yarn run v8-snapshot:arch && cross-env npm_config_arch=arm64 yarn run v8-snapshot:arch",
     "v8-snapshot:arch": "yarn run mk-snapshot && yarn run cp-snapshot",
-    "mk-snapshot": "cross-env ELECTRON_CUSTOM_VERSION=$npm_package_devDependencies_electron node node_modules/electron-mksnapshot/download-mksnapshot.js && node bin/mk-snapshot.js",
+    "mk-snapshot": "node scripts/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
     "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required",
     "uuaw": "uuaw"
@@ -144,7 +144,7 @@
     "terser": "5.36.0",
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "10.9.2",
-    "typescript": "5.7.2",
+    "typescript": "^5.8.3",
     "uuaw": "^1.2.2",
     "webpack": "5.96.1"
   },
@@ -159,5 +159,5 @@
     "@types/retry": "0.12.5",
     "node-abi": "^3.67.0"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@4.9.1"
 }
