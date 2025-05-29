@@ -3155,7 +3155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bindings@npm:^1.4.0":
+"bindings@npm:^1.4.0, bindings@npm:^1.5.0":
   version: 1.5.0
   resolution: "bindings@npm:1.5.0"
   dependencies:
@@ -6452,6 +6452,7 @@ __metadata:
     plist: "npm:3.1.0"
     prettier: "npm:3.3.3"
     proxyquire: "npm:2.1.3"
+    quine-electron-drag-click: "npm:1.0.6-d"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"
     react-redux: "npm:8.1.3"
@@ -8316,7 +8317,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-addon-api@npm:^3.1.0":
+"node-addon-api@npm:^3.0.2, node-addon-api@npm:^3.1.0":
   version: 3.2.1
   resolution: "node-addon-api@npm:3.2.1"
   dependencies:
@@ -9411,6 +9412,17 @@ __metadata:
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
   checksum: 10c0/a24cba5da8cec30d70d2484be37622580f64765fb6390a928b17f60cd69e8dbd32a954b3ff9176fa1b86d86ff2ba05252fae55dc4d40d0291c60412b0ad096da
+  languageName: node
+  linkType: hard
+
+"quine-electron-drag-click@npm:1.0.6-d":
+  version: 1.0.6-d
+  resolution: "quine-electron-drag-click@npm:1.0.6-d"
+  dependencies:
+    bindings: "npm:^1.5.0"
+    node-addon-api: "npm:^3.0.2"
+    node-gyp: "npm:latest"
+  checksum: 10c0/3b908f492b8f021ba9980d8993a6667034213317bf2a25a6c7e6346d7b70ad2eb4564c59ee81c16ace1552fbbd2b91083fe37f94a7d0b508a23071e0fd72a152
   languageName: node
   linkType: hard
 
