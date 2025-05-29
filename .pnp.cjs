@@ -75,6 +75,8 @@ const RAW_RUNTIME_STATE =
           ["chalk", "npm:5.3.0"],\
           ["clsx", "npm:2.1.1"],\
           ["color", "npm:4.2.3"],\
+          ["color-convert", "npm:2.0.1"],\
+          ["color-string", "npm:1.9.0"],\
           ["columnify", "npm:1.6.0"],\
           ["concurrently", "npm:9.1.0"],\
           ["copy-webpack-plugin", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:12.0.2"],\
@@ -109,6 +111,7 @@ const RAW_RUNTIME_STATE =
           ["ms", "npm:2.1.3"],\
           ["node-addon-api", "npm:8.2.2"],\
           ["node-gyp", "npm:10.3.1"],\
+          ["normalize-url", "npm:6.0.1"],\
           ["null-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:4.0.1"],\
           ["open", "npm:8.4.2"],\
           ["ora", "npm:8.1.1"],\
@@ -4975,7 +4978,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["color", [\
       ["npm:4.2.3", {\
-        "packageLocation": "./.yarn/cache/color-npm-4.2.3-4a23227581-7fbe7cfb81.zip/node_modules/color/",\
+        "packageLocation": "./.yarn/unplugged/color-npm-4.2.3-4a23227581/node_modules/color/",\
         "packageDependencies": [\
           ["color", "npm:4.2.3"],\
           ["color-convert", "npm:2.0.1"],\
@@ -5019,6 +5022,15 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["color-string", [\
+      ["npm:1.9.0", {\
+        "packageLocation": "./.yarn/cache/color-string-npm-1.9.0-75382c0441-db3442bcc6.zip/node_modules/color-string/",\
+        "packageDependencies": [\
+          ["color-name", "npm:1.1.4"],\
+          ["color-string", "npm:1.9.0"],\
+          ["simple-swizzle", "npm:0.2.2"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:1.9.1", {\
         "packageLocation": "./.yarn/cache/color-string-npm-1.9.1-dc020e56be-b0bfd74c03.zip/node_modules/color-string/",\
         "packageDependencies": [\
@@ -8066,6 +8078,8 @@ const RAW_RUNTIME_STATE =
           ["chalk", "npm:5.3.0"],\
           ["clsx", "npm:2.1.1"],\
           ["color", "npm:4.2.3"],\
+          ["color-convert", "npm:2.0.1"],\
+          ["color-string", "npm:1.9.0"],\
           ["columnify", "npm:1.6.0"],\
           ["concurrently", "npm:9.1.0"],\
           ["copy-webpack-plugin", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:12.0.2"],\
@@ -8100,6 +8114,7 @@ const RAW_RUNTIME_STATE =
           ["ms", "npm:2.1.3"],\
           ["node-addon-api", "npm:8.2.2"],\
           ["node-gyp", "npm:10.3.1"],\
+          ["normalize-url", "npm:6.0.1"],\
           ["null-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:4.0.1"],\
           ["open", "npm:8.4.2"],\
           ["ora", "npm:8.1.1"],\
@@ -10361,6 +10376,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["normalize-url", [\
+      ["npm:6.0.1", {\
+        "packageLocation": "./.yarn/cache/normalize-url-npm-6.0.1-1df8202fbc-f4d46c6694.zip/node_modules/normalize-url/",\
+        "packageDependencies": [\
+          ["normalize-url", "npm:6.0.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:6.1.0", {\
         "packageLocation": "./.yarn/cache/normalize-url-npm-6.1.0-b95bc12ece-95d948f9bd.zip/node_modules/normalize-url/",\
         "packageDependencies": [\

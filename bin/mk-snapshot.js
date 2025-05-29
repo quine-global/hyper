@@ -36,7 +36,8 @@ async function main() {
   await mkdirp(outputBlobPath);
 
   if (process.platform !== 'darwin') {
-    const mksnapshotBinPath = `${baseDirPath}/node_modules/electron-mksnapshot/bin`;
+    // TODO non-darwin
+    const mksnapshotBinPath = path.dirname(require.resolve('electron-mksnapshot/bin/mksnapshot'));
     const matchingDirs = crossArchDirs.map((dir) => `${mksnapshotBinPath}/${dir}`).filter((dir) => fs.existsSync(dir));
     for (const dir of matchingDirs) {
       if (fs.existsSync(`${mksnapshotBinPath}/gen/v8/embedded.S`)) {
@@ -50,7 +51,7 @@ async function main() {
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
   const res = childProcess.execFileSync(
-    path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.exe' : '')),
+    require.resolve(`electron-mksnapshot/bin/mksnapshot${process.platform === 'win32' ? '.exe' : ''}`),
     [
       '--startup-src=' + snapshotScriptPath,
       '--startup-blob=' + startupBlobPath,
