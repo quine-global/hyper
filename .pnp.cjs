@@ -55,6 +55,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["@types/seamless-immutable", "npm:7.1.19"],\
+          ["@types/shell-escape", "npm:0.2.3"],\
           ["@types/styled-jsx", "npm:2.2.9"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.0.0"],\
@@ -133,6 +134,7 @@ const RAW_RUNTIME_STATE =
           ["seamless-immutable", "npm:7.1.4"],\
           ["semver", "npm:7.6.3"],\
           ["shebang-loader", "npm:0.0.1"],\
+          ["shell-escape", "npm:0.2.0"],\
           ["style-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:4.0.0"],\
           ["styled-jsx", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:5.1.6"],\
           ["stylis", "npm:3.5.4"],\
@@ -2523,6 +2525,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@types-semver-npm-7.7.0-0314bdb65a-6b5f65f647.zip/node_modules/@types/semver/",\
         "packageDependencies": [\
           ["@types/semver", "npm:7.7.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@types/shell-escape", [\
+      ["npm:0.2.3", {\
+        "packageLocation": "./.yarn/cache/@types-shell-escape-npm-0.2.3-4d809b6aa3-4f153f4241.zip/node_modules/@types/shell-escape/",\
+        "packageDependencies": [\
+          ["@types/shell-escape", "npm:0.2.3"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8058,6 +8069,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.12"],\
           ["@types/react-dom", "npm:18.3.1"],\
           ["@types/seamless-immutable", "npm:7.1.19"],\
+          ["@types/shell-escape", "npm:0.2.3"],\
           ["@types/styled-jsx", "npm:2.2.9"],\
           ["@types/uuid", "npm:10.0.0"],\
           ["@typescript-eslint/eslint-plugin", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:7.0.0"],\
@@ -8136,6 +8148,7 @@ const RAW_RUNTIME_STATE =
           ["seamless-immutable", "npm:7.1.4"],\
           ["semver", "npm:7.6.3"],\
           ["shebang-loader", "npm:0.0.1"],\
+          ["shell-escape", "npm:0.2.0"],\
           ["style-loader", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:4.0.0"],\
           ["styled-jsx", "virtual:10fae7a043ccd231630f94a65503420470de4ae67433d574f9d2d8a25b0881495f548c527bc570bb5feb199f52f9c2d492ebaf378fb1b066878b8d28b0733f55#npm:5.1.6"],\
           ["stylis", "npm:3.5.4"],\
@@ -12342,6 +12355,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/shebang-regex-npm-3.0.0-899a0cd65e-1dbed0726d.zip/node_modules/shebang-regex/",\
         "packageDependencies": [\
           ["shebang-regex", "npm:3.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["shell-escape", [\
+      ["npm:0.2.0", {\
+        "packageLocation": "./.yarn/cache/shell-escape-npm-0.2.0-38c5261c29-501616713d.zip/node_modules/shell-escape/",\
+        "packageDependencies": [\
+          ["shell-escape", "npm:0.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\

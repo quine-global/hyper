@@ -1812,6 +1812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/shell-escape@npm:^0":
+  version: 0.2.3
+  resolution: "@types/shell-escape@npm:0.2.3"
+  checksum: 10c0/4f153f424138339fff4be34a8316402b8866cbf94cad40667affacc50547f85a702554c99c9c3d25a69434c2911312e86d4ea37616a216a9074d39c24221559c
+  languageName: node
+  linkType: hard
+
 "@types/styled-jsx@npm:2.2.9":
   version: 2.2.9
   resolution: "@types/styled-jsx@npm:2.2.9"
@@ -6402,6 +6409,7 @@ __metadata:
     "@types/react": "npm:18.3.12"
     "@types/react-dom": "npm:18.3.1"
     "@types/seamless-immutable": "npm:7.1.19"
+    "@types/shell-escape": "npm:^0"
     "@types/styled-jsx": "npm:2.2.9"
     "@types/uuid": "npm:10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:7.0.0"
@@ -6479,6 +6487,7 @@ __metadata:
     seamless-immutable: "npm:7.1.4"
     semver: "npm:7.6.3"
     shebang-loader: "npm:0.0.1"
+    shell-escape: "npm:^0.2.0"
     style-loader: "npm:4.0.0"
     styled-jsx: "npm:5.1.6"
     stylis: "npm:3.5.4"
@@ -10223,6 +10232,13 @@ __metadata:
   version: 3.0.0
   resolution: "shebang-regex@npm:3.0.0"
   checksum: 10c0/1dbed0726dd0e1152a92696c76c7f06084eb32a90f0528d11acd764043aacf76994b2fb30aa1291a21bd019d6699164d048286309a278855ee7bec06cf6fb690
+  languageName: node
+  linkType: hard
+
+"shell-escape@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "shell-escape@npm:0.2.0"
+  checksum: 10c0/501616713d13fd053b3858da18b613d83bfcdc8368e62be393dc563cc9fe2550492d403f73211e9a84429f39c8b9617f1e016dabee177b0ebdcb298fa47fc612
   languageName: node
   linkType: hard
 
