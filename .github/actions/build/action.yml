@@ -39,14 +39,10 @@ runs:
           python3 -m pip install $EXTRA_ARGS packaging setuptools
         fi
 
-    - name: Get yarn cache directory path
-      shell: bash
-      id: yarn-cache-dir-path
-      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache@v4
+      if: github.event_name == 'push'
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        path: .yarn/cache
         key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
@@ -151,12 +147,6 @@ runs:
       with:
         name: pr_num
         path: ./pr_num.txt
-
-    - uses: actions/cache/save@v4
-      if: github.event_name == 'push'
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
 
 #    - name: Run E2E Tests (non-Linux)
 #      if: runner.os != 'Linux'
