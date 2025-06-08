@@ -326,7 +326,7 @@ import type {TermGroupConnectedProps} from '../lib/components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
 
 export type SearchBoxProps = {
-  dateFocused: Date | null;
+  dateFocused: ImmutableDate | null;
   caseSensitive: boolean;
   wholeWord: boolean;
   regex: boolean;
