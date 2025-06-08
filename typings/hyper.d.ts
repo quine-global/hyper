@@ -1,6 +1,6 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable import/order */
-import type {Immutable} from 'seamless-immutable';
+import type {Immutable, ImmutableDate} from 'seamless-immutable';
 import type Client from '../lib/utils/rpc';
 
 declare global {
@@ -387,7 +387,7 @@ export type TermProps = {
   rows: number | null;
   screenReaderMode: boolean;
   scrollback: number;
-  search: Date | null;
+  search: ImmutableDate | null;
   searchAddon: SearchAddon | null;
   selectionColor: string;
   term: Terminal | null;

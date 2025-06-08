@@ -86,7 +86,7 @@ class TermGroup_ extends React.PureComponent<TermGroupProps> {
       modifierKeys: this.props.modifierKeys,
       padding: this.props.padding,
       cleared: session.cleared,
-      search: session.search?.asMutable() ?? null,
+      search: session.search,
       cols: session.cols,
       rows: session.rows,
       copyOnSelect: this.props.copyOnSelect,
