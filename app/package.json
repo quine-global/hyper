@@ -21,7 +21,6 @@
     "color": "4.2.3",
     "default-shell": "1.0.1",
     "electron-devtools-installer": "3.2.0",
-    "quine-electron-drag-click": "1.0.6-d",
     "electron-fetch": "1.9.1",
     "electron-is-dev": "2.0.0",
     "electron-store": "8.2.0",
@@ -34,6 +33,7 @@
     "os-locale": "5.0.0",
     "parse-url": "9.2.0",
     "queue": "6.0.2",
+    "quine-electron-drag-click": "1.0.6-d",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "recast": "0.23.11",
@@ -47,5 +47,10 @@
   },
   "devDependencies": {
     "node-gyp": "^10.2.0"
+  },
+  "dependenciesMeta": {
+    "node-pty@1.1.0-beta33": {
+      "unplugged": true
+    }
   }
 }

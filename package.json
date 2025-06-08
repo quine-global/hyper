@@ -1,5 +1,5 @@
 {
-  "name": "hyper",
+  "name": "hyper-root",
   "version": "4.0.0-q-canary.8",
   "repository": "quine-global/hyper",
   "engines": {
@@ -16,7 +16,7 @@
     "test:unit": "cross-env DEBUG=ava:watcher ava",
     "test:unit:watch": "yarn run test:unit -- --watch",
     "test:e2e": "cross-env DEBUG=ava:watcher ava --config ava-e2e.config.js",
-    "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && yarn run install-app-deps-with-retry && yarn run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky && yarn run generate-schema",
+    "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && yarn run install-app-deps-with-retry && yarn run rebuild-node-pty && husky && yarn run generate-schema",
     "install-app-deps-with-retry": "electron-builder install-app-deps || electron-builder install-app-deps || electron-builder install-app-deps",
     "rebuild-node-pty": "electron-rebuild -f -o node-pty -m target",
     "dist": "yarn run build && yarn run electron-builder-with-retry",
@@ -175,5 +175,8 @@
     "electron-mksnapshot@34.5.1": {
       "unplugged": true
     }
-  }
+  },
+  "workspaces": [
+    "app"
+  ]
 }
