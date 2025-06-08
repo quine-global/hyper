@@ -74,7 +74,7 @@ export interface SessionSetCwdAction {
 export interface SessionSearchAction {
   type: typeof SESSION_SEARCH;
   uid: string;
-  value: boolean;
+  value: Date | null;
 }
 
 export type SessionActions =

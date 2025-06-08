@@ -141,7 +141,7 @@ export function openSearch(uid?: string) {
     dispatch({
       type: SESSION_SEARCH,
       uid: targetUid,
-      value: true
+      value: new Date()
     });
   };
 }
@@ -153,7 +153,7 @@ export function closeSearch(uid?: string, keyEvent?: any) {
       dispatch({
         type: SESSION_SEARCH,
         uid: targetUid,
-        value: false
+        value: null
       });
     } else {
       if (keyEvent) {

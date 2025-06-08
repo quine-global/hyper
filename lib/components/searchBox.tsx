@@ -87,6 +87,7 @@ const SearchButton = ({
 const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>((props, ref) => {
   const {
     caseSensitive,
+    dateFocused,
     wholeWord,
     regex,
     results,
@@ -121,6 +122,14 @@ const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>((props, ref) => {
   useEffect(() => {
     inputRef.current?.focus();
   }, [inputRef.current]);
+
+  useEffect(() => {
+    if (!dateFocused) {
+      return;
+    }
+    inputRef.current?.focus();
+    inputRef.current?.select();
+  }, [dateFocused]);
 
   const searchButtonColors: SearchButtonColors = {
     backgroundColor: borderColor,

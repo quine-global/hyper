@@ -118,7 +118,7 @@ export type session = {
   pid: number | null;
   resizeAt?: number;
   rows: number | null;
-  search: boolean;
+  search: Date | null;
   shell: string | null;
   title: string;
   uid: string;
@@ -326,6 +326,7 @@ import type {TermGroupConnectedProps} from '../lib/components/term-group';
 export type TermGroupProps = TermGroupConnectedProps & TermGroupOwnProps;
 
 export type SearchBoxProps = {
+  dateFocused: Date | null;
   caseSensitive: boolean;
   wholeWord: boolean;
   regex: boolean;
@@ -386,7 +387,7 @@ export type TermProps = {
   rows: number | null;
   screenReaderMode: boolean;
   scrollback: number;
-  search: boolean;
+  search: Date | null;
   searchAddon: SearchAddon | null;
   selectionColor: string;
   term: Terminal | null;
