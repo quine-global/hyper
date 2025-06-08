@@ -4,16 +4,35 @@ import Copy from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 
+// @ts-ignore
+import PnpWebpackPlugin from 'pnp-webpack-plugin';
+
+import { createRequire } from 'module';
+
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
+
+const { resolveRequest } = require('pnpapi');
+const pathToReact = resolveRequest('react', __filename);
+console.log('Resolved react via pnpapi:', pathToReact);
+
 
 const config: webpack.Configuration[] = [
   {
     mode: 'none',
     name: 'hyper-app',
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      plugins: [PnpWebpackPlugin],
+      alias: {
+        react: require.resolve('react'),
+        //'react-dom': require.resolve('react-dom'),    
+      }
     },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
+    },
+  
     entry: './app/index.ts',
     output: {
       path: path.join(__dirname, 'target'),
@@ -47,10 +66,6 @@ const config: webpack.Configuration[] = [
             to: './config/[name][ext]'
           },
           {
-            from: './app/yarn.lock',
-            to: 'yarn.lock'
-          },
-          {
             from: './app/keymaps/*.json',
             globOptions: {ignore: ['**/node_modules/**']},
             to: './keymaps/[name][ext]'
@@ -68,12 +83,20 @@ const config: webpack.Configuration[] = [
   {
     mode: 'none',
     name: 'hyper',
+  infrastructureLogging: {
+    level: 'verbose',
+    debug: true
+  },
     resolve: {
+      plugins: [PnpWebpackPlugin],
       alias: {
-        react: path.resolve(__dirname, 'node_modules/react'),
-        'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
+        react: require.resolve('react'),
+        //'react-dom': require.resolve('react-dom')
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts']
+    },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)]
     },
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.tsx',
@@ -86,7 +109,7 @@ const config: webpack.Configuration[] = [
         {
           test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
-          loader: 'babel-loader'
+          loader: require.resolve('babel-loader')
         },
         {
           test: /\.json/,
