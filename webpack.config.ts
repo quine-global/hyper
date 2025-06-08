@@ -4,6 +4,9 @@ import Copy from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import webpack from 'webpack';
 
+// @ts-ignore
+import PnpWebpackPlugin from 'pnp-webpack-plugin';
+
 const nodeEnv = process.env.NODE_ENV || 'development';
 const isProd = nodeEnv === 'production';
 
@@ -12,8 +15,17 @@ const config: webpack.Configuration[] = [
     mode: 'none',
     name: 'hyper-app',
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+      plugins: [PnpWebpackPlugin],
+      alias: {
+        react: require.resolve('react'),
+        'react-dom': require.resolve('react-dom'),    
+      }
     },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)],
+    },
+  
     entry: './app/index.ts',
     output: {
       path: path.join(__dirname, 'target'),
@@ -69,11 +81,15 @@ const config: webpack.Configuration[] = [
     mode: 'none',
     name: 'hyper',
     resolve: {
+      plugins: [PnpWebpackPlugin],
       alias: {
         react: path.resolve(__dirname, 'node_modules/react'),
         'react-dom': path.resolve(__dirname, 'node_modules/react-dom')
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts']
+    },
+    resolveLoader: {
+      plugins: [PnpWebpackPlugin.moduleLoader(module)]
     },
     devtool: isProd ? 'hidden-source-map' : 'cheap-module-source-map',
     entry: './lib/index.tsx',
