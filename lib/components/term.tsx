@@ -518,6 +518,7 @@ export default class Term extends React.PureComponent<
         {this.props.customChildren}
         {this.props.search ? (
           <SearchBox
+            dateFocused={this.props.search}
             next={this.searchNext}
             prev={this.searchPrevious}
             close={this.closeSearchBox}
