@@ -92,6 +92,7 @@ const RAW_RUNTIME_STATE =
           ["cpy-cli", "npm:5.0.0"],\
           ["cross-env", "npm:7.0.3"],\
           ["css-loader", "virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:7.1.2"],\
+          ["dmg-builder", "npm:26.0.13"],\
           ["electron", "npm:34.5.1"],\
           ["electron-builder", "npm:26.0.13"],\
           ["electron-link", "npm:0.6.0"],\
@@ -5835,7 +5836,7 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["dmg-builder", [\
       ["npm:26.0.13", {\
-        "packageLocation": "./.yarn/cache/dmg-builder-npm-26.0.13-a90a6569fb-c18259a83c.zip/node_modules/dmg-builder/",\
+        "packageLocation": "./.yarn/unplugged/dmg-builder-npm-26.0.13-a90a6569fb/node_modules/dmg-builder/",\
         "packageDependencies": [\
           ["app-builder-lib", "virtual:a90a6569fb27d997899716e14afa33599d669a44e7af0085f0ec0815b23def8231982090071ea45e3410fa0ed1af9b3ee5627fd5814495f118f215b3190c676f#npm:26.0.13"],\
           ["builder-util", "npm:26.0.13"],\
@@ -8353,6 +8354,7 @@ const RAW_RUNTIME_STATE =
           ["cpy-cli", "npm:5.0.0"],\
           ["cross-env", "npm:7.0.3"],\
           ["css-loader", "virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:7.1.2"],\
+          ["dmg-builder", "npm:26.0.13"],\
           ["electron", "npm:34.5.1"],\
           ["electron-builder", "npm:26.0.13"],\
           ["electron-link", "npm:0.6.0"],\
