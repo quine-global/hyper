@@ -118,7 +118,7 @@ export type session = {
   pid: number | null;
   resizeAt?: number;
   rows: number | null;
-  search: Date | null;
+  search: ImmutableDate | null;
   shell: string | null;
   title: string;
   uid: string;
