@@ -2255,9 +2255,9 @@ at-least-node@^1.0.0:
   resolved "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-"ava@https://github.com/quine-global/ava#5b287fbd9f8c24a84f083626f72b6f177002b2a6":
+"ava@https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe":
   version "6.2.0"
-  resolved "https://github.com/quine-global/ava#5b287fbd9f8c24a84f083626f72b6f177002b2a6"
+  resolved "https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe"
   dependencies:
     "@vercel/nft" "^0.27.5"
     acorn "^8.13.0"
@@ -8372,6 +8372,11 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
+
+use-device-pixel-ratio@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/use-device-pixel-ratio/-/use-device-pixel-ratio-1.1.2.tgz#e936b99d4037ff1028ac1ac2b5b2ef02ac55f91d"
+  integrity sha512-nFxV0HwLdRUt20kvIgqHYZe6PK/v4mU1X8/eLsT1ti5ck0l2ob0HDRziaJPx+YWzBo6dMm4cTac3mcyk68Gh+A==
 
 use-sync-external-store@^1.0.0:
   version "1.5.0"
