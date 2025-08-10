@@ -58,7 +58,15 @@ const config: webpack.Configuration[] = [
           {
             from: './app/*.json',
             globOptions: {ignore: ['**/node_modules/**']},
-            to: '[name][ext]'
+            to: '[name][ext]',
+            transform(content, absoluteFrom) {
+              if (absoluteFrom.endsWith('package.json')) {
+                const pkg = JSON.parse(content.toString());
+                pkg.name = 'hyper';
+                return JSON.stringify(pkg, null, 2);
+              }
+              return content;
+            }
           },
           {
             from: './app/config/*.json',

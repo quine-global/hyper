@@ -6562,6 +6562,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hyper-app@workspace:app":
+  version: 0.0.0-use.local
+  resolution: "hyper-app@workspace:app"
+  dependencies:
+    "@babel/parser": "npm:7.27.0"
+    "@electron/remote": "npm:2.1.2"
+    ast-types: "npm:^0.16.1"
+    async-retry: "npm:1.3.3"
+    chokidar: "npm:^3.6.0"
+    color: "npm:4.2.3"
+    default-shell: "npm:1.0.1"
+    electron-devtools-installer: "npm:3.2.0"
+    electron-fetch: "npm:1.9.1"
+    electron-is-dev: "npm:2.0.0"
+    electron-store: "npm:8.2.0"
+    fs-extra: "npm:11.3.0"
+    git-describe: "npm:4.1.1"
+    lodash: "npm:4.17.21"
+    ms: "npm:2.1.3"
+    native-process-working-directory: "npm:^1.0.2"
+    native-reg: "npm:1.1.1"
+    node-gyp: "npm:^10.2.0"
+    node-pty: "npm:1.1.0-beta33"
+    os-locale: "npm:5.0.0"
+    parse-url: "npm:9.2.0"
+    queue: "npm:6.0.2"
+    quine-electron-drag-click: "npm:1.0.6-d"
+    react: "npm:18.3.1"
+    react-dom: "npm:18.3.1"
+    recast: "npm:0.23.11"
+    semver: "npm:7.7.1"
+    shell-env: "npm:3.0.1"
+    sudo-prompt: "npm:^9.2.1"
+    uuid: "npm:10.0.0"
+  dependenciesMeta:
+    native-reg:
+      optional: true
+    node-pty@1.1.0-beta33:
+      unplugged: true
+  languageName: unknown
+  linkType: soft
+
 "hyper-root@workspace:.":
   version: 0.0.0-use.local
   resolution: "hyper-root@workspace:."
@@ -6705,9 +6747,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"hyper@workspace:app":
+"hyper@workspace:target":
   version: 0.0.0-use.local
-  resolution: "hyper@workspace:app"
+  resolution: "hyper@workspace:target"
   dependencies:
     "@babel/parser": "npm:7.27.0"
     "@electron/remote": "npm:2.1.2"

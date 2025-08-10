@@ -195,6 +195,7 @@
     }
   },
   "workspaces": [
-    "app"
+    "app",
+    "target"
   ]
 }

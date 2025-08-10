@@ -15,15 +15,20 @@ const RAW_RUNTIME_STATE =
       "reference": "workspace:."\
     },\
     {\
-      "name": "hyper",\
+      "name": "hyper-app",\
       "reference": "workspace:app"\
+    },\
+    {\
+      "name": "hyper",\
+      "reference": "workspace:target"\
     }\
   ],\
   "enableTopLevelFallback": true,\
   "ignorePatternData": "(^(?:\\\\.yarn\\\\/sdks(?:\\\\/(?!\\\\.{1,2}(?:\\\\/|$))(?:(?:(?!(?:^|\\\\/)\\\\.{1,2}(?:\\\\/|$)).)*?)|$))$)",\
   "pnpZipBackend": "libzip",\
   "fallbackExclusionList": [\
-    ["hyper", ["workspace:app"]],\
+    ["hyper", ["workspace:target"]],\
+    ["hyper-app", ["workspace:app"]],\
     ["hyper-root", ["workspace:."]]\
   ],\
   "fallbackPool": [\
@@ -1366,12 +1371,12 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:2.1.2", {\
-        "packageLocation": "./.yarn/__virtual__/@electron-remote-virtual-e0aaa60f3a/0/cache/@electron-remote-npm-2.1.2-8749126234-a40fa7d8fa.zip/node_modules/@electron/remote/",\
+      ["virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:2.1.2", {\
+        "packageLocation": "./.yarn/__virtual__/@electron-remote-virtual-f16cf6206b/0/cache/@electron-remote-npm-2.1.2-8749126234-a40fa7d8fa.zip/node_modules/@electron/remote/",\
         "packageDependencies": [\
-          ["@electron/remote", "virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:2.1.2"],\
+          ["@electron/remote", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:2.1.2"],\
           ["@types/electron", null],\
-          ["electron", "npm:34.5.1"]\
+          ["electron", null]\
         ],\
         "packagePeers": [\
           "@types/electron",\
@@ -1379,12 +1384,12 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
-      ["virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:2.1.2", {\
-        "packageLocation": "./.yarn/__virtual__/@electron-remote-virtual-50a06f23d1/0/cache/@electron-remote-npm-2.1.2-8749126234-a40fa7d8fa.zip/node_modules/@electron/remote/",\
+      ["virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:2.1.2", {\
+        "packageLocation": "./.yarn/__virtual__/@electron-remote-virtual-e0aaa60f3a/0/cache/@electron-remote-npm-2.1.2-8749126234-a40fa7d8fa.zip/node_modules/@electron/remote/",\
         "packageDependencies": [\
-          ["@electron/remote", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:2.1.2"],\
+          ["@electron/remote", "virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:2.1.2"],\
           ["@types/electron", null],\
-          ["electron", null]\
+          ["electron", "npm:34.5.1"]\
         ],\
         "packagePeers": [\
           "@types/electron",\
@@ -8253,11 +8258,11 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["hyper", [\
-      ["workspace:app", {\
-        "packageLocation": "./app/",\
+      ["workspace:target", {\
+        "packageLocation": "./target/",\
         "packageDependencies": [\
           ["@babel/parser", "npm:7.27.0"],\
-          ["@electron/remote", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:2.1.2"],\
+          ["@electron/remote", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:2.1.2"],\
           ["ast-types", "npm:0.16.1"],\
           ["async-retry", "npm:1.3.3"],\
           ["chokidar", "npm:3.6.0"],\
@@ -8269,7 +8274,7 @@ const RAW_RUNTIME_STATE =
           ["electron-store", "npm:8.2.0"],\
           ["fs-extra", "npm:11.3.0"],\
           ["git-describe", "npm:4.1.1"],\
-          ["hyper", "workspace:app"],\
+          ["hyper", "workspace:target"],\
           ["lodash", "npm:4.17.21"],\
           ["ms", "npm:2.1.3"],\
           ["native-process-working-directory", "npm:1.0.2"],\
@@ -8280,8 +8285,47 @@ const RAW_RUNTIME_STATE =
           ["parse-url", "npm:9.2.0"],\
           ["queue", "npm:6.0.2"],\
           ["quine-electron-drag-click", "npm:1.0.6-d"],\
-          ["react", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1"],\
-          ["react-dom", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1"],\
+          ["react", "virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1"],\
+          ["react-dom", "virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1"],\
+          ["recast", "npm:0.23.11"],\
+          ["semver", "npm:7.7.1"],\
+          ["shell-env", "npm:3.0.1"],\
+          ["sudo-prompt", "npm:9.2.1"],\
+          ["uuid", "npm:10.0.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }]\
+    ]],\
+    ["hyper-app", [\
+      ["workspace:app", {\
+        "packageLocation": "./app/",\
+        "packageDependencies": [\
+          ["@babel/parser", "npm:7.27.0"],\
+          ["@electron/remote", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:2.1.2"],\
+          ["ast-types", "npm:0.16.1"],\
+          ["async-retry", "npm:1.3.3"],\
+          ["chokidar", "npm:3.6.0"],\
+          ["color", "npm:4.2.3"],\
+          ["default-shell", "npm:1.0.1"],\
+          ["electron-devtools-installer", "npm:3.2.0"],\
+          ["electron-fetch", "npm:1.9.1"],\
+          ["electron-is-dev", "npm:2.0.0"],\
+          ["electron-store", "npm:8.2.0"],\
+          ["fs-extra", "npm:11.3.0"],\
+          ["git-describe", "npm:4.1.1"],\
+          ["hyper-app", "workspace:app"],\
+          ["lodash", "npm:4.17.21"],\
+          ["ms", "npm:2.1.3"],\
+          ["native-process-working-directory", "npm:1.0.2"],\
+          ["native-reg", "npm:1.1.1"],\
+          ["node-gyp", "npm:10.3.1"],\
+          ["node-pty", "npm:1.1.0-beta33"],\
+          ["os-locale", "npm:5.0.0"],\
+          ["parse-url", "npm:9.2.0"],\
+          ["queue", "npm:6.0.2"],\
+          ["quine-electron-drag-click", "npm:1.0.6-d"],\
+          ["react", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1"],\
+          ["react-dom", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1"],\
           ["recast", "npm:0.23.11"],\
           ["semver", "npm:7.7.1"],\
           ["shell-env", "npm:3.0.1"],\
@@ -12045,11 +12089,24 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["react", [\
       ["npm:18.3.1", {\
-        "packageLocation": "./.yarn/unplugged/react-virtual-d6087db8a8/node_modules/react/",\
+        "packageLocation": "./.yarn/unplugged/react-virtual-e4bba1f255/node_modules/react/",\
         "packageDependencies": [\
           ["react", "npm:18.3.1"]\
         ],\
         "linkType": "SOFT"\
+      }],\
+      ["virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1", {\
+        "packageLocation": "./.yarn/unplugged/react-virtual-ff351c3e0d/node_modules/react/",\
+        "packageDependencies": [\
+          ["@types/react", null],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["react", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
       }],\
       ["virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:18.3.1", {\
         "packageLocation": "./.yarn/unplugged/react-virtual-dc92023538/node_modules/react/",\
@@ -12064,12 +12121,12 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
-      ["virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1", {\
-        "packageLocation": "./.yarn/unplugged/react-virtual-d6087db8a8/node_modules/react/",\
+      ["virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1", {\
+        "packageLocation": "./.yarn/unplugged/react-virtual-e4bba1f255/node_modules/react/",\
         "packageDependencies": [\
           ["@types/react", null],\
           ["loose-envify", "npm:1.4.0"],\
-          ["react", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1"]\
+          ["react", "virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1"]\
         ],\
         "packagePeers": [\
           "@types/react",\
@@ -12080,11 +12137,29 @@ const RAW_RUNTIME_STATE =
     ]],\
     ["react-dom", [\
       ["npm:18.3.1", {\
-        "packageLocation": "./.yarn/unplugged/react-dom-virtual-aae8050aa2/node_modules/react-dom/",\
+        "packageLocation": "./.yarn/unplugged/react-dom-virtual-b8f2faf23e/node_modules/react-dom/",\
         "packageDependencies": [\
           ["react-dom", "npm:18.3.1"]\
         ],\
         "linkType": "SOFT"\
+      }],\
+      ["virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1", {\
+        "packageLocation": "./.yarn/unplugged/react-dom-virtual-73f8f5dfc9/node_modules/react-dom/",\
+        "packageDependencies": [\
+          ["@types/react", null],\
+          ["@types/react-dom", null],\
+          ["loose-envify", "npm:1.4.0"],\
+          ["react", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1"],\
+          ["react-dom", "virtual:10d9fd6e2ffa4671ab9e7d872e6e3e9e7a4bf4ef12ed8779d10a86bf5f6980c16bddda442cd85f499f98603a91c0fbe8de1091b3b385ba51cf24883c0a40b1ba#npm:18.3.1"],\
+          ["scheduler", "npm:0.23.2"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
       }],\
       ["virtual:3dc724bba5ebc37ed8ce0429dc08129efe9ec30eb482a2360dded56066340d4c684515386ff8a4f323dfae7f5d73e7da39897f097af7564c52a869ef51333462#npm:18.3.1", {\
         "packageLocation": "./.yarn/unplugged/react-dom-virtual-d74c7fc53b/node_modules/react-dom/",\
@@ -12104,14 +12179,14 @@ const RAW_RUNTIME_STATE =
         ],\
         "linkType": "HARD"\
       }],\
-      ["virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1", {\
-        "packageLocation": "./.yarn/unplugged/react-dom-virtual-aae8050aa2/node_modules/react-dom/",\
+      ["virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1", {\
+        "packageLocation": "./.yarn/unplugged/react-dom-virtual-b8f2faf23e/node_modules/react-dom/",\
         "packageDependencies": [\
           ["@types/react", null],\
           ["@types/react-dom", null],\
           ["loose-envify", "npm:1.4.0"],\
-          ["react", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1"],\
-          ["react-dom", "virtual:fa4ceca87a5246fc0e2a8fea312d9d5e7d33a6363256d3f7a7379de209cfdb65b1809e3a8051dcd2fa8415e9da3e80f225a0315d5f4e9fadbe2134c0744e3a23#npm:18.3.1"],\
+          ["react", "virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1"],\
+          ["react-dom", "virtual:608d5f3e5ba3bb01295b9f6dc87c867afaecff20aef22f9d86445e0502eedf1cd293d7fd18e69ea73390a3cf2627fc4685bbd942668495a0973df10e46b5a906#npm:18.3.1"],\
           ["scheduler", "npm:0.23.2"]\
         ],\
         "packagePeers": [\
