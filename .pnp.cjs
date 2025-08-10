@@ -43,7 +43,8 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["hyper-root", "workspace:."]\
+          ["hyper-root", "workspace:."],\
+          ["node-gyp", "npm:11.3.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -3517,6 +3518,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/acorn-npm-8.14.1-aee76ee752-dbd36c1ed1.zip/node_modules/acorn/",\
         "packageDependencies": [\
           ["acorn", "npm:8.14.1"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:8.15.0", {\
+        "packageLocation": "./.yarn/cache/acorn-npm-8.15.0-0764cf600e-dec73ff59b.zip/node_modules/acorn/",\
+        "packageDependencies": [\
+          ["acorn", "npm:8.15.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -8271,7 +8279,7 @@ const RAW_RUNTIME_STATE =
           ["@xterm/addon-web-links", "virtual:011ad7fdc86d2a4add6eb23a132024e85f1a94f30b27c19d0669bd60e95c3fe59662ef7648d28dda855a7fdda248d7be587881a0dde81de0df1e52937738ff66#npm:0.11.0"],\
           ["@xterm/addon-webgl", "virtual:011ad7fdc86d2a4add6eb23a132024e85f1a94f30b27c19d0669bd60e95c3fe59662ef7648d28dda855a7fdda248d7be587881a0dde81de0df1e52937738ff66#npm:0.18.0"],\
           ["@xterm/xterm", "npm:5.5.0"],\
-          ["acorn", "npm:8.14.1"],\
+          ["acorn", "npm:8.15.0"],\
           ["args", "npm:5.0.3"],\
           ["ava", "virtual:011ad7fdc86d2a4add6eb23a132024e85f1a94f30b27c19d0669bd60e95c3fe59662ef7648d28dda855a7fdda248d7be587881a0dde81de0df1e52937738ff66#https://github.com/quine-global/ava.git#commit=38aebe3badef8d54f68e8315e9849cfa83d531fe"],\
           ["babel-loader", "virtual:011ad7fdc86d2a4add6eb23a132024e85f1a94f30b27c19d0669bd60e95c3fe59662ef7648d28dda855a7fdda248d7be587881a0dde81de0df1e52937738ff66#npm:9.2.1"],\
@@ -8359,7 +8367,8 @@ const RAW_RUNTIME_STATE =
       ["workspace:.", {\
         "packageLocation": "./",\
         "packageDependencies": [\
-          ["hyper-root", "workspace:."]\
+          ["hyper-root", "workspace:."],\
+          ["node-gyp", "npm:11.3.0"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -10639,6 +10648,23 @@ const RAW_RUNTIME_STATE =
           ["graceful-fs", "npm:4.2.11"],\
           ["make-fetch-happen", "npm:14.0.3"],\
           ["node-gyp", "npm:11.2.0"],\
+          ["nopt", "npm:8.1.0"],\
+          ["proc-log", "npm:5.0.0"],\
+          ["semver", "npm:7.7.2"],\
+          ["tar", "npm:7.4.3"],\
+          ["tinyglobby", "npm:0.2.14"],\
+          ["which", "npm:5.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:11.3.0", {\
+        "packageLocation": "./.yarn/unplugged/node-gyp-npm-11.3.0-b555487fd9/node_modules/node-gyp/",\
+        "packageDependencies": [\
+          ["env-paths", "npm:2.2.1"],\
+          ["exponential-backoff", "npm:3.1.2"],\
+          ["graceful-fs", "npm:4.2.11"],\
+          ["make-fetch-happen", "npm:14.0.3"],\
+          ["node-gyp", "npm:11.3.0"],\
           ["nopt", "npm:8.1.0"],\
           ["proc-log", "npm:5.0.0"],\
           ["semver", "npm:7.7.2"],\

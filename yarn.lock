@@ -2587,12 +2587,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.13.0, acorn@npm:^8.14.0, acorn@npm:^8.14.1, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
+"acorn@npm:^8.0.4, acorn@npm:^8.11.0, acorn@npm:^8.13.0, acorn@npm:^8.14.0, acorn@npm:^8.4.1, acorn@npm:^8.5.0, acorn@npm:^8.6.0, acorn@npm:^8.8.2, acorn@npm:^8.9.0":
   version: 8.14.1
   resolution: "acorn@npm:8.14.1"
   bin:
     acorn: bin/acorn
   checksum: 10c0/dbd36c1ed1d2fa3550140000371fcf721578095b18777b85a79df231ca093b08edc6858d75d6e48c73e431c174dcf9214edbd7e6fa5911b93bd8abfa54e47123
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.15.0":
+  version: 8.15.0
+  resolution: "acorn@npm:8.15.0"
+  bin:
+    acorn: bin/acorn
+  checksum: 10c0/dec73ff59b7d6628a01eebaece7f2bdb8bb62b9b5926dcad0f8931f2b8b79c2be21f6c68ac095592adb5adb15831a3635d9343e6a91d028bbe85d564875ec3ec
   languageName: node
   linkType: hard
 
@@ -6688,7 +6697,7 @@ __metadata:
     "@xterm/addon-web-links": "npm:0.11.0"
     "@xterm/addon-webgl": "npm:0.18.0"
     "@xterm/xterm": "npm:5.5.0"
-    acorn: "npm:^8.14.1"
+    acorn: "npm:^8.15.0"
     args: "npm:5.0.3"
     ava: "https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe"
     babel-loader: "npm:9.2.1"
@@ -6770,9 +6779,13 @@ __metadata:
   dependenciesMeta:
     "@react-icons/all-files@4.1.0":
       unplugged: true
+    acorn@8.15.0:
+      unplugged: true
     color@4.2.3:
       unplugged: true
     dmg-builder@26.0.13:
+      unplugged: true
+    electron-link@0.6.0:
       unplugged: true
     electron-mksnapshot@34.5.1:
       unplugged: true
@@ -6780,12 +6793,16 @@ __metadata:
       unplugged: true
     react@18.3.1:
       unplugged: true
+    recast@0.20.5:
+      unplugged: true
   languageName: unknown
   linkType: soft
 
 "hyper-root@workspace:.":
   version: 0.0.0-use.local
   resolution: "hyper-root@workspace:."
+  dependencies:
+    node-gyp: "npm:^11.3.0"
   languageName: unknown
   linkType: soft
 
@@ -8861,6 +8878,26 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 10c0/87c3b50e1f6f5256b5d2879a8c064eefa53ed444bad2a20870be43bc189db7cbffe22c30af056046c6d904181d73881b1726fd391d2f6f79f89b991019f195ea
+  languageName: node
+  linkType: hard
+
+"node-gyp@npm:^11.3.0":
+  version: 11.3.0
+  resolution: "node-gyp@npm:11.3.0"
+  dependencies:
+    env-paths: "npm:^2.2.0"
+    exponential-backoff: "npm:^3.1.1"
+    graceful-fs: "npm:^4.2.6"
+    make-fetch-happen: "npm:^14.0.3"
+    nopt: "npm:^8.0.0"
+    proc-log: "npm:^5.0.0"
+    semver: "npm:^7.3.5"
+    tar: "npm:^7.4.3"
+    tinyglobby: "npm:^0.2.12"
+    which: "npm:^5.0.0"
+  bin:
+    node-gyp: bin/node-gyp.js
+  checksum: 10c0/5f4ad5a729386f7b50096efd4934b06c071dbfbc7d7d541a66d6959a7dccd62f53ff3dc95fffb60bf99d8da1270e23769f82246fcaa6c5645a70c967ae9a3398
   languageName: node
   linkType: hard
 

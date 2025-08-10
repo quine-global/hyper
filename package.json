@@ -10,5 +10,8 @@
     "app",
     "target",
     "builder"
-  ]
+  ],
+  "devDependencies": {
+    "node-gyp": "^11.3.0"
+  }
 }
