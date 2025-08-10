@@ -1713,12 +1713,48 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:22.15.30":
-  version: 22.15.30
-  resolution: "@types/node@npm:22.15.30"
+"@types/node@npm:*":
+  version: 24.2.1
+  resolution: "@types/node@npm:24.2.1"
+  dependencies:
+    undici-types: "npm:~7.10.0"
+  checksum: 10c0/439a3c7edf88a298e0c92e46f670234070b892589c3b06e82cc86c47a7e1cf220f4a4b4736ec6ac7e4b9e1c40d7b6d443a1e22f99dd17f13f9dd15de3b32011b
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:22.9.3":
+  version: 22.9.3
+  resolution: "@types/node@npm:22.9.3"
+  dependencies:
+    undici-types: "npm:~6.19.8"
+  checksum: 10c0/954ec72bf29436ea62425a9563914a9c1e93f97b18194acd51d74d13998a701977547ed2985ed3a0e97211b785436d28377116e5f613bfcf3182d9bd81d784dc
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^18.11.9":
+  version: 18.19.122
+  resolution: "@types/node@npm:18.19.122"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10c0/1fa545ff27866bd4e39c96e28c622cc354fe4fff0594a39e138eca96e706a30eba6f5cd7a49f13d9223dd93bb189ae9125fdab6604a8c4badade337b2d00d900
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.9.0":
+  version: 20.19.10
+  resolution: "@types/node@npm:20.19.10"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/ca330ac0e7fd502686d6df115fcc606aba46fd334220f749bbba2f639accdadcb23f7900603ceccdc8240be736739cad5c0b87c0fa92c9255a4dff245f07d664
+  checksum: 10c0/dac81561f6d7cbd37c876c4023846095a71d8b62df52c8b6b32de67f6ca6aaf2ffd0c1e02ede6d2c8af41e934ce2005f67b8b6348b79dd355c05f3192aa7b59a
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.5.5":
+  version: 22.17.1
+  resolution: "@types/node@npm:22.17.1"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10c0/b04063bdabfc4146af05d14d4fd23ee68615194473d0ef971ddef549b80b791f52c8f93abdd8d1092ee0257f3dea862fa233519244fd051e79233cdce614de14
   languageName: node
   linkType: hard
 
@@ -1783,7 +1819,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/retry@npm:0.12.5":
+"@types/retry@npm:*":
   version: 0.12.5
   resolution: "@types/retry@npm:0.12.5"
   checksum: 10c0/eaaca483cc62f2f02c0b8486847ee70986ca7f97afd7363037247dbe3e98df8bd56a5b50d58b1e96768a5a1be0307010d86e9991bd458d72e8df88be471bd720
@@ -6604,9 +6640,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"hyper-root@workspace:.":
+"hyper-builder@workspace:builder, hyper-lib@workspace:builder":
   version: 0.0.0-use.local
-  resolution: "hyper-root@workspace:."
+  resolution: "hyper-builder@workspace:builder"
   dependencies:
     "@ava/babel": "npm:2.0.0"
     "@ava/typescript": "npm:^4.1.0"
@@ -6747,45 +6783,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"hyper-root@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "hyper-root@workspace:."
+  languageName: unknown
+  linkType: soft
+
 "hyper@workspace:target":
   version: 0.0.0-use.local
   resolution: "hyper@workspace:target"
   dependencies:
-    "@babel/parser": "npm:7.27.0"
-    "@electron/remote": "npm:2.1.2"
-    ast-types: "npm:^0.16.1"
-    async-retry: "npm:1.3.3"
-    chokidar: "npm:^3.6.0"
-    color: "npm:4.2.3"
-    default-shell: "npm:1.0.1"
-    electron-devtools-installer: "npm:3.2.0"
-    electron-fetch: "npm:1.9.1"
-    electron-is-dev: "npm:2.0.0"
-    electron-store: "npm:8.2.0"
-    fs-extra: "npm:11.3.0"
-    git-describe: "npm:4.1.1"
-    lodash: "npm:4.17.21"
-    ms: "npm:2.1.3"
-    native-process-working-directory: "npm:^1.0.2"
-    native-reg: "npm:1.1.1"
-    node-gyp: "npm:^10.2.0"
-    node-pty: "npm:1.1.0-beta33"
-    os-locale: "npm:5.0.0"
-    parse-url: "npm:9.2.0"
-    queue: "npm:6.0.2"
-    quine-electron-drag-click: "npm:1.0.6-d"
-    react: "npm:18.3.1"
-    react-dom: "npm:18.3.1"
-    recast: "npm:0.23.11"
-    semver: "npm:7.7.1"
-    shell-env: "npm:3.0.1"
-    sudo-prompt: "npm:^9.2.1"
-    uuid: "npm:10.0.0"
-  dependenciesMeta:
-    native-reg:
-      optional: true
-    node-pty@1.1.0-beta33:
-      unplugged: true
+    hyper-lib: "workspace:builder"
   languageName: unknown
   linkType: soft
 
@@ -8737,7 +8745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-abi@npm:^3.67.0":
+"node-abi@npm:^3.0.0, node-abi@npm:^3.45.0":
   version: 3.75.0
   resolution: "node-abi@npm:3.75.0"
   dependencies:
@@ -12025,10 +12033,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~5.26.4":
+  version: 5.26.5
+  resolution: "undici-types@npm:5.26.5"
+  checksum: 10c0/bb673d7876c2d411b6eb6c560e0c571eef4a01c1c19925175d16e3a30c4c428181fb8d7ae802a261f283e4166a0ac435e2f505743aa9e45d893f9a3df017b501
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.8":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
+  languageName: node
+  linkType: hard
+
 "undici-types@npm:~6.21.0":
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~7.10.0":
+  version: 7.10.0
+  resolution: "undici-types@npm:7.10.0"
+  checksum: 10c0/8b00ce50e235fe3cc601307f148b5e8fb427092ee3b23e8118ec0a5d7f68eca8cee468c8fc9f15cbb2cf2a3797945ebceb1cbd9732306a1d00e0a9b6afa0f635
   languageName: node
   linkType: hard
 
