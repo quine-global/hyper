@@ -1,3 +1,4 @@
+
 const path = require('path');
 const fs = require('fs');
 const fsPromises = require('fs/promises');
@@ -10,23 +11,29 @@ function copySnapshot(pathToElectron, archToCopy) {
   const pathToBlobV8 = path.resolve(__dirname, '..', 'cache', archToCopy, v8ContextFileName);
 
   console.log('Copying v8 snapshots from', pathToBlob, 'to', pathToElectron);
+  fs.mkdirSync(pathToElectron, { recursive: true });
   fs.copyFileSync(pathToBlob, path.join(pathToElectron, snapshotFileName));
   fs.copyFileSync(pathToBlobV8, path.join(pathToElectron, v8ContextFileName));
 }
 
 function getPathToElectron() {
+  const electronPath = require.resolve('electron');
+
   switch (process.platform) {
     case 'darwin':
       return path.resolve(
-        __dirname,
+        electronPath,
         '..',
-        'node_modules/electron/dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources'
+        '..',
+        '..',
+        'dist/Electron.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Resources'
       );
     case 'win32':
     case 'linux':
-      return path.resolve(__dirname, '..', 'node_modules', 'electron', 'dist');
+      return path.resolve(electronPath, '..', '..', '..', 'dist');
   }
 }
+
 
 function getV8ContextFileName(archToCopy) {
   return `snapshot_blob.bin`;
