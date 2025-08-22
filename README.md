@@ -3,13 +3,15 @@
 </p>
 
 <p>
-  <a aria-label="Vercel logo" href="https://vercel.com">
-    <img src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=vercel&labelColor=000000&logoWidth=20">
-  </a>
- </p>
+  <a aria-label="Vercel logo" href="https://vercel.com"><img 
+    src="https://img.shields.io/badge/MADE%20BY%20Vercel-000000.svg?style=for-the-badge&logo=vercel&labelColor=000000&logoWidth=20"
+  /></a> <a aria-label="Quine logo" href="https://quineglobal.com"><img
+     width="143" height="28" alt="forked-by-quine" src="https://github.com/user-attachments/assets/57decaa2-7d8c-4d13-ada7-ff6b964346f7"
+  /></a>
+</p>
 
 [![Node CI](https://github.com/quine-global/hyper/actions/workflows/ci.yml/badge.svg?branch=canary)](https://github.com/quine-global/hyper/actions/workflows/ci.yml)
-  
+
 [![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
 
 For more details, head to: https://hyper.is
