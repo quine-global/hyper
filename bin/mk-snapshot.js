@@ -41,8 +41,10 @@ async function main() {
   const outputBlobPath = `${baseDirPath}/cache/${npmConfigArch}`;
   await mkdirp(outputBlobPath);
 
-  const baseDir = require.resolve("electron-mksnapshot");
-  const mksnapshotBinPath = path.resolve(baseDir, "bin", "mksnapshot" + (process.platform === "win32" ? ".exe" : ""));
+  const mksnapshotBinPath = 
+    require.resolve(
+      path.join("electron-mksnapshot", "bin", "mksnapshot" + (process.platform === "win32" ? ".exe" : ""))
+    );
 
   if (process.platform !== 'darwin') {
     // TODO non-darwin
