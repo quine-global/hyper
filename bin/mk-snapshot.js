@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const electronLink = require('electron-link');
 const {mkdirp} = require('fs-extra');
-const pnp = require("pnpapi");
 
 const excludedModules = {};
 
@@ -42,7 +41,7 @@ async function main() {
   const outputBlobPath = `${baseDirPath}/cache/${npmConfigArch}`;
   await mkdirp(outputBlobPath);
 
-  const baseDir = pnp.resolveToUnqualified("electron-mksnapshot", __filename);
+  const baseDir = require.resolve("electron-mksnapshot");
   const mksnapshotBinPath = path.resolve(baseDir, "bin", "mksnapshot" + (process.platform === "win32" ? ".exe" : ""));
 
   if (process.platform !== 'darwin') {
