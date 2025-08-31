@@ -27,7 +27,9 @@ import toElectronBackgroundColor from '../utils/to-electron-background-color';
 
 import contextMenuTemplate from './contextmenu';
 
-electronDragClick();
+if(process.platform === 'darwin') {
+  electronDragClick();
+}
 
 export function newWindow(
   options_: BrowserWindowConstructorOptions,
