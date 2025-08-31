@@ -15,6 +15,12 @@ const archMap = {
 };
 
 async function main() {
+  const npmConfigArch = process.env.npm_config_arch;
+  if (!npmConfigArch) {
+    throw new Error('env var npm_config_arch is not specified')
+  }
+
+
   const baseDirPath = path.resolve(__dirname, '..');
 
   console.log('Creating a linked script..');
@@ -32,11 +38,25 @@ async function main() {
   // Verify if we will be able to use this in `mksnapshot`
   vm.runInNewContext(result.snapshotScript, undefined, {filename: snapshotScriptPath, displayErrors: true});
 
-  const outputBlobPath = `${baseDirPath}/cache/${process.env.npm_config_arch}`;
+  const outputBlobPath = `${baseDirPath}/cache/${npmConfigArch}`;
   await mkdirp(outputBlobPath);
 
+  let mksnapshotBinPath
+  if (process.platform === 'win32') {
+    mksnapshotBinPath = 
+      require.resolve(
+        path.join("electron-mksnapshot", "bin", "mksnapshot.exe")
+      );
+  } else {
+    mksnapshotBinPath = 
+      require.resolve(
+        path.join("electron-mksnapshot", "bin", "mksnapshot")
+      );
+  }
+
+  mksnapshotBinPath = path.dirname(mksnapshotBinPath);
+
   if (process.platform !== 'darwin') {
-    const mksnapshotBinPath = `${baseDirPath}/node_modules/electron-mksnapshot/bin`;
     const matchingDirs = crossArchDirs.map((dir) => `${mksnapshotBinPath}/${dir}`).filter((dir) => fs.existsSync(dir));
     for (const dir of matchingDirs) {
       if (fs.existsSync(`${mksnapshotBinPath}/gen/v8/embedded.S`)) {
@@ -45,12 +65,12 @@ async function main() {
       }
     }
   }
-
+  
   const startupBlobPath = path.join(outputBlobPath, 'snapshot_blob.bin');
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
   const res = childProcess.execFileSync(
-    path.resolve(__dirname, '..', 'node_modules', 'electron-mksnapshot', 'bin', 'mksnapshot' + (process.platform === 'win32' ? '.exe' : '')),
+    require.resolve(`electron-mksnapshot/bin/mksnapshot${process.platform === 'win32' ? '.exe' : ''}`),
     [
       '--startup-src=' + snapshotScriptPath,
       '--startup-blob=' + startupBlobPath,
