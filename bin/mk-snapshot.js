@@ -41,13 +41,22 @@ async function main() {
   const outputBlobPath = `${baseDirPath}/cache/${npmConfigArch}`;
   await mkdirp(outputBlobPath);
 
-  const mksnapshotBinPath = 
-    require.resolve(
-      path.join("electron-mksnapshot", "bin", "mksnapshot" + (process.platform === "win32" ? ".exe" : ""))
-    );
+  let mksnapshotBinPath
+  if (process.platform === 'win32') {
+    mksnapshotBinPath = 
+      require.resolve(
+        path.join("electron-mksnapshot", "bin", "mksnapshot.exe")
+      );
+  } else {
+    mksnapshotBinPath = 
+      require.resolve(
+        path.join("electron-mksnapshot", "bin", "mksnapshot")
+      );
+  }
+
+  mksnapshotBinPath = path.dirname(mksnapshotBinPath);
 
   if (process.platform !== 'darwin') {
-    // TODO non-darwin
     const matchingDirs = crossArchDirs.map((dir) => `${mksnapshotBinPath}/${dir}`).filter((dir) => fs.existsSync(dir));
     for (const dir of matchingDirs) {
       if (fs.existsSync(`${mksnapshotBinPath}/gen/v8/embedded.S`)) {
@@ -56,7 +65,7 @@ async function main() {
       }
     }
   }
-
+  
   const startupBlobPath = path.join(outputBlobPath, 'snapshot_blob.bin');
 
   console.log(`Generating startup blob in "${outputBlobPath}"`);
