@@ -1292,11 +1292,6 @@
   dependencies:
     undici-types "~6.19.2"
 
-"@types/parse-path@^7.0.0":
-  version "7.0.3"
-  resolved "https://registry.npmjs.org/@types/parse-path/-/parse-path-7.0.3.tgz#cec2da2834ab58eb2eb579122d9a1fc13bd7ef36"
-  integrity sha512-LriObC2+KYZD3FzCrgWGv/qufdUy4eXrxcLgQMfYXgPbLIecKIsVBaQgUPmxSSLcjmYbDTQbMgr6qr6l/eb7Bg==
-
 "@types/plist@3.0.5", "@types/plist@^3.0.1":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@types/plist/-/plist-3.0.5.tgz#9a0c49c0f9886c8c8696a7904dd703f6284036e0"
@@ -6568,20 +6563,19 @@ parse-ms@^4.0.0:
   resolved "https://registry.npmjs.org/parse-ms/-/parse-ms-4.0.0.tgz#c0c058edd47c2a590151a718990533fd62803df4"
   integrity sha512-TXfryirbmq34y8QBwgqCVLi+8oA3oWx2eAnSn62ITyEhEYaWRlVZ2DvMM9eZbMs/RfxPu/PK/aBLyGj4IrqMHw==
 
-parse-path@^7.0.0:
+parse-path@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npmjs.org/parse-path/-/parse-path-7.1.0.tgz#41fb513cb122831807a4c7b29c8727947a09d8c6"
   integrity sha512-EuCycjZtfPcjWk7KTksnJ5xPMvWGA/6i4zrLYhRG0hGvC3GPU/jGUj3Cy+ZR0v30duV3e23R95T1lE2+lsndSw==
   dependencies:
     protocols "^2.0.0"
 
-parse-url@9.2.0:
-  version "9.2.0"
-  resolved "https://registry.npmjs.org/parse-url/-/parse-url-9.2.0.tgz#d75da32b3bbade66e4eb0763fb4851d27526b97b"
-  integrity sha512-bCgsFI+GeGWPAvAiUv63ZorMeif3/U0zaXABGJbOWt5OH2KCaPHF6S+0ok4aqM9RuIPGyZdx9tR9l13PsW4AYQ==
+parse-url@10.0.3:
+  version "10.0.3"
+  resolved "https://registry.npmjs.org/parse-url/-/parse-url-10.0.3.tgz#e9598dc46a2f733500f3186b3945bb73d890c79d"
+  integrity sha512-RvldzLvNE0DtOO1loukZsYcHCzHVUnHe7GNyrKIkavp7fNWs5ueX3kUzY/hXS8uRqDWwtaRKDcAmLEVouPIxIw==
   dependencies:
-    "@types/parse-path" "^7.0.0"
-    parse-path "^7.0.0"
+    parse-path "^7.1.0"
 
 path-equal@^1.2.5:
   version "1.2.5"
