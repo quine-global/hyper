@@ -92,7 +92,7 @@
     "@babel/plugin-proposal-optional-chaining": "7.21.0",
     "@babel/preset-react": "7.25.9",
     "@babel/preset-typescript": "7.26.0",
-    "@electron/rebuild": "^3.7.1",
+    "@electron/rebuild": "^4.0.1",
     "@types/args": "5.0.3",
     "@types/async-retry": "1.4.9",
     "@types/color": "3.0.6",
