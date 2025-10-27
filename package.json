@@ -51,7 +51,7 @@
     "ava": "https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe",
     "chalk": "5.3.0",
     "clsx": "2.1.1",
-    "color": "4.2.3",
+    "color": "5.0.2",
     "columnify": "1.6.0",
     "css-loader": "7.1.2",
     "electron-rebuild": "^3.2.9",
