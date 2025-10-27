@@ -115,7 +115,7 @@
     "copy-webpack-plugin": "12.0.2",
     "cpy-cli": "^5.0.0",
     "cross-env": "7.0.3",
-    "electron": "34.5.1",
+    "electron": "38.4.0",
     "electron-builder": "26.0.13",
     "electron-link": "^0.6.0",
     "electron-mksnapshot": "34.5.1",
