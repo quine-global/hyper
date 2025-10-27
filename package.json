@@ -134,7 +134,7 @@
     "husky-init": "^8.0.0",
     "inquirer": "10.1.8",
     "node-addon-api": "8.2.2",
-    "node-gyp": "^10.2.0",
+    "node-gyp": "^11.5.0",
     "null-loader": "4.0.1",
     "parse-url": "9.2.0",
     "playwright": "1.49.0",
