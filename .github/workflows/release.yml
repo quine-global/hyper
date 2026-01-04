@@ -84,11 +84,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
+      - name: Set up QEMU and binfmt
         run: |
+          # Install qemu-user-static
           sudo apt-get update
-          sudo apt-get install -y qemu-user-static binfmt-support
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          sudo apt-get install -y qemu-user-static
+
+          # Download and install binfmt configurations
+          wget https://github.com/qemu/qemu/raw/master/scripts/qemu-binfmt-conf.sh
+          chmod +x qemu-binfmt-conf.sh
+          sudo ./qemu-binfmt-conf.sh --qemu-path /usr/bin --qemu-suffix -static --debian
+
+          # Import the binfmt configurations
+          sudo update-binfmts --import qemu-arm
+          sudo update-binfmts --import qemu-aarch64
+
+          # Verify they exist
+          ls -la /proc/sys/fs/binfmt_misc/qemu-arm* || true
 
       - name: Build ARMv7l
         uses: ./.github/actions/build-linux-arm
@@ -140,7 +152,7 @@ jobs:
 
       - name: List downloaded artifacts
         run: ls -R ./artifacts
-      
+
       - name: Ensure non-empty artifacts
         run: |
           echo "Checking for zero-byte files in artifacts/..."
