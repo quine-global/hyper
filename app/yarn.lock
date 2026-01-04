@@ -353,10 +353,10 @@ eastasianwidth@^0.2.0:
   resolved "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
-electron-devtools-installer@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.npmjs.org/electron-devtools-installer/-/electron-devtools-installer-3.2.0.tgz#acc48d24eb7033fe5af284a19667e73b78d406d0"
-  integrity sha512-t3UczsYugm4OAbqvdImMCImIMVdFzJAHgbwHpkl5jmfu1izVgUcP/mnrPqJIpEeCK1uZGpt+yHgWEN+9EwoYhQ==
+electron-devtools-installer@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.npmjs.org/electron-devtools-installer/-/electron-devtools-installer-3.2.1.tgz#338a0ada7b4232ee42cd88fe5cf305c6be95cfe9"
+  integrity sha512-FaCi+oDCOBTw0gJUsuw5dXW32b2Ekh5jO8lI1NRCQigo3azh2VogsIi0eelMVrP1+LkN/bewyH3Xoo1USjO0eQ==
   dependencies:
     rimraf "^3.0.2"
     semver "^7.2.1"
@@ -1219,10 +1219,10 @@ queue@6.0.2:
   dependencies:
     inherits "~2.0.3"
 
-quine-electron-drag-click@1.0.6d:
-  version "1.0.6-d"
-  resolved "https://registry.npmjs.org/quine-electron-drag-click/-/quine-electron-drag-click-1.0.6-d.tgz#210fc244fdf3a11b3ad1b2e2d7d7670176b5e19b"
-  integrity sha512-2geemTnPP3GuEGzOR/IbbXbTf+JX/VERjerA4r2TuXYHSanNiEbMWSSZ2wD8RllOnp/tBIE+O4CmmPfJ86rYQQ==
+quine-electron-drag-click@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/quine-electron-drag-click/-/quine-electron-drag-click-2.0.0.tgz#c6694a706b4c4eca75277ef2c34d7773476700e1"
+  integrity sha512-pieh1HawezFDn+cpBgs+RQXeR8wj0h/gZafB3sB9rYRQAHTs9V1R8gIq6u7SjGrn1esiM+iP4cknpzsbk/KQ9w==
   dependencies:
     bindings "^1.5.0"
     node-addon-api "^3.0.2"
