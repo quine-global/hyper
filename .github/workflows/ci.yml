@@ -84,7 +84,7 @@ jobs:
           matrix-os: windows-latest
           matrix-name: win
           upload-artifact: false
-  
+
   # ARM Linux:
 
   build-linux-armv7l:
@@ -101,17 +101,18 @@ jobs:
         run: |
           # Install qemu-user-static
           sudo apt-get update
-          sudo apt-get install -y qemu-user-static
-          
+          sudo apt-get install -y qemu-user-static binfmt-support
+
+
           # Download and install binfmt configurations
           wget https://github.com/qemu/qemu/raw/master/scripts/qemu-binfmt-conf.sh
           chmod +x qemu-binfmt-conf.sh
           sudo ./qemu-binfmt-conf.sh --qemu-path /usr/bin --qemu-suffix -static --debian
-          
+
           # Import the binfmt configurations
           sudo update-binfmts --import qemu-arm
           sudo update-binfmts --import qemu-aarch64
-          
+
           # Verify they exist
           ls -la /proc/sys/fs/binfmt_misc/qemu-arm* || true
 

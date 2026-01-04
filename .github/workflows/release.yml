@@ -88,7 +88,7 @@ jobs:
         run: |
           # Install qemu-user-static
           sudo apt-get update
-          sudo apt-get install -y qemu-user-static
+          sudo apt-get install -y qemu-user-static binfmt-support
 
           # Download and install binfmt configurations
           wget https://github.com/qemu/qemu/raw/master/scripts/qemu-binfmt-conf.sh
