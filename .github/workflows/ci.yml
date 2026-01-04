@@ -101,7 +101,10 @@ jobs:
         run: |
           # Install qemu-user-static
           sudo apt-get update
-          sudo apt-get install -y qemu-user-static binfmt-support
+          sudo apt-get install -y qemu-user-static binfmt-support python3-setuptools
+          
+          # Install distutils for node-gyp
+          sudo apt-get install -y python3-distutils || sudo apt-get install -y python3-dev python-is-python3
 
 
           # Download and install binfmt configurations
