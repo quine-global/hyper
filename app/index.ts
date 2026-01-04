@@ -190,7 +190,7 @@ app.on('ready', () =>
               }
             }
           ]);
-          app.dock.setMenu(dockMenu);
+          app.dock?.setMenu(dockMenu);
         }
 
         Menu.setApplicationMenu(AppMenu.buildMenu(menu));
