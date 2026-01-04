@@ -1,7 +1,8 @@
 import React, {forwardRef} from 'react';
 
+import {useDevicePixelRatio} from 'use-device-pixel-ratio';
+
 import type {StyleSheetProps} from '../../typings/hyper';
-import { useDevicePixelRatio } from 'use-device-pixel-ratio';
 
 const StyleSheet = forwardRef<HTMLStyleElement, StyleSheetProps>((props, ref) => {
   const {borderColor} = props;

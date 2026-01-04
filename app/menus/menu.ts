@@ -65,7 +65,10 @@ export const createMenu = (
 
         Created by Guillermo Rauch
         Copyright © 2022 Vercel, Inc.
-      `.split('\n').map(z => z.trim()).join('\n'),
+      `
+        .split('\n')
+        .map((z) => z.trim())
+        .join('\n'),
       buttons: [],
       icon: icon as any
     });

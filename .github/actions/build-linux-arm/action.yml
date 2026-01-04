@@ -73,6 +73,11 @@ runs:
         copy_artifact_path: target
         copy_artifact_dest: target
         commands: |
+          # Install Python distutils in the ARM container
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-setuptools python3-dev
+          pip3 install setuptools --break-system-packages || pip3 install setuptools
+          
           cd target
           # TODO upgrade node to 20.11.0 to match NODE_VERSION
           wget https://nodejs.org/dist/v18.16.0/node-v18.16.0-linux-${{ inputs.matrix-name }}.tar.xz
