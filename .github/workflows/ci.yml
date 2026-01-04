@@ -119,6 +119,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm,arm64
+
       - name: Build ARM64
         uses: ./.github/actions/build-linux-arm
         env:
