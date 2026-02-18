@@ -2255,9 +2255,9 @@ at-least-node@^1.0.0:
   resolved "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz#602cd4b46e844ad4effc92a8011a3c46e0238dc2"
   integrity sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==
 
-"ava@https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe":
+"ava@https://github.com/quine-global/ava#79bc47b960f0fd28b376b9bd179c9af1cb701c45":
   version "6.2.0"
-  resolved "https://github.com/quine-global/ava#38aebe3badef8d54f68e8315e9849cfa83d531fe"
+  resolved "https://github.com/quine-global/ava#79bc47b960f0fd28b376b9bd179c9af1cb701c45"
   dependencies:
     "@vercel/nft" "^0.27.5"
     acorn "^8.13.0"
