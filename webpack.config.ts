@@ -24,7 +24,7 @@ const config: webpack.Configuration[] = [
         {
           test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
-          loader: 'null-loader'
+          loader: require.resolve('null-loader')
         }
       ]
     },
