@@ -1,11 +1,11 @@
 import React, {useCallback, useRef, useEffect, forwardRef} from 'react';
 
-import {VscArrowDown} from '@react-icons/all-files/vsc/VscArrowDown';
-import {VscArrowUp} from '@react-icons/all-files/vsc/VscArrowUp';
-import {VscCaseSensitive} from '@react-icons/all-files/vsc/VscCaseSensitive';
-import {VscClose} from '@react-icons/all-files/vsc/VscClose';
-import {VscRegex} from '@react-icons/all-files/vsc/VscRegex';
-import {VscWholeWord} from '@react-icons/all-files/vsc/VscWholeWord';
+import {VscArrowDown} from '../../react-icons/VscArrowDown';
+import {VscArrowUp} from '../../react-icons/VscArrowUp';
+import {VscCaseSensitive} from '../../react-icons/VscCaseSensitive';
+import {VscClose} from '../../react-icons/VscClose';
+import {VscRegex} from '../../react-icons/VscRegex';
+import {VscWholeWord} from '../../react-icons/VscWholeWord';
 import clsx from 'clsx';
 
 import type {SearchBoxProps} from '../../typings/hyper';

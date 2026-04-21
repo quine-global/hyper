@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@electron/remote": "2.1.2",
-    "@react-icons/all-files": "4.1.0",
     "@redux-devtools/extension": "^3.3.0",
     "@xterm/addon-canvas": "0.7.0",
     "@xterm/addon-fit": "0.10.0",
