@@ -59,7 +59,7 @@ console.log('Disabling Chromium GPU blacklist');
 app.commandLine.appendSwitch('ignore-gpu-blacklist');
 
 if (process.env.HYPER_DISABLE_GPU) {
-  app.commandLine.appendSwitch('disable-gpu');
+  app.commandLine.appendSwitch('in-process-gpu');
 }
 
 if (isDev) {
