@@ -8,6 +8,7 @@
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
     "app": "cross-env ELECTRONMON_LOGLEVEL=error electronmon target",
+    "app:parallels": "cross-env ELECTRONMON_LOGLEVEL=error electronmon target -- --disable-gpu",
     "dev": "concurrently -n \"Webpack,TypeScript\" -c \"cyan.bold,blue.bold\" \"webpack -w\" \"tsc --build -v --pretty --watch --preserveWatchOutput\" -k",
     "ts": "tsc --build -v --pretty --preserveWatchOutput",
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v && cross-env BABEL_ENV=production babel target/renderer/bundle.js --out-file target/renderer/bundle.js --no-comments --minified",
