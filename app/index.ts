@@ -149,6 +149,9 @@ app.on('ready', () =>
 
         hwin.once('ready-to-show', () => {
           hwin.show();
+          if (isDev) {
+            hwin.webContents.openDevTools({mode: 'detach'});
+          }
         });
 
         // the window can be closed by the browser process itself
