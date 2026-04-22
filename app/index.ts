@@ -58,6 +58,10 @@ app.getLastFocusedWindow = () => {
 console.log('Disabling Chromium GPU blacklist');
 app.commandLine.appendSwitch('ignore-gpu-blacklist');
 
+if (process.env.HYPER_DISABLE_GPU) {
+  app.commandLine.appendSwitch('disable-gpu');
+}
+
 if (isDev) {
   console.log('running in dev mode');
 
