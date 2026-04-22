@@ -166,6 +166,7 @@ rpc.on('session search close', () => {
 });
 
 rpc.on('termgroup add req', ({activeUid, profile}) => {
+  console.log('[renderer] received termgroup add req, activeUid:', activeUid, 'profile:', profile);
   store_.dispatch(termGroupActions.requestTermGroup(activeUid, profile));
 });
 
