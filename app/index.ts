@@ -145,13 +145,15 @@ app.on('ready', () =>
 
         const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn, profileName);
         windowSet.add(hwin);
+
+        if (isDev) {
+          hwin.webContents.openDevTools({mode: 'detach'});
+        }
+
         void hwin.loadURL(url);
 
         hwin.once('ready-to-show', () => {
           hwin.show();
-          if (isDev) {
-            hwin.webContents.openDevTools({mode: 'detach'});
-          }
         });
 
         // the window can be closed by the browser process itself
