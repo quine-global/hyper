@@ -234,8 +234,11 @@ const getPluginVersion = (path: string): string | null => {
 };
 
 const loadModules = () => {
-  console.log('(re)loading renderer plugins');
+  console.log('[renderer:plugins] loadModules start');
   const paths = plugins.getPaths();
+  console.log('[renderer:plugins] paths:', JSON.stringify(paths));
+  const loadedPluginVersions = plugins.getLoadedPluginVersions();
+  console.log('[renderer:plugins] loaded plugin versions from main:', JSON.stringify(loadedPluginVersions));
 
   // initialize cache that we populate with extension methods
   connectors = {
@@ -266,20 +269,26 @@ const loadModules = () => {
     reduceTermGroups: termGroupsReducers
   };
 
-  const loadedPlugins = plugins.getLoadedPluginVersions().map((plugin: any) => plugin.name);
-  modules = paths.plugins
-    .concat(paths.localPlugins)
-    .filter((plugin) => loadedPlugins.indexOf(pathModule.basename(plugin)) !== -1)
+  const loadedPlugins = loadedPluginVersions.map((plugin: any) => plugin.name);
+  const allPaths = paths.plugins.concat(paths.localPlugins);
+  const filteredPaths = allPaths.filter((plugin) => loadedPlugins.indexOf(pathModule.basename(plugin)) !== -1);
+  console.log('[renderer:plugins] all paths:', allPaths);
+  console.log('[renderer:plugins] filtered paths (matched to loaded):', filteredPaths);
+  modules = filteredPaths
     .map((path) => {
       let mod: hyperPlugin;
       const pluginName = getPluginName(path);
       const pluginVersion = getPluginVersion(path);
 
+      console.log(`[renderer:plugins] requiring: ${pluginName} @ ${path}`);
       // window.require allows us to ensure this doesn't get
       // in the way of our build
       try {
         mod = window.require(path);
-      } catch (err) {
+        console.log(`[renderer:plugins] required ok: ${pluginName}`);
+      } catch (err: any) {
+        console.error(`[renderer:plugins] FAILED to require ${pluginName}:`, err?.message);
+        console.error(`[renderer:plugins] stack:`, err?.stack);
         notify(
           'Plugin load error',
           `"${pluginName}" failed to load in the renderer process. Check Developer Tools for details.`,
@@ -375,12 +384,13 @@ const loadModules = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         mod.onRendererWindow(window);
       }
-      console.log(`Plugin ${pluginName} (${pluginVersion}) loaded.`);
+      console.log(`[renderer:plugins] loaded: ${pluginName} (${pluginVersion})`);
 
       return mod;
     })
     .filter((mod): mod is hyperPlugin => Boolean(mod));
 
+  console.log(`[renderer:plugins] loadModules done, ${modules.length} plugins active`);
   const deprecatedPlugins = plugins.getDeprecatedConfig();
   Object.keys(deprecatedPlugins).forEach((name) => {
     const {css} = deprecatedPlugins[name];

@@ -260,7 +260,7 @@ export const subscribe = (fn: Function) => {
 };
 
 function getPaths() {
-  return {
+  const result = {
     plugins: plugins.plugins.map((name) => {
       return resolve(path, 'node_modules', name.split('#')[0]);
     }),
@@ -268,6 +268,8 @@ function getPaths() {
       return resolve(localPath, name);
     })
   };
+  console.log('[plugins] paths:', JSON.stringify(result));
+  return result;
 }
 
 // expose to renderer
@@ -280,13 +282,16 @@ export const getBasePaths = () => {
 
 function requirePlugins(): any[] {
   const {plugins: plugins_, localPlugins} = paths;
+  console.log('[plugins] requirePlugins: plugins=', plugins_, 'localPlugins=', localPlugins);
 
   const load = (path_: string) => {
     let mod: Record<string, any>;
+    console.log('[plugins] loading:', path_);
     try {
       mod = require(path_);
       const exposed = mod && Object.keys(mod).some((key) => availableExtensions.has(key));
       if (!exposed) {
+        console.warn('[plugins] plugin exposes no Hyper API methods:', path_);
         notify('Plugin error!', `${`Plugin "${basename(path_)}" does not expose any `}Hyper extension API methods`);
         return;
       }
@@ -299,13 +304,15 @@ function requirePlugins(): any[] {
       } catch (err) {
         console.warn(`No package.json found in ${path_}`);
       }
-      console.log(`Plugin ${mod._name} (${mod._version}) loaded.`);
+      console.log(`[plugins] loaded: ${mod._name} (${mod._version})`);
 
       return mod;
     } catch (_err) {
-      const err = _err as {code: string; message: string};
+      const err = _err as {code: string; message: string; stack?: string};
+      console.error(`[plugins] failed to load "${basename(path_)}" (${path_}):`, err.message);
+      console.error('[plugins] stack:', err.stack);
       if (err.code === 'MODULE_NOT_FOUND') {
-        console.warn(`Plugin error while loading "${basename(path_)}" (${path_}): ${err.message}`);
+        console.warn(`[plugins] MODULE_NOT_FOUND for "${basename(path_)}": ${err.message}`);
       } else {
         notify('Plugin error!', `Plugin "${basename(path_)}" failed to load (${err.message})`, {error: err});
       }

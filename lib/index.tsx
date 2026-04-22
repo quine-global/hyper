@@ -21,13 +21,17 @@ import * as config from './utils/config';
 import {getBase64FileData} from './utils/file';
 import * as plugins from './utils/plugins';
 
+console.log('[renderer] index.tsx starting, platform:', process.platform);
+
 // On Linux, the default zoom was somehow changed with Electron 3 (or maybe 2).
 // Setting zoom factor to 1.2 brings back the normal default size
 if (process.platform === 'linux') {
   webFrame.setZoomFactor(1.2);
 }
 
+console.log('[renderer] configuring store');
 const store_ = configureStore();
+console.log('[renderer] store configured');
 
 Object.defineProperty(window, 'store', {get: () => store_});
 Object.defineProperty(window, 'rpc', {get: () => rpc});
@@ -50,8 +54,10 @@ const fetchFileData = (configData: configOptions) => {
 };
 
 // initialize config
+console.log('[renderer] loading config');
 store_.dispatch(loadConfig(config.getConfig()));
 fetchFileData(config.getConfig());
+console.log('[renderer] config loaded');
 
 config.subscribe(() => {
   const configInfo = config.getConfig();
@@ -67,9 +73,11 @@ config.subscribe(() => {
   }
 });
 
+console.log('[renderer] setting up RPC');
 // initialize communication with main electron process
 // and subscribe to all user intents for example from menus
 rpc.on('ready', () => {
+  console.log('[renderer] RPC ready');
   store_.dispatch(init());
   store_.dispatch(uiActions.setFontSmoothing());
 });
@@ -233,13 +241,17 @@ rpc.on('leave full screen', () => {
   store_.dispatch(uiActions.leaveFullScreen());
 });
 
-const root = createRoot(document.getElementById('mount')!);
+const mountEl = document.getElementById('mount');
+console.log('[renderer] mount element:', mountEl ? 'found' : 'NOT FOUND — check index.html');
+const root = createRoot(mountEl!);
 
+console.log('[renderer] calling root.render');
 root.render(
   <Provider store={store_}>
     <HyperContainer />
   </Provider>
 );
+console.log('[renderer] root.render called');
 
 rpc.on('reload', () => {
   plugins.reload();
