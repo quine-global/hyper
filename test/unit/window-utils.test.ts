@@ -1,9 +1,9 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import test from 'ava';
+import proxyquireLib from 'proxyquire';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const proxyquire = require('proxyquire').noCallThru();
+const proxyquire = proxyquireLib.noCallThru();
 
 test('positionIsValid() returns true when window is on only screen', (t) => {
   const position = [50, 50];

@@ -143,7 +143,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "10.9.2",
     "typescript": "5.7.2",
-    "ava": "https://github.com/quine-global/ava#53739b5c3b7dfc9f1f902b2bc11a190d7778904f",
+    "ava": "https://github.com/quine-global/ava#ad77c3bc92de51a3436c1be1acbb3da594e3251e",
     "uuaw": "^1.2.2",
     "webpack": "5.96.1"
   },

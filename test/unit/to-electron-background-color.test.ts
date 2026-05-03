@@ -1,7 +1,7 @@
 import test from 'ava';
 
-import toElectronBackgroundColor from '../../app/utils/to-electron-background-color';
-import {isHexColor} from '../testUtils/is-hex-color';
+import toElectronBackgroundColor from '../../app/utils/to-electron-background-color.js';
+import {isHexColor} from '../testUtils/is-hex-color.js';
 
 test('toElectronBackgroundColor', (t) => {
   t.false(false);
