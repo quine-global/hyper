@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DefaultContext, IconContext } from './iconContext';
+import { IconContext } from './iconContext';
 
 export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
   children?: React.ReactNode;
@@ -68,5 +68,5 @@ export function IconBase(props: IconBaseProps & { attr?: Record<string, string> 
 }
 
 function Tree2Element(tree: IconTree[]): React.ReactElement[] {
-  return tree && tree.map((node, i) => React.createElement(node.tag, { key: i, ...node.attr }, Tree2Element(node.child)));
+  return tree.map((node, i) => React.createElement(node.tag, { key: i, ...node.attr }, Tree2Element(node.child)));
 }
