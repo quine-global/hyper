@@ -68,7 +68,7 @@ Regardless of the platform you are working on, you will need to have Yarn instal
   * Windows
     - Install [Visual Studio](https://visualstudio.microsoft.com/) (2022 or newer) with the **Desktop development with C++** workload.
     - In the VS Installer under **Individual Components**, also install **Latest MSVC - VS C++ x64/x86 Spectre-mitigated libs** (required for building native Node modules).
-    - Install Node.js >=22.12.0 (the native module build toolchain requires it).
+    - Install Node.js >=22.20.0 (the native module build toolchain requires it).
   * macOS
     - Once you have installed Yarn, you can skip this section!
   * Linux (You can see [here](https://en.wikipedia.org/wiki/List_of_Linux_distributions) what your Linux is based on.)

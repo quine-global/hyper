@@ -3,7 +3,7 @@
   "version": "4.0.0-q-canary.8",
   "repository": "quine-global/hyper",
   "engines": {
-    "node": "22.12.0"
+    "node": "22.20.0"
   },
   "scripts": {
     "start": "echo 'please run `yarn run dev` in one tab and then `yarn run app` in another one'",
@@ -80,8 +80,7 @@
     "webpack-cli": "5.1.4"
   },
   "devDependencies": {
-    "@ava/babel": "2.0.0",
-    "@ava/typescript": "^4.1.0",
+    "@ava/typescript": "^6.0.0",
     "@babel/cli": "7.25.9",
     "@babel/core": "7.26.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
@@ -144,7 +143,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "10.9.2",
     "typescript": "5.7.2",
-    "ava": "https://github.com/quine-global/ava#79bc47b960f0fd28b376b9bd179c9af1cb701c45",
+    "ava": "https://github.com/quine-global/ava#81194d32ed749ac82d389cb3bd228de8bd59a591",
     "uuaw": "^1.2.2",
     "webpack": "5.96.1"
   },
