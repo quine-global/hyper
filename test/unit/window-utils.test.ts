@@ -7,7 +7,8 @@ const proxyquire = proxyquireLib.noCallThru();
 
 test('positionIsValid() returns true when window is on only screen', (t) => {
   const position = [50, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -33,7 +34,7 @@ test('positionIsValid() returns true when window is on only screen', (t) => {
 
 test('positionIsValid() returns true when window is on second screen', (t) => {
   const position = [750, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -75,7 +76,7 @@ test('positionIsValid() returns false when position isnt valid', (t) => {
     }
   };
   const position = [600, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
