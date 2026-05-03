@@ -4,6 +4,10 @@ app/renderer
 target
 bin/cli.*
 cache
+build/config.gypi
+
+# claude code
+.claude
 
 # dependencies
 node_modules
