@@ -108,7 +108,7 @@
     "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.21.0",
-    "ava": "https://github.com/quine-global/ava#ad77c3bc92de51a3436c1be1acbb3da594e3251e",
+    "ava": "https://github.com/quine-global/ava#53739b5c3b7dfc9f1f902b2bc11a190d7778904f",
     "babel-loader": "9.2.1",
     "concurrently": "9.1.0",
     "copy-webpack-plugin": "12.0.2",
