@@ -13,7 +13,9 @@
     "ts": "tsc --build -v --pretty --preserveWatchOutput",
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v && cross-env BABEL_ENV=production babel target/renderer/bundle.js --out-file target/renderer/bundle.js --no-comments --minified",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.json",
-    "test": "yarn run lint",
+    "test": "yarn run lint && yarn run test:unit",
+    "test:unit": "cross-env DEBUG=ava:watcher AVA_IMPORT_FROM_PROJECT_NO_STUB=1 ava --no-cache",
+    "test:unit:watch": "yarn run test:unit -- --watch",
     "test:e2e": "cross-env DEBUG=ava:watcher AVA_IMPORT_FROM_PROJECT_NO_STUB=1 ava --no-cache --config ava-e2e.config.js",
     "postinstall": "yarn run v8-snapshot && webpack --config-name hyper-app && yarn run install-app-deps-with-retry && yarn run rebuild-node-pty && cpy --cwd=target node_modules \"../../app/\" && husky && yarn run generate-schema",
     "install-app-deps-with-retry": "node bin/with-normalized-cwd.js electron-builder install-app-deps || node bin/with-normalized-cwd.js electron-builder install-app-deps || node bin/with-normalized-cwd.js electron-builder install-app-deps",
@@ -78,6 +80,8 @@
     "webpack-cli": "5.1.4"
   },
   "devDependencies": {
+    "@ava/babel": "2.0.0",
+    "@ava/typescript": "^4.1.0",
     "@babel/cli": "7.25.9",
     "@babel/core": "7.26.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
@@ -140,6 +144,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "10.9.2",
     "typescript": "5.7.2",
+    "ava": "https://github.com/quine-global/ava#79bc47b960f0fd28b376b9bd179c9af1cb701c45",
     "uuaw": "^1.2.2",
     "webpack": "5.96.1"
   },

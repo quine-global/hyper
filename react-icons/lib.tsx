@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IconContext } from './iconContext';
+import {IconContext} from './iconContext';
 
 export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
   children?: React.ReactNode;
@@ -11,15 +11,17 @@ export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
 
 export interface IconTree {
   tag: string;
-  attr: { [key: string]: string };
+  attr: {[key: string]: string};
   child: IconTree[];
 }
 
 export function GenIcon(data: IconTree) {
   return function GenIconInner(props: IconBaseProps) {
-    return <IconBase attr={{ ...data.attr }} {...props}>
-      {Tree2Element(data.child)}
-    </IconBase>;
+    return (
+      <IconBase attr={{...data.attr}} {...props}>
+        {Tree2Element(data.child)}
+      </IconBase>
+    );
   };
 }
 
@@ -32,9 +34,9 @@ export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
 
 export type IconType = (props: IconBaseProps) => React.ReactNode;
 
-export function IconBase(props: IconBaseProps & { attr?: Record<string, string> }): React.ReactElement {
+export function IconBase(props: IconBaseProps & {attr?: Record<string, string>}): React.ReactElement {
   const elem = (conf: IconContext) => {
-    const { attr, size, title, ...svgProps } = props;
+    const {attr, size, title, ...svgProps} = props;
     const computedSize = size || conf.size || '1em';
     let className;
     if (conf.className) className = conf.className;
@@ -68,5 +70,5 @@ export function IconBase(props: IconBaseProps & { attr?: Record<string, string> 
 }
 
 function Tree2Element(tree: IconTree[]): React.ReactElement[] {
-  return tree.map((node, i) => React.createElement(node.tag, { key: i, ...node.attr }, Tree2Element(node.child)));
+  return tree.map((node, i) => React.createElement(node.tag, {key: i, ...node.attr}, Tree2Element(node.child)));
 }
