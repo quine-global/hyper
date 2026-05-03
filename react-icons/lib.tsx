@@ -12,7 +12,7 @@ export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
 export interface IconTree {
   tag: string;
   attr: {[key: string]: string};
-  child: IconTree[];
+  child: IconTree[] | undefined;
 }
 
 export function GenIcon(data: IconTree) {
@@ -69,6 +69,6 @@ export function IconBase(props: IconBaseProps & {attr?: Record<string, string>})
   return <IconContext.Consumer>{(conf: IconContext) => elem(conf)}</IconContext.Consumer>;
 }
 
-function Tree2Element(tree: IconTree[]): React.ReactElement[] {
-  return tree.map((node, i) => React.createElement(node.tag, {key: i, ...node.attr}, Tree2Element(node.child)));
+function Tree2Element(tree: IconTree[] | undefined): React.ReactElement[] | undefined {
+  return tree?.map((node, i) => React.createElement(node.tag, {key: i, ...node.attr}, Tree2Element(node.child)));
 }
