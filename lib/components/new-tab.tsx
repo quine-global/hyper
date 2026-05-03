@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 
-import {VscChevronDown} from '../../react-icons/VscChevronDown';
 import useClickAway from 'react-use/lib/useClickAway';
 
+import {VscChevronDown} from '../../react-icons/VscChevronDown';
 import type {configOptions} from '../../typings/config';
 
 interface Props {

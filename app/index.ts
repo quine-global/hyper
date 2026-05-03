@@ -96,15 +96,27 @@ async function installDevExtensions(isDev_: boolean) {
   return Promise.all(
     extensions.map((extension) =>
       installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}})
-        .then((name) => { console.log('[main] devtools extension installed:', name); return name; })
-        .catch((err) => { console.warn('[main] devtools extension failed:', err.message); })
+        .then((name) => {
+          console.log('[main] devtools extension installed:', name);
+          return name;
+        })
+        .catch((err) => {
+          console.warn('[main] devtools extension failed:', err.message);
+        })
     )
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.on('ready', () => {
-  console.log('[main] app ready, electron version:', process.versions.electron, 'node:', process.versions.node, 'chrome:', process.versions.chrome);
+  console.log(
+    '[main] app ready, electron version:',
+    process.versions.electron,
+    'node:',
+    process.versions.node,
+    'chrome:',
+    process.versions.chrome
+  );
   return installDevExtensions(isDev)
     .then(() => {
       console.log('[main] devtools extensions done, creating window');

@@ -111,7 +111,18 @@ export default class Session extends EventEmitter {
   }
 
   init({uid, rows, cols, cwd, shell: _shell, shellArgs: _shellArgs, profile}: SessionOptions) {
-    console.log('[session] init uid:', uid, 'shell:', _shell || defaultShell, 'cwd:', cwd, 'rows:', rows, 'cols:', cols);
+    console.log(
+      '[session] init uid:',
+      uid,
+      'shell:',
+      _shell || defaultShell,
+      'cwd:',
+      cwd,
+      'rows:',
+      rows,
+      'cols:',
+      cols
+    );
     this.profile = profile;
     const envFromConfig = config.getProfileConfig(profile).env || {};
     const defaultShellArgs = ['--login'];
