@@ -98,6 +98,7 @@ export function newWindow(
   });
 
   rpc.on('init', () => {
+    console.log('[window] received init from renderer');
     window.show();
     updateBackgroundColor();
 
@@ -105,6 +106,7 @@ export function newWindow(
     // a new session will be created by default.
     if (!fn) {
       fn = (win: BrowserWindow) => {
+        console.log('[window] emitting termgroup add req');
         win.rpc.emit('termgroup add req', {});
       };
     }
@@ -185,9 +187,12 @@ export function newWindow(
   }
 
   rpc.on('new', (extraOptions) => {
+    console.log('[window] received new session request, extraOptions:', JSON.stringify(extraOptions));
     const {session, options} = createSession(extraOptions);
+    console.log('[window] session created, uid:', options.uid, 'pid:', session.pty?.pid ?? 'no pty');
 
     sessions.set(options.uid, session);
+    console.log('[window] emitting session add, uid:', options.uid);
     rpc.emit('session add', {
       rows: options.rows,
       cols: options.cols,

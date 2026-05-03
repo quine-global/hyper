@@ -1,3 +1,3 @@
 // THIS FILE IS AUTO GENERATED
-import { IconTree, IconType } from '../lib'
+import type {IconType} from './lib';
 export declare const VscRegex: IconType;

@@ -53,6 +53,7 @@ export function requestTermGroup(_activeUid: string | undefined, _profile: strin
         const {cwd} = ui;
         const activeUid = _activeUid ? _activeUid : sessions.activeUid;
         const profile = _profile ? _profile : activeUid ? sessions.sessions[activeUid].profile : window.profileName;
+        console.log('[renderer] emitting new session, profile:', profile, 'cwd:', cwd);
         rpc.emit('new', {
           isNewGroup: true,
           cwd,

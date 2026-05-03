@@ -111,6 +111,18 @@ export default class Session extends EventEmitter {
   }
 
   init({uid, rows, cols, cwd, shell: _shell, shellArgs: _shellArgs, profile}: SessionOptions) {
+    console.log(
+      '[session] init uid:',
+      uid,
+      'shell:',
+      _shell || defaultShell,
+      'cwd:',
+      cwd,
+      'rows:',
+      rows,
+      'cols:',
+      cols
+    );
     this.profile = profile;
     const envFromConfig = config.getProfileConfig(profile).env || {};
     const defaultShellArgs = ['--login'];
@@ -156,10 +168,14 @@ export default class Session extends EventEmitter {
       options.useConpty = useConpty;
     }
 
+    console.log('[session] spawning pty, shell:', shell, 'args:', shellArgs, 'useConpty:', options.useConpty);
     try {
       this.pty = spawn(shell, shellArgs, options);
+      console.log('[session] pty spawned, pid:', this.pty.pid);
     } catch (_err) {
-      const err = _err as {message: string};
+      const err = _err as {message: string; stack?: string};
+      console.error('[session] pty spawn failed:', err.message);
+      console.error('[session] pty spawn stack:', err.stack);
       if (/is not a function/.test(err.message)) {
         throw createNodePtyError();
       } else {

@@ -5,11 +5,11 @@
     "composite": true
   },
   "include": [
-    "./app/",
     "./lib/",
     "./test/",
     "./cli/",
-    "./typings/"
+    "./typings/",
+    "./react-icons/"
   ],
   "references": [
     {

@@ -1,13 +1,13 @@
 import React, {useCallback, useRef, useEffect, forwardRef} from 'react';
 
+import clsx from 'clsx';
+
 import {VscArrowDown} from '../../react-icons/VscArrowDown';
 import {VscArrowUp} from '../../react-icons/VscArrowUp';
 import {VscCaseSensitive} from '../../react-icons/VscCaseSensitive';
 import {VscClose} from '../../react-icons/VscClose';
 import {VscRegex} from '../../react-icons/VscRegex';
 import {VscWholeWord} from '../../react-icons/VscWholeWord';
-import clsx from 'clsx';
-
 import type {SearchBoxProps} from '../../typings/hyper';
 
 type SearchButtonColors = {

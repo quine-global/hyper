@@ -1,13 +1,14 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import test from 'ava';
+import proxyquireLib from 'proxyquire';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const proxyquire = require('proxyquire').noCallThru();
+const proxyquire = proxyquireLib.noCallThru();
 
 test('positionIsValid() returns true when window is on only screen', (t) => {
   const position = [50, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -33,7 +34,7 @@ test('positionIsValid() returns true when window is on only screen', (t) => {
 
 test('positionIsValid() returns true when window is on second screen', (t) => {
   const position = [750, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {
@@ -75,7 +76,7 @@ test('positionIsValid() returns false when position isnt valid', (t) => {
     }
   };
   const position = [600, 50];
-  const windowUtils = proxyquire('../../app/utils/window-utils', {
+  const windowUtils = proxyquire('../../../../../target/utils/window-utils', {
     electron: {
       screen: {
         getAllDisplays: () => {

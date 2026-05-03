@@ -14,12 +14,16 @@ if (['--help', '-v', '--version'].includes(process.argv[1])) {
 // Enable remote module
 // eslint-disable-next-line import/order
 import {initialize as remoteInitialize} from '@electron/remote/main';
+console.log('[main] initializing @electron/remote');
 remoteInitialize();
+console.log('[main] @electron/remote initialized');
 
 // set up config
 // eslint-disable-next-line import/order
 import * as config from './config';
+console.log('[main] setting up config');
 config.setup();
+console.log('[main] config setup complete');
 
 // Native
 import {resolve} from 'path';
@@ -58,6 +62,10 @@ app.getLastFocusedWindow = () => {
 console.log('Disabling Chromium GPU blacklist');
 app.commandLine.appendSwitch('ignore-gpu-blacklist');
 
+if (process.env.HYPER_DISABLE_GPU) {
+  app.commandLine.appendSwitch('in-process-gpu');
+}
+
 if (isDev) {
   console.log('running in dev mode');
 
@@ -78,20 +86,40 @@ async function installDevExtensions(isDev_: boolean) {
   if (!isDev_) {
     return [];
   }
+  console.log('[main] loading electron-devtools-installer');
   const {default: installer, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = await import('electron-devtools-installer');
 
   const extensions = [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS];
   const forceDownload = Boolean(process.env.UPGRADE_EXTENSIONS);
+  console.log('[main] installing devtools extensions, forceDownload:', forceDownload);
 
   return Promise.all(
-    extensions.map((extension) => installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}}))
+    extensions.map((extension) =>
+      installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}})
+        .then((name) => {
+          console.log('[main] devtools extension installed:', name);
+          return name;
+        })
+        .catch((err) => {
+          console.warn('[main] devtools extension failed:', err.message);
+        })
+    )
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-app.on('ready', () =>
-  installDevExtensions(isDev)
+app.on('ready', () => {
+  console.log(
+    '[main] app ready, electron version:',
+    process.versions.electron,
+    'node:',
+    process.versions.node,
+    'chrome:',
+    process.versions.chrome
+  );
+  return installDevExtensions(isDev)
     .then(() => {
+      console.log('[main] devtools extensions done, creating window');
       function createWindow(
         fn?: (win: BrowserWindow) => void,
         options: {size?: [number, number]; position?: [number, number]} = {},
@@ -139,11 +167,36 @@ app.on('ready', () =>
           [startX, startY] = config.windowDefaults.windowPosition;
         }
 
+        console.log('[main] creating BrowserWindow', {width, height, x: startX, y: startY});
         const hwin = newWindow({width, height, x: startX, y: startY}, cfg, fn, profileName);
         windowSet.add(hwin);
+        console.log('[main] BrowserWindow created, id:', hwin.id);
+
+        hwin.webContents.on('did-start-loading', () => console.log('[main] renderer: did-start-loading'));
+        hwin.webContents.on('dom-ready', () => console.log('[main] renderer: dom-ready'));
+        hwin.webContents.on('did-finish-load', () => console.log('[main] renderer: did-finish-load'));
+        hwin.webContents.on('did-stop-loading', () => console.log('[main] renderer: did-stop-loading'));
+        hwin.webContents.on('did-fail-load', (_e, code, desc, url_) => {
+          console.error('[main] renderer: did-fail-load', code, desc, url_);
+        });
+        hwin.webContents.on('render-process-gone', (_e, details) => {
+          console.error('[main] renderer: process gone — reason:', details.reason, 'exitCode:', details.exitCode);
+        });
+        hwin.webContents.on('unresponsive', () => console.warn('[main] renderer: unresponsive'));
+
+        if (isDev) {
+          // hwin.webContents.openDevTools({mode: 'detach'});
+          hwin.webContents.on('console-message', (_e, level, message, line, sourceId) => {
+            const labels = ['verbose', 'info', 'warn', 'error'];
+            console.log(`[renderer:${labels[level] ?? level}] ${message} (${sourceId}:${line})`);
+          });
+        }
+
+        console.log('[main] loading URL:', url);
         void hwin.loadURL(url);
 
         hwin.once('ready-to-show', () => {
+          console.log('[main] renderer: ready-to-show, showing window');
           hwin.show();
         });
 
@@ -213,9 +266,9 @@ app.on('ready', () =>
       }
     })
     .catch((err) => {
-      console.error('Error while loading devtools extensions', err);
-    })
-);
+      console.error('[main] fatal error during startup:', err);
+    });
+});
 
 /**
  * Get last focused BrowserWindow or create new if none and callback
