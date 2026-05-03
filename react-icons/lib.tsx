@@ -1,5 +1,6 @@
-import React from "react";
-import { DefaultContext, IconContext } from "./iconContext";
+import React from 'react';
+
+import { DefaultContext, IconContext } from './iconContext';
 
 export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
   children?: React.ReactNode;
@@ -15,11 +16,11 @@ export interface IconTree {
 }
 
 export function GenIcon(data: IconTree) {
-  return (props: IconBaseProps) => (
-    <IconBase attr={{ ...data.attr }} {...props}>
+  return function GenIconInner(props: IconBaseProps) {
+    return <IconBase attr={{ ...data.attr }} {...props}>
       {Tree2Element(data.child)}
-    </IconBase>
-  );
+    </IconBase>;
+  };
 }
 
 export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
@@ -31,16 +32,13 @@ export interface IconBaseProps extends React.SVGAttributes<SVGElement> {
 
 export type IconType = (props: IconBaseProps) => React.ReactNode;
 
-export function IconBase(
-  props: IconBaseProps & { attr?: Record<string, string> },
-): React.ReactElement {
+export function IconBase(props: IconBaseProps & { attr?: Record<string, string> }): React.ReactElement {
   const elem = (conf: IconContext) => {
     const { attr, size, title, ...svgProps } = props;
-    const computedSize = size || conf.size || "1em";
+    const computedSize = size || conf.size || '1em';
     let className;
     if (conf.className) className = conf.className;
-    if (props.className)
-      className = (className ? className + " " : "") + props.className;
+    if (props.className) className = (className ? className + ' ' : '') + props.className;
 
     return (
       <svg
@@ -54,7 +52,7 @@ export function IconBase(
         style={{
           color: props.color || conf.color,
           ...conf.style,
-          ...props.style,
+          ...props.style
         }}
         height={computedSize}
         width={computedSize}
@@ -66,25 +64,9 @@ export function IconBase(
     );
   };
 
-  return IconContext !== undefined ? (
-    <IconContext.Consumer>
-      {(conf: IconContext) => elem(conf)}
-    </IconContext.Consumer>
-  ) : (
-    elem(DefaultContext)
-  );
+  return <IconContext.Consumer>{(conf: IconContext) => elem(conf)}</IconContext.Consumer>;
 }
 
-
 function Tree2Element(tree: IconTree[]): React.ReactElement[] {
-  return (
-    tree &&
-    tree.map((node, i) =>
-      React.createElement(
-        node.tag,
-        { key: i, ...node.attr },
-        Tree2Element(node.child),
-      ),
-    )
-  );
+  return tree && tree.map((node, i) => React.createElement(node.tag, { key: i, ...node.attr }, Tree2Element(node.child)));
 }
