@@ -15,13 +15,13 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
-"@ava/typescript@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/@ava/typescript/-/typescript-6.0.0.tgz#58678eb524b5a8aa192688cfc907d49fed7efc5d"
-  integrity sha512-+8oDYc4J5cCaWZh1VUbyc+cegGplJO9FqHpqR4LVAVx8fRLVRaYlC4yyA6cqHJ1vWP23Ff/ECS5U68Zz6OLZlg==
+"@ava/typescript@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/@ava/typescript/-/typescript-7.0.0.tgz#f5399c83de92786e64b006dd9db28331292fbbec"
+  integrity sha512-0ktzq4/9ya2QoAuVWzl3McpLV9W//Tj+oMonQ4ucgm5l6tQ46aaju/rJL9kzeY5MkG6wzXvFt/MmaLqf9uNC9w==
   dependencies:
     escape-string-regexp "^5.0.0"
-    execa "^9.6.0"
+    execa "^9.6.1"
 
 "@babel/cli@7.25.9":
   version "7.25.9"
@@ -3630,7 +3630,7 @@ events@^3.2.0:
   resolved "https://registry.npmjs.org/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
-execa@^9.6.0:
+execa@^9.6.1:
   version "9.6.1"
   resolved "https://registry.npmjs.org/execa/-/execa-9.6.1.tgz#5b90acedc6bdc0fa9b9a6ddf8f9cbb0c75a7c471"
   integrity sha512-9Be3ZoN4LmYR90tUoVu2te2BsbzHfhJyfEiAVfz7N5/zv+jduIfLrV2xdQXOHbaD6KgpGdO9PRPM1Y4Q9QkPkA==
