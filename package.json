@@ -109,7 +109,7 @@
     "@typescript-eslint/eslint-plugin": "7.0.0",
     "@typescript-eslint/parser": "6.21.0",
     "ava": "https://github.com/quine-global/ava#ad77c3bc92de51a3436c1be1acbb3da594e3251e",
-    "babel-loader": "9.2.1",
+    "babel-loader": "10.1.1",
     "concurrently": "9.1.0",
     "copy-webpack-plugin": "14.0.0",
     "cpy-cli": "^5.0.0",
