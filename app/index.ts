@@ -185,7 +185,7 @@ app.on('ready', () => {
         hwin.webContents.on('unresponsive', () => console.warn('[main] renderer: unresponsive'));
 
         if (isDev) {
-          hwin.webContents.openDevTools({mode: 'detach'});
+          // hwin.webContents.openDevTools({mode: 'detach'});
           hwin.webContents.on('console-message', (_e, level, message, line, sourceId) => {
             const labels = ['verbose', 'info', 'warn', 'error'];
             console.log(`[renderer:${labels[level] ?? level}] ${message} (${sourceId}:${line})`);

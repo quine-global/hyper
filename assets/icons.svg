@@ -23,16 +23,8 @@
     </symbol>
     <symbol id="maximize-window" viewBox="0 0 10 10">
       <title>maximize window</title>
-      <defs>
-        <polygon id="maximize-window-a" points="0 0 10 0 10 10 0 10"/>
-        <mask id="maximize-window-b" width="10" height="10" x="0" y="0">
-          <use xlink:href="#maximize-window-a"/>
-        </mask>
-      </defs>
-      <g fill="none" fill-rule="evenodd">
-        <polygon fill="none" points="0 0 10 0 10 10 0 10"/>
-        <use stroke="currentColor" stroke-width="2" mask="url(#maximize-window-b)" xlink:href="#maximize-window-a"/>
-      </g>
+      <rect x="0.5" y="0.5" width="9" height="9"
+        fill="none" stroke="currentColor" stroke-width="1"/>
     </symbol>
     <symbol id="restore-window" viewBox="0 0 10.2 10.2">
       <title>restore window</title>
