@@ -80,7 +80,7 @@
     "webpack-cli": "5.1.4"
   },
   "devDependencies": {
-    "@ava/typescript": "^6.0.0",
+    "@ava/typescript": "^7.0.0",
     "@babel/cli": "7.25.9",
     "@babel/core": "7.26.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
