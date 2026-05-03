@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from 'react';
 
 import type {TabProps} from '../../typings/hyper';
 
-const Tab = (props: TabProps) => {
+function Tab(props: TabProps) {
   const handleClick = (event: React.MouseEvent) => {
     const isLeftClick = event.nativeEvent.which === 1;
 
@@ -173,7 +173,5 @@ const Tab = (props: TabProps) => {
     </>
   );
 };
-
-Tab.displayName = 'Tab';
 
 export default Tab;
