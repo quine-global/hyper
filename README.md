@@ -115,14 +115,6 @@ If you are getting compiler errors when running `yarn` add the environment varia
 If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
 `export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
 
-##### Error with `No native build was found for platform=darwin arch=arm64 runtime=node`
-
-Run this:
-
-```
-node_modules/.bin/node-gyp rebuild --directory node_modules/leveldown
-```
-
 
 ## Related Repositories
 
