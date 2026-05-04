@@ -80,8 +80,8 @@ const addBinToUserPath = () => {
   }
   return new Promise<void>((resolve, reject) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-unsafe-assignment
-      const Registry = require('native-reg');
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+      const Registry = require('native-reg') as typeof NativeReg;
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
       // C:\Users\<user>\AppData\Local\Programs\hyper\resources\bin
