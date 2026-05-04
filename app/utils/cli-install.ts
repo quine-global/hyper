@@ -1,6 +1,7 @@
 import {existsSync, readlink, symlink} from 'fs';
 import path from 'path';
 import {promisify} from 'util';
+import type * as NativeReg from 'native-reg';
 
 import {clipboard, dialog} from 'electron';
 
