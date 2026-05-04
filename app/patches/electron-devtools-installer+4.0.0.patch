@@ -1,0 +1,24 @@
+diff --git a/node_modules/electron-devtools-installer/dist/index.js b/node_modules/electron-devtools-installer/dist/index.js
+index c428018..3c0a7d4 100644
+--- a/node_modules/electron-devtools-installer/dist/index.js
++++ b/node_modules/electron-devtools-installer/dist/index.js
+@@ -26,7 +26,8 @@ async function installExtension(extensionReference, options = {}) {
+     else {
+         throw new Error(`Invalid extensionReference passed in: "${extensionReference}"`);
+     }
+-    const installedExtension = targetSession.getAllExtensions().find((e) => e.id === chromeStoreID);
++    const getAllExtensions = targetSession.extensions ? targetSession.extensions.getAllExtensions.bind(targetSession.extensions) : targetSession.getAllExtensions.bind(targetSession);
++    const installedExtension = getAllExtensions().find((e) => e.id === chromeStoreID);
+     if (!forceDownload && installedExtension) {
+         return installedExtension;
+     }
+@@ -47,7 +48,8 @@ async function installExtension(extensionReference, options = {}) {
+         targetSession.removeExtension(installedExtension.id);
+         await unloadPromise;
+     }
+-    return targetSession.loadExtension(extensionFolder, loadExtensionOptions);
++    const loader = targetSession.extensions ? targetSession.extensions.loadExtension.bind(targetSession.extensions) : targetSession.loadExtension.bind(targetSession);
++    return loader(extensionFolder, loadExtensionOptions);
+ }
+ exports.default = installExtension;
+ exports.EMBER_INSPECTOR = {

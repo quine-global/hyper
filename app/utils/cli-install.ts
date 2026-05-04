@@ -1,12 +1,11 @@
 import {existsSync, readlink, symlink} from 'fs';
 import path from 'path';
 import {promisify} from 'util';
+import type * as NativeReg from 'native-reg';
 
 import {clipboard, dialog} from 'electron';
 
 import {mkdirpSync} from 'fs-extra';
-import * as Registry from 'native-reg';
-import type {ValueType} from 'native-reg';
 import sudoPrompt from 'sudo-prompt';
 
 import {cliScriptPath, cliLinkPath} from '../config/paths';
@@ -76,8 +75,13 @@ sudo ln -sf "${cliScriptPath}" "${cliLinkPath}"`,
 };
 
 const addBinToUserPath = () => {
+  if (process.platform !== 'win32') {
+    return Promise.reject(new Error('addBinToUserPath is only supported on Windows'));
+  }
   return new Promise<void>((resolve, reject) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+      const Registry = require('native-reg') as typeof NativeReg;
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
       // C:\Users\<user>\AppData\Local\Programs\hyper\resources\bin
@@ -90,7 +94,8 @@ const addBinToUserPath = () => {
       const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
-      let type: ValueType = Registry.ValueType.SZ;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      let type = Registry.ValueType.SZ;
       if (pathItem) {
         type = Registry.queryValueRaw(envKey, pathItem)!.type;
         if (type !== Registry.ValueType.SZ && type !== Registry.ValueType.EXPAND_SZ) {

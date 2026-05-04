@@ -23,7 +23,7 @@
     "dist": "yarn run build && yarn run electron-builder-with-retry",
     "electron-builder-with-retry": "electron-builder -p never || electron-builder -p never || electron-builder -p never",
     "clean": "node ./bin/rimraf-standalone.js node_modules && node ./bin/rimraf-standalone.js ./app/node_modules && node ./bin/rimraf-standalone.js ./app/renderer && node ./bin/rimraf-standalone.js ./target && node ./bin/rimraf-standalone.js ./dist",
-    "v8-snapshot": "cross-env npm_config_arch=x64 yarn run v8-snapshot:arch && cross-env npm_config_arch=arm64 yarn run v8-snapshot:arch",
+    "v8-snapshot": "cross-env SNAPSHOT_TARGET_ARCH=x64 yarn run v8-snapshot:arch && cross-env SNAPSHOT_TARGET_ARCH=arm64 yarn run v8-snapshot:arch",
     "v8-snapshot:arch": "yarn run mk-snapshot && yarn run cp-snapshot",
     "mk-snapshot": "cross-env ELECTRON_CUSTOM_VERSION=$npm_package_devDependencies_electron node node_modules/electron-mksnapshot/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
@@ -116,7 +116,7 @@
     "cross-env": "7.0.3",
     "electron": "38.6.0",
     "electron-builder": "26.8.1",
-    "electron-link": "^0.6.0",
+    "electron-link": "https://github.com/quine-global/electron-link#10fc13cb91f08e3b2a2f791125509db4d84530ff",
     "electron-mksnapshot": "41.5.0",
     "electronmon": "^2.0.3",
     "eslint": "8.57.0",
@@ -158,6 +158,7 @@
   },
   "resolutions": {
     "@types/retry": "0.12.5",
+    "electron-link": "https://github.com/quine-global/electron-link#10fc13cb91f08e3b2a2f791125509db4d84530ff",
     "node-abi": "^3.81.0"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

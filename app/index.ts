@@ -96,9 +96,9 @@ async function installDevExtensions(isDev_: boolean) {
   return Promise.all(
     extensions.map((extension) =>
       installer(extension, {forceDownload, loadExtensionOptions: {allowFileAccess: true}})
-        .then((name) => {
-          console.log('[main] devtools extension installed:', name);
-          return name;
+        .then((ext) => {
+          console.log('[main] devtools extension installed:', ext.name);
+          return ext;
         })
         .catch((err) => {
           console.warn('[main] devtools extension failed:', err.message);
