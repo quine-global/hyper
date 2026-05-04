@@ -106,7 +106,7 @@ runs:
         sudo dpkg --add-architecture i386
         sudo apt update
         sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
-        npm_config_arch=armv7l yarn run v8-snapshot:arch
+        SNAPSHOT_TARGET_ARCH=armv7l yarn run v8-snapshot:arch
     
     - name: Build final Electron App for ARM
       shell: bash

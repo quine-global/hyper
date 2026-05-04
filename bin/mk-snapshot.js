@@ -15,9 +15,9 @@ const archMap = {
 };
 
 async function main() {
-  const npmConfigArch = process.env.npm_config_arch;
+  const npmConfigArch = process.env.SNAPSHOT_TARGET_ARCH ?? process.env.npm_config_arch;
   if (!npmConfigArch) {
-    throw new Error('env var npm_config_arch is not specified')
+    throw new Error('env var SNAPSHOT_TARGET_ARCH is not specified')
   }
 
 

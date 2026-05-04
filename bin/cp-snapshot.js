@@ -50,7 +50,7 @@ exports.default = async (context) => {
 };
 
 if (require.main === module) {
-  const archToCopy = process.env.npm_config_arch;
+  const archToCopy = process.env.SNAPSHOT_TARGET_ARCH ?? process.env.npm_config_arch;
   const pathToElectron = getPathToElectron();
   if ((process.arch.startsWith('arm') ? 'arm64' : 'x64') === archToCopy) {
     copySnapshot(pathToElectron, archToCopy);
