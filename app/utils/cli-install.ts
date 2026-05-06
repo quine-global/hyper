@@ -1,11 +1,11 @@
 import {existsSync, readlink, symlink} from 'fs';
 import path from 'path';
 import {promisify} from 'util';
-import type * as NativeReg from 'native-reg';
 
 import {clipboard, dialog} from 'electron';
 
 import {mkdirpSync} from 'fs-extra';
+import type * as NativeReg from 'native-reg';
 import sudoPrompt from 'sudo-prompt';
 
 import {cliScriptPath, cliLinkPath} from '../config/paths';
@@ -80,7 +80,7 @@ const addBinToUserPath = () => {
   }
   return new Promise<void>((resolve, reject) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const Registry = require('native-reg') as typeof NativeReg;
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
@@ -94,7 +94,7 @@ const addBinToUserPath = () => {
       const pathItemName = pathItem || 'PATH';
 
       let newPathValue = binPath;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+
       let type = Registry.ValueType.SZ;
       if (pathItem) {
         type = Registry.queryValueRaw(envKey, pathItem)!.type;

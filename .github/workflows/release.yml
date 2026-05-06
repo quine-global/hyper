@@ -21,27 +21,45 @@ env:
   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
 jobs:
-  build-ubuntu:
-    name: Build Ubuntu
+  validate-tag:
+    name: Validate Tag Matches package.json
+    if: "!contains(github.ref_name, 'canary')"
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Check tag matches package.json version
+        run: |
+          TAG="${{ github.ref_name }}"
+          ROOT_VERSION="v$(jq -r .version package.json)"
+          APP_VERSION="v$(jq -r .version app/package.json)"
+          FAILED=0
+          if [ "$TAG" != "$ROOT_VERSION" ]; then
+            echo "Error: tag '$TAG' does not match package.json version '$ROOT_VERSION'"
+            FAILED=1
+          fi
+          if [ "$TAG" != "$APP_VERSION" ]; then
+            echo "Error: tag '$TAG' does not match app/package.json version '$APP_VERSION'"
+            FAILED=1
+          fi
+          exit $FAILED
 
-      - name: Build
-        uses: ./.github/actions/build
-        env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          matrix-os: ubuntu-latest
-          matrix-name: ubuntu
-          upload-artifact: true
-
-  build-macos:
-    name: Build macOS
-    runs-on: macos-latest
+  build:
+    name: Build ${{ matrix.name }}
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Ubuntu
+            matrix-name: ubuntu
+          - os: macos-latest
+            name: macOS
+            matrix-name: macos
+          - os: windows-latest
+            name: Windows
+            matrix-name: win
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,32 +71,16 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
-          matrix-os: macos-latest
-          matrix-name: macos
-          upload-artifact: true
-
-  build-windows:
-    name: Build Windows
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build
-        uses: ./.github/actions/build
-        env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          matrix-os: windows-latest
-          matrix-name: win
+          matrix-os: ${{ matrix.os }}
+          matrix-name: ${{ matrix.matrix-name }}
           upload-artifact: true
 
   # ARM Linux:
 
   build-linux-armv7l:
     name: Build Linux ARMv7l
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -119,6 +121,8 @@ jobs:
 
   build-linux-arm64:
     name: Build Linux ARM64
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -141,9 +145,7 @@ jobs:
   upload-release:
     name: Upload and Create Release
     needs:
-      - build-ubuntu
-      - build-macos
-      - build-windows
+      - build
       - build-linux-armv7l
       - build-linux-arm64
     runs-on: ubuntu-latest
@@ -173,7 +175,7 @@ jobs:
           gh release view "${{ github.ref_name }}" --repo "${{ github.repository }}" --json assets --jq '.assets[] | "\(.name) - \(.url)"' || true
 
       - name: Create GitHub Release
-        # Pinned to work around https://github.com/softprops/action-gh-release/issues/445
+        # TODO Pinned to work around https://github.com/softprops/action-gh-release/issues/445
         uses: softprops/action-gh-release@v3.0.0
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}

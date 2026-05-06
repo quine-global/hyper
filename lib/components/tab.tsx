@@ -172,6 +172,6 @@ function Tab(props: TabProps) {
       `}</style>
     </>
   );
-};
+}
 
 export default Tab;

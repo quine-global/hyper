@@ -26,7 +26,9 @@ config.setup();
 console.log('[main] config setup complete');
 
 // Native
+import {execFile as execFileCallback} from 'child_process';
 import {resolve} from 'path';
+import {promisify} from 'util';
 
 // Packages
 import {app, BrowserWindow, Menu, screen} from 'electron';
@@ -104,6 +106,14 @@ async function installDevExtensions(isDev_: boolean) {
           console.warn('[main] devtools extension failed:', err.message);
         })
     )
+  );
+}
+
+if (process.platform === 'darwin') {
+  const execFile = promisify(execFileCallback);
+  const appName = isDev ? 'com.github.Electron' : app.getName();
+  execFile('defaults', ['write', appName, 'ApplePressAndHoldEnabled', '-bool', 'false']).catch((err: Error) =>
+    console.error('defaults write failed:', err)
   );
 }
 
