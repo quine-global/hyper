@@ -2920,7 +2920,7 @@ electron-builder@26.8.1:
 
 "electron-link@https://github.com/quine-global/electron-link#10fc13cb91f08e3b2a2f791125509db4d84530ff":
   version "0.7.0"
-  resolved "git+ssh://git@github.com/quine-global/electron-link.git#10fc13cb91f08e3b2a2f791125509db4d84530ff"
+  resolved "git+https://github.com/quine-global/electron-link.git#10fc13cb91f08e3b2a2f791125509db4d84530ff"
   integrity sha512-gMsGNEYFxSrx2nR2G4cRA60l9bxD3Fvy0C16C7oPt9E4yP9Y6YbVjBocSrQv2+ZV/cTUmQSOrfjRI9IBmJ4Xgw==
   dependencies:
     acorn "^8.0.4"
