@@ -20,11 +20,9 @@ type AutoUpdaterEvent =
   | 'update-available'
   | 'update-not-available';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface AutoUpdater extends Omit<OriginalAutoUpdater, 'on' | 'removeListener'> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   removeListener(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
 }
 

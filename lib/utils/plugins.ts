@@ -108,7 +108,7 @@ function getDecorated<P extends Record<string, any>>(
         let class__;
 
         try {
-          class__ = fn(class_, {React, PureComponent, Notification, notify});
+          class__ = fn(class_, {React, PureComponent, Notification, notify}) as React.ComponentClass<P>;
           class__.displayName = `${fn._pluginName}(${name})`;
         } catch (err) {
           notify(
@@ -170,7 +170,8 @@ export function decorate<P extends Record<string, any>>(
 
 const Module = require('module') as typeof import('module') & {_load: (...args: unknown[]) => unknown};
 const originalLoad = Module._load;
-Module._load = function _load(path: string) {
+Module._load = function _load(...args: unknown[]) {
+  const path = args[0] as string;
   // PLEASE NOTE: Code changes here, also need to be changed in
   // app/plugins.js
   switch (path) {
@@ -194,8 +195,7 @@ Module._load = function _load(path: string) {
     case 'child_process':
       return process.platform === 'darwin' ? IPCChildProcess : ChildProcess;
     default:
-      // eslint-disable-next-line prefer-rest-params
-      return originalLoad.apply(this, arguments);
+      return originalLoad.apply(this, args);
   }
 };
 
