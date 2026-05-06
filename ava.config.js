@@ -3,7 +3,7 @@ module.exports = {
   typescript: {
     compile: 'tsc',
     rewritePaths: {
-      'test/': 'dist/tmp/root/test/',
+      'test/': 'dist/tmp/root/test/'
     }
   },
   verbose: true,
