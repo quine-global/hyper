@@ -80,7 +80,6 @@ function exposeDecorated<P extends Record<string, any>>(
     onRef = (decorated_: any) => {
       if (this.props.onDecorated) {
         try {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           this.props.onDecorated(decorated_);
         } catch (e) {
           notify('Plugin error', `Error occurred. Check Developer Tools for details`, {error: e});
@@ -103,7 +102,7 @@ function getDecorated<P extends Record<string, any>>(
 
     modules.forEach((mod: any) => {
       const method = 'decorate' + name;
-      const fn: Function & {_pluginName: string} = mod[method];
+      const fn: ((...args: unknown[]) => unknown) & {_pluginName: string} = mod[method];
 
       if (fn) {
         let class__;
@@ -168,8 +167,8 @@ export function decorate<P extends Record<string, any>>(
 // patching Module._load
 // so plugins can `require` them without needing their own version
 // https://github.com/vercel/hyper/issues/619
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Module = require('module') as typeof import('module') & {_load: Function};
+
+const Module = require('module') as typeof import('module') & {_load: (...args: unknown[]) => unknown};
 const originalLoad = Module._load;
 Module._load = function _load(path: string) {
   // PLEASE NOTE: Code changes here, also need to be changed in
@@ -207,7 +206,6 @@ const clearModulesCache = () => {
   // trigger unload hooks
   modules.forEach((mod) => {
     if (mod.onRendererUnload) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       mod.onRendererUnload(window);
     }
   });
@@ -227,7 +225,7 @@ const getPluginVersion = (path: string): string | null => {
   let version: string | null = null;
   try {
     version = window.require(pathModule.resolve(path, 'package.json')).version as string;
-  } catch (err) {
+  } catch (_err) {
     console.warn(`No package.json found in ${path}`);
   }
   return version;
@@ -381,7 +379,6 @@ const loadModules = () => {
       }
 
       if (mod.onRendererWindow) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         mod.onRendererWindow(window);
       }
       console.log(`[renderer:plugins] loaded: ${pluginName} (${pluginVersion})`);
@@ -423,7 +420,6 @@ function getProps(name: keyof typeof propsDecorators, props: any, ...fnArgs: any
     }
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       ret_ = fn(...fnArgs, props_);
     } catch (err) {
       notify('Plugin error', `${fn._pluginName}: Error occurred in \`${name}\`. Check Developer Tools for details.`, {
@@ -466,7 +462,7 @@ export function getTabProps<T extends Assignable<TabProps, T>>(tab: any, parentP
 // connects + decorates a class
 // plugins can override mapToState, dispatchToProps
 // and the class gets decorated (proxied)
-export function connect<stateProps extends {}, dispatchProps>(
+export function connect<stateProps extends object, dispatchProps>(
   stateFn: (state: HyperState) => stateProps,
   dispatchFn: (dispatch: HyperDispatch) => dispatchProps,
   c: null | undefined,
@@ -483,7 +479,6 @@ export function connect<stateProps extends {}, dispatchProps>(
           let ret_;
 
           try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             ret_ = fn(state, ret);
           } catch (err) {
             notify(
@@ -509,7 +504,6 @@ export function connect<stateProps extends {}, dispatchProps>(
           let ret_;
 
           try {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             ret_ = fn(dispatch, ret);
           } catch (err) {
             notify(
@@ -545,14 +539,12 @@ const decorateReducer: {
 } = <T extends keyof typeof reducersDecorators>(name: T, fn: any) => {
   const reducers = reducersDecorators[name];
   return (state: any, action: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     let state_ = fn(state, action);
 
     reducers.forEach((pluginReducer: any) => {
       let state__;
 
       try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         state__ = pluginReducer(state_, action);
       } catch (err) {
         notify('Plugin error', `${fn._pluginName}: Error occurred in \`${name}\`. Check Developer Tools for details.`, {
@@ -586,7 +578,7 @@ export function decorateSessionsReducer(fn: ISessionReducer) {
 }
 
 // redux middleware generator
-export const middleware: Middleware<{}, HyperState, Dispatch<HyperActions>> = (store) => (next) => (action) => {
+export const middleware: Middleware<object, HyperState, Dispatch<HyperActions>> = (store) => (next) => (action) => {
   const nextMiddleware = (remaining: Middleware[]) => (action_: any) =>
     remaining.length ? remaining[0](store)(nextMiddleware(remaining.slice(1)))(action_) : next(action_);
   nextMiddleware(middlewares)(action);

@@ -136,7 +136,7 @@ export function newWindow(
     const profile = extraOptionsFiltered.profile || profileName;
     const activeSession = extraOptionsFiltered.activeUid ? sessions.get(extraOptionsFiltered.activeUid) : undefined;
     let cwd = '';
-    if (cfg.preserveCWD !== false && activeSession && activeSession.profile === profile) {
+    if (cfg.preserveCWD !== false && activeSession?.profile === profile) {
       const activePID = activeSession.pty?.pid;
       if (activePID !== undefined) {
         try {

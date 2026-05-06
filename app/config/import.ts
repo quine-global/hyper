@@ -42,7 +42,7 @@ const _importConf = () => {
   let userCfg: rawConfig;
   try {
     userCfg = JSON.parse(readFileSync(cfgPath, 'utf8'));
-  } catch (err) {
+  } catch (_err) {
     notify("Couldn't parse config file. Using default config instead.");
     userCfg = JSON.parse(defaultCfgRaw);
   }

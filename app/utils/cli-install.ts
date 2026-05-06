@@ -80,7 +80,6 @@ const addBinToUserPath = () => {
   }
   return new Promise<void>((resolve, reject) => {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const Registry = require('native-reg') as typeof NativeReg;
       const envKey = Registry.openKey(Registry.HKCU, 'Environment', Registry.Access.ALL_ACCESS)!;
 
@@ -131,7 +130,7 @@ const addBinToUserPath = () => {
 
 const logNotify = (withNotification: boolean, title: string, body: string, details?: {error?: any}) => {
   console.log(title, body, details);
-  withNotification && notify(title, body, details);
+  if (withNotification) notify(title, body, details);
 };
 
 export const installCLI = async (withNotification: boolean) => {

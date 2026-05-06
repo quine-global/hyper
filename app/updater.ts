@@ -21,8 +21,8 @@ type AutoUpdaterEvent =
   | 'update-not-available';
 
 interface AutoUpdater extends OriginalAutoUpdater {
-  on(event: AutoUpdaterEvent, listener: Function): this;
-  removeListener(event: AutoUpdaterEvent, listener: Function): this;
+  on(event: AutoUpdaterEvent, listener: (...args: unknown[]) => void): this;
+  removeListener(event: AutoUpdaterEvent, listener: (...args: unknown[]) => void): this;
 }
 
 const {platform} = process;

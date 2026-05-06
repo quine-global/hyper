@@ -9,10 +9,9 @@ import type {HyperActions, HyperState} from '../../typings/hyper';
  * defer or add to existing side effects at will
  * as the result of an action being triggered.
  */
-const effectsMiddleware: Middleware<{}, HyperState, Dispatch<HyperActions>> = () => (next) => (action) => {
+const effectsMiddleware: Middleware<object, HyperState, Dispatch<HyperActions>> = () => (next) => (action) => {
   const ret = next(action);
   if (action.effect) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     action.effect();
     delete action.effect;
   }

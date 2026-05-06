@@ -3,7 +3,6 @@ import {cfgPath} from './config/paths';
 
 // Print diagnostic information for a few arguments instead of running Hyper.
 if (['--help', '-v', '--version'].includes(process.argv[1])) {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const {version} = require('./package');
   console.log(`Hyper version ${version}`);
   console.log('Hyper does not accept any command line arguments. Please modify the config file instead.');

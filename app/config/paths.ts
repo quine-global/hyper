@@ -43,7 +43,7 @@ if (isDev) {
     cfgPath = devCfg;
     cfgDir = devDir;
     console.log('using config file:', cfgPath);
-  } catch (err) {
+  } catch (_err) {
     // ignore
   }
 }
