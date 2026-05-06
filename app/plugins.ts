@@ -1,6 +1,6 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
+
 import {exec, execFile} from 'child_process';
 import {writeFileSync} from 'fs';
 import {resolve, basename} from 'path';
@@ -14,7 +14,6 @@ import Config from 'electron-store';
 import ms from 'ms';
 import ReactDom from 'react-dom';
 
-import type {IpcMainWithCommands} from '../typings/common';
 import type {configOptions} from '../typings/config';
 
 import * as config from './config';
@@ -42,7 +41,7 @@ function getId(plugins_: any) {
   return JSON.stringify(plugins_);
 }
 
-const watchers: Function[] = [];
+const watchers: (() => unknown)[] = [];
 
 // we listen on configuration updates to trigger
 // plugin installation
@@ -62,7 +61,6 @@ config.subscribe(() => {
 // so plugins can `require` them without needing their own version
 // https://github.com/vercel/hyper/issues/619
 function patchModuleLoad() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const Module = require('module');
   const originalLoad = Module._load;
   Module._load = function _load(modulePath: string) {
@@ -135,7 +133,7 @@ function updatePlugins({force = false} = {}) {
 
       // notify watchers
       watchers.forEach((fn) => {
-        fn(err, {force});
+        fn();
       });
 
       if (force || changed) {
@@ -155,10 +153,9 @@ function getPluginVersions() {
   return paths_.map((path_) => {
     let version: string | null = null;
     try {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       version = require(resolve(path_, 'package.json')).version;
       //eslint-disable-next-line no-empty
-    } catch (err) {}
+    } catch (_err) {}
     return [basename(path_), version];
   });
 }
@@ -220,7 +217,7 @@ function syncPackageJSON() {
   const file = resolve(path, 'package.json');
   try {
     writeFileSync(file, JSON.stringify(pkg, null, 2));
-  } catch (err) {
+  } catch (_err) {
     alert(`An error occurred writing to ${file}`);
   }
 }
@@ -252,7 +249,7 @@ function toDependencies(plugins_: {plugins: string[]}) {
   return obj;
 }
 
-export const subscribe = (fn: Function) => {
+export const subscribe = (fn: () => unknown) => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);
@@ -299,9 +296,8 @@ function requirePlugins(): any[] {
       // populate the name for internal errors here
       mod._name = basename(path_);
       try {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         mod._version = require(resolve(path_, 'package.json')).version;
-      } catch (err) {
+      } catch (_err) {
         console.warn(`No package.json found in ${path_}`);
       }
       console.log(`[plugins] loaded: ${mod._name} (${mod._version})`);
@@ -469,7 +465,7 @@ export const decorateSessionClass = <T>(Session: T): T => {
 
 export {toDependencies as _toDependencies};
 
-const ipcMain = _ipcMain as IpcMainWithCommands;
+const ipcMain = _ipcMain;
 
 ipcMain.handle('child_process.exec', (event, command, options) => {
   return promisify(exec)(command, options);

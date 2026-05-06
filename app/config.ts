@@ -10,7 +10,7 @@ import {cfgPath, cfgDir} from './config/paths';
 import notify from './notify';
 import {getColorMap} from './utils/colors';
 
-const watchers: Function[] = [];
+const watchers: (() => unknown)[] = [];
 let cfg: parsedConfig = {} as any;
 let _watcher: chokidar.FSWatcher;
 
@@ -69,7 +69,7 @@ const _watch = () => {
   });
 };
 
-export const subscribe = (fn: Function) => {
+export const subscribe = (fn: () => unknown) => {
   watchers.push(fn);
   return () => {
     watchers.splice(watchers.indexOf(fn), 1);

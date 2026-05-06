@@ -1,5 +1,3 @@
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import test from 'ava';
 import proxyquireLib from 'proxyquire';
 

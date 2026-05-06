@@ -70,7 +70,7 @@ export const createMenu = (
         .map((z) => z.trim())
         .join('\n'),
       buttons: [],
-      icon: icon as any
+      icon: icon
     });
   };
   const menu = [

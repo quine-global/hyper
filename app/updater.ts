@@ -20,9 +20,10 @@ type AutoUpdaterEvent =
   | 'update-available'
   | 'update-not-available';
 
-interface AutoUpdater extends OriginalAutoUpdater {
-  on(event: AutoUpdaterEvent, listener: Function): this;
-  removeListener(event: AutoUpdaterEvent, listener: Function): this;
+interface AutoUpdater extends Omit<OriginalAutoUpdater, 'on' | 'removeListener'> {
+  on(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
+
+  removeListener(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
 }
 
 const {platform} = process;
@@ -60,7 +61,7 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
 
 async function init() {
-  autoUpdater.on('error', (err) => {
+  autoUpdater.on('error', (err: Error) => {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 

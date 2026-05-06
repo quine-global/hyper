@@ -20,9 +20,8 @@ const createNodePtyError = () =>
 
 let spawn: typeof npSpawn;
 try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   spawn = require('node-pty').spawn;
-} catch (err) {
+} catch (_err) {
   throw createNodePtyError();
 }
 

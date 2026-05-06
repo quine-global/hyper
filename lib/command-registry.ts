@@ -15,7 +15,7 @@ export const getRegisteredKeys = async () => {
 
   return Object.keys(keymaps).reduce((result: Record<string, string>, actionName) => {
     const commandKeys = keymaps[actionName];
-    commandKeys.forEach((shortcut) => {
+    commandKeys.forEach((shortcut: string) => {
       result[shortcut] = actionName;
     });
     return result;

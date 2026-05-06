@@ -136,7 +136,7 @@ export function newWindow(
     const profile = extraOptionsFiltered.profile || profileName;
     const activeSession = extraOptionsFiltered.activeUid ? sessions.get(extraOptionsFiltered.activeUid) : undefined;
     let cwd = '';
-    if (cfg.preserveCWD !== false && activeSession && activeSession.profile === profile) {
+    if (cfg.preserveCWD !== false && activeSession?.profile === profile) {
       const activePID = activeSession.pty?.pid;
       if (activePID !== undefined) {
         try {
@@ -346,12 +346,10 @@ export function newWindow(
   // load plugins
   load();
 
-  const pluginsUnsubscribe = app.plugins.subscribe((err: any) => {
-    if (!err) {
-      load();
-      window.webContents.send('plugins change');
-      updateBackgroundColor();
-    }
+  const pluginsUnsubscribe = app.plugins.subscribe(() => {
+    load();
+    window.webContents.send('plugins change');
+    updateBackgroundColor();
   });
 
   // Keep track of focus time of every window, to figure out
