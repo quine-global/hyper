@@ -12,10 +12,6 @@
 
 [![Node CI](https://github.com/quine-global/hyper/actions/workflows/ci.yml/badge.svg?branch=canary)](https://github.com/quine-global/hyper/actions/workflows/ci.yml)
 
-[![Changelog #213](https://img.shields.io/badge/changelog-%23213-lightgrey.svg)](https://changelog.com/213)
-
-For more details, head to: https://hyper.is
-
 ## Project goals
 
 The goal of the project is to create a beautiful and customizable experience for command-line interface users, built on open web standards. We have picked up where Vercel left off, and intend to first offer stability, followed by a more tailored experience. We will still support customizability, but stability of theming APIs is not a goal.
@@ -24,41 +20,7 @@ In the future, we anticipate the community will come up with innovative addition
 
 ## Usage
 
-[Download the latest release!](https://hyper.is/#installation)
-
-### Linux
-#### Arch and derivatives
-Hyper is available in the [AUR](https://aur.archlinux.org/packages/hyper/). Use an AUR [package manager](https://wiki.archlinux.org/index.php/AUR_helpers) e.g. [paru](https://github.com/Morganamilo/paru)
-
-```sh
-paru -S hyper
-```
-
-#### NixOS
-Hyper is available as [Nix package](https://github.com/NixOS/nixpkgs/blob/master/pkgs/applications/misc/hyper/default.nix), to install the app run this command:
-
-```sh
-nix-env -i hyper
-```
-
-### macOS
-
-Use [Homebrew Cask](https://brew.sh) to download the app by running these commands:
-
-```bash
-brew update
-brew install --cask hyper
-```
-
-### Windows
-
-Use [chocolatey](https://chocolatey.org/) to install the app by running the following command (package information can be found [here](https://chocolatey.org/packages/hyper/)):
-
-```bash
-choco install hyper
-```
-
-**Note:** The version available on [Homebrew Cask](https://brew.sh), [Chocolatey](https://chocolatey.org), [Snapcraft](https://snapcraft.io/store) or the [AUR](https://aur.archlinux.org) may not be the latest. Please consider downloading it from [here](https://hyper.is/#installation) if that's the case.
+[Download the latest release!](https://github.com/quine-global/hyper/releases/latest)
 
 ## Contribute
 
@@ -115,8 +77,14 @@ If you are getting compiler errors when running `yarn` add the environment varia
 If you have issues in the `codesign` step when running `yarn run dist` on macOS, you can temporarily disable code signing locally by setting
 `export CSC_IDENTITY_AUTO_DISCOVERY=false` for the current terminal session.
 
+## Futher Documentation
+
+If you'd like more details on the Plugin API, that much has not changed from the original Vercel Hyper yet. You can find it on the
+[old Hyper's website](https://hyper.is/).
 
 ## Related Repositories
+
+These repositories are for the original Hyper.
 
 - [Website](https://github.com/vercel/hyper-site)
 - [Sample Extension](https://github.com/vercel/hyperpower)
