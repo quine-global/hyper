@@ -133,7 +133,7 @@ function updatePlugins({force = false} = {}) {
 
       // notify watchers
       watchers.forEach((fn) => {
-        fn(err, {force});
+        fn();
       });
 
       if (force || changed) {

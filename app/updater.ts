@@ -20,9 +20,12 @@ type AutoUpdaterEvent =
   | 'update-available'
   | 'update-not-available';
 
-interface AutoUpdater extends OriginalAutoUpdater {
-  on(event: AutoUpdaterEvent, listener: (...args: unknown[]) => void): this;
-  removeListener(event: AutoUpdaterEvent, listener: (...args: unknown[]) => void): this;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface AutoUpdater extends Omit<OriginalAutoUpdater, 'on' | 'removeListener'> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  on(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  removeListener(event: AutoUpdaterEvent, listener: (...args: any[]) => void): this;
 }
 
 const {platform} = process;
@@ -60,7 +63,7 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
 
 async function init() {
-  autoUpdater.on('error', (err) => {
+  autoUpdater.on('error', (err: Error) => {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
 

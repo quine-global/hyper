@@ -346,12 +346,10 @@ export function newWindow(
   // load plugins
   load();
 
-  const pluginsUnsubscribe = app.plugins.subscribe((err: any) => {
-    if (!err) {
-      load();
-      window.webContents.send('plugins change');
-      updateBackgroundColor();
-    }
+  const pluginsUnsubscribe = app.plugins.subscribe(() => {
+    load();
+    window.webContents.send('plugins change');
+    updateBackgroundColor();
   });
 
   // Keep track of focus time of every window, to figure out
