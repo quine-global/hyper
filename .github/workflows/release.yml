@@ -21,8 +21,32 @@ env:
   APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
 
 jobs:
+  validate-tag:
+    name: Validate Tag Matches package.json
+    if: "!contains(github.ref_name, 'canary')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check tag matches package.json version
+        run: |
+          TAG="${{ github.ref_name }}"
+          ROOT_VERSION="v$(jq -r .version package.json)"
+          APP_VERSION="v$(jq -r .version app/package.json)"
+          FAILED=0
+          if [ "$TAG" != "$ROOT_VERSION" ]; then
+            echo "Error: tag '$TAG' does not match package.json version '$ROOT_VERSION'"
+            FAILED=1
+          fi
+          if [ "$TAG" != "$APP_VERSION" ]; then
+            echo "Error: tag '$TAG' does not match app/package.json version '$APP_VERSION'"
+            FAILED=1
+          fi
+          exit $FAILED
+
   build-ubuntu:
     name: Build Ubuntu
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -41,6 +65,8 @@ jobs:
 
   build-macos:
     name: Build macOS
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: macos-latest
     steps:
       - name: Checkout code
@@ -59,6 +85,8 @@ jobs:
 
   build-windows:
     name: Build Windows
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -79,6 +107,8 @@ jobs:
 
   build-linux-armv7l:
     name: Build Linux ARMv7l
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -119,6 +149,8 @@ jobs:
 
   build-linux-arm64:
     name: Build Linux ARM64
+    needs: validate-tag
+    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
