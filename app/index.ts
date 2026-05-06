@@ -107,6 +107,14 @@ async function installDevExtensions(isDev_: boolean) {
   );
 }
 
+if (process.platform === 'darwin') {
+  const execFile = require('util').promisify(require('child_process').execFile);
+  const appName = isDev ? 'com.github.Electron' : app.getName();
+  execFile('defaults', ['write', appName, 'ApplePressAndHoldEnabled', '-bool',
+  'false'])                                                                    
+    .catch((err: Error) => console.error('defaults write failed:', err));
+}                                                                             
+
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.on('ready', () => {
   console.log(
