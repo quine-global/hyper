@@ -56,7 +56,7 @@
     "got": "12.4.1",
     "json-loader": "0.5.7",
     "lodash": "4.17.21",
-    "mousetrap": "chabou/mousetrap#useCapture",
+    "mousetrap": "https://github.com/chabou/mousetrap.git#useCapture",
     "ms": "2.1.3",
     "open": "8.4.2",
     "ora": "9.4.0",
