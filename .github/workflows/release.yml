@@ -43,11 +43,23 @@ jobs:
           fi
           exit $FAILED
 
-  build-ubuntu:
-    name: Build Ubuntu
+  build:
+    name: Build ${{ matrix.name }}
     needs: validate-tag
     if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Ubuntu
+            matrix-name: ubuntu
+          - os: macos-latest
+            name: macOS
+            matrix-name: macos
+          - os: windows-latest
+            name: Windows
+            matrix-name: win
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,48 +71,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           node-version: ${{ env.NODE_VERSION }}
-          matrix-os: ubuntu-latest
-          matrix-name: ubuntu
-          upload-artifact: true
-
-  build-macos:
-    name: Build macOS
-    needs: validate-tag
-    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build
-        uses: ./.github/actions/build
-        env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          matrix-os: macos-latest
-          matrix-name: macos
-          upload-artifact: true
-
-  build-windows:
-    name: Build Windows
-    needs: validate-tag
-    if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Build
-        uses: ./.github/actions/build
-        env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          matrix-os: windows-latest
-          matrix-name: win
+          matrix-os: ${{ matrix.os }}
+          matrix-name: ${{ matrix.matrix-name }}
           upload-artifact: true
 
   # ARM Linux:
@@ -173,9 +145,7 @@ jobs:
   upload-release:
     name: Upload and Create Release
     needs:
-      - build-ubuntu
-      - build-macos
-      - build-windows
+      - build
       - build-linux-armv7l
       - build-linux-arm64
     runs-on: ubuntu-latest
