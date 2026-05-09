@@ -1085,15 +1085,10 @@
   resolved "https://registry.npmjs.org/@types/mousetrap/-/mousetrap-1.6.15.tgz"
   integrity sha512-qL0hyIMNPow317QWW/63RvL1x5MVMV+Ru3NaY9f/CuEpCqrmb7WeuK2071ZY5hczOnm38qExWM2i2WtkXLSqFw==
 
-"@types/ms@*":
+"@types/ms@*", "@types/ms@2.1.0":
   version "2.1.0"
-  resolved "https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz"
+  resolved "https://registry.npmjs.org/@types/ms/-/ms-2.1.0.tgz#052aa67a48eccc4309d7f0191b7e41434b90bb78"
   integrity sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==
-
-"@types/ms@0.7.34":
-  version "0.7.34"
-  resolved "https://registry.npmjs.org/@types/ms/-/ms-0.7.34.tgz"
-  integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*", "@types/node@22.9.3":
   version "22.9.3"
