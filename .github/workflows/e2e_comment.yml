@@ -41,7 +41,7 @@ jobs:
           path: ./*.png
           client_id: ${{ secrets.IMGUR_CLIENT_ID }}
       - name: Comment on the PR
-        uses: jungwinter/comment@v1
+        uses: jungwinter/comment@v1.1.0
         env:
           IMG_MARKDOWN: ${{ join(fromJSON(steps.upload_screenshots.outputs.markdown_urls), '') }}
           MESSAGE: |
