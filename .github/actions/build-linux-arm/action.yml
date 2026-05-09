@@ -62,7 +62,7 @@ runs:
         yarn install
         sudo apt update
         sudo apt install libarchive-tools
-    
+
     - name: Rebuild node-pty and all native modules for ARM
       uses: pguyot/arm-runner-action@v2.6.5
       with:
@@ -77,7 +77,7 @@ runs:
           sudo apt-get update
           sudo apt-get install -y python3-pip python3-setuptools python3-dev
           pip3 install setuptools --break-system-packages || pip3 install setuptools
-          
+
           cd target
           wget https://nodejs.org/dist/v22.11.0/node-v22.11.0-linux-${{ inputs.matrix-name }}.tar.xz
           tar -xJf node-v22.11.0-linux-${{ inputs.matrix-name }}.tar.xz
@@ -107,7 +107,7 @@ runs:
         sudo apt update
         sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
         SNAPSHOT_TARGET_ARCH=armv7l yarn run v8-snapshot:arch
-    
+
     - name: Build final Electron App for ARM
       shell: bash
       run: |
@@ -129,8 +129,5 @@ runs:
 
 #    - name: Run E2E Tests on Linux
 #      if: runner.os == 'Linux'
-#      uses: GabrielBB/xvfb-action@v1.7
-#      with:
-#        run: |
-#          yarn run test
-#
+#      shell: bash
+#      run: xvfb-run -a yarn run test
