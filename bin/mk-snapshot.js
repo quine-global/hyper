@@ -36,7 +36,14 @@ async function main() {
   fs.writeFileSync(snapshotScriptPath, result.snapshotScript);
 
   // Verify if we will be able to use this in `mksnapshot`
-  vm.runInNewContext(result.snapshotScript, undefined, {filename: snapshotScriptPath, displayErrors: true});
+  try {
+    vm.runInNewContext(result.snapshotScript, undefined, {filename: snapshotScriptPath, displayErrors: true});
+  } catch (error) {
+    console.error('Failed to validate snapshot script:');
+    console.error(error.message);
+    console.error(error.stack);
+    throw error;
+  }
 
   const outputBlobPath = `${baseDirPath}/cache/${npmConfigArch}`;
   await mkdirp(outputBlobPath);
