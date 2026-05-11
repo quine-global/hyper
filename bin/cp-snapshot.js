@@ -10,10 +10,17 @@ function copySnapshot(pathToElectron, archToCopy) {
   const pathToBlob = path.resolve(__dirname, '..', 'cache', archToCopy, snapshotFileName);
   const pathToBlobV8 = path.resolve(__dirname, '..', 'cache', archToCopy, v8ContextFileName);
 
+  if (!fs.existsSync(pathToBlob)) {
+    console.warn(`Warning: snapshot blob not found at ${pathToBlob}`);
+    return;
+  }
+
   console.log('Copying v8 snapshots from', pathToBlob, 'to', pathToElectron);
   fs.mkdirSync(pathToElectron, { recursive: true });
   fs.copyFileSync(pathToBlob, path.join(pathToElectron, snapshotFileName));
-  fs.copyFileSync(pathToBlobV8, path.join(pathToElectron, v8ContextFileName));
+  if (fs.existsSync(pathToBlobV8)) {
+    fs.copyFileSync(pathToBlobV8, path.join(pathToElectron, v8ContextFileName));
+  }
 }
 
 function getPathToElectron() {
