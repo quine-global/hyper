@@ -115,6 +115,7 @@ runs:
           dist/*.AppImage
           dist/*.deb
           dist/*.pacman
+          dist/*.rpm
           dist/*.exe
 
     - name: Run E2E Tests

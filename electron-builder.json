@@ -22,6 +22,7 @@
     "target": [
       "deb",
       "AppImage",
+      "rpm",
       "snap",
       "pacman"
     ]
@@ -102,6 +103,13 @@
   "deb": {
     "compression": "bzip2",
     "afterInstall": "./build/linux/after-install.tpl"
+  },
+  "rpm": {
+    "afterInstall": "./build/linux/after-install.tpl",
+    "fpm": [
+      "--rpm-rpmbuild-define",
+      "_build_id_links none"
+    ]
   },
   "snap": {
     "confinement": "classic",
