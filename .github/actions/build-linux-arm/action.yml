@@ -28,6 +28,9 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - name: Enable pnpm
+      uses: pnpm/action-setup@v4
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v6.2.0
       with:
@@ -38,17 +41,17 @@ runs:
       run: |
         python3 -m pip install packaging setuptools
 
-    - name: Get yarn cache directory path
+    - name: Get pnpm store directory path
       shell: bash
-      id: yarn-cache-dir-path
-      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      id: pnpm-store-dir-path
+      run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
     - uses: actions/cache/restore@v5.0.5
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+        path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-yarn-
+          ${{ runner.os }}-pnpm-
 
     - name: Delete old electron headers
       # These can sometimes be present on a freshly-provisioned github runner, so remove them
@@ -59,7 +62,7 @@ runs:
     - name: Install dependencies and tools
       shell: bash
       run: |
-        yarn install
+        pnpm install --frozen-lockfile
         sudo apt update
         sudo apt install libarchive-tools
 
@@ -85,14 +88,15 @@ runs:
           rm -rf node-v22.11.0-linux-${{ inputs.matrix-name }}.tar.xz node-v22.11.0-linux-${{ inputs.matrix-name }}
 
           cd ..
-          npm run rebuild-node-pty
+          npm install -g pnpm@10.33.0
+          pnpm run rebuild-node-pty
 
           cd target
           npx electron-rebuild
 
     - name: Compile
       shell: bash
-      run: yarn run build
+      run: pnpm run build
 
     - name: Chown rebuilt node_modules
       shell: bash
@@ -106,12 +110,12 @@ runs:
         sudo dpkg --add-architecture i386
         sudo apt update
         sudo apt install -y libglib2.0-0:i386 libexpat1:i386 libgcc-s1:i386
-        SNAPSHOT_TARGET_ARCH=armv7l yarn run v8-snapshot:arch
+        SNAPSHOT_TARGET_ARCH=armv7l pnpm run v8-snapshot:arch
 
     - name: Build final Electron App for ARM
       shell: bash
       run: |
-        yarn run electron-builder -p never -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
+        pnpm exec electron-builder -p never -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
       env:
         GH_TOKEN: ${{ env.GH_TOKEN }}
 
@@ -130,4 +134,4 @@ runs:
 #    - name: Run E2E Tests on Linux
 #      if: runner.os == 'Linux'
 #      shell: bash
-#      run: xvfb-run -a yarn run test
+#      run: xvfb-run -a pnpm run test
