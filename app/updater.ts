@@ -61,7 +61,7 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
     platform: plat,
     arch,
     version: currentVersion,
-    channel,
+    channel
   });
 
   return `https://hyper.quineglobal.com/update?${params.toString()}`;
