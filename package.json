@@ -3,7 +3,7 @@
   "version": "4.0.0-q-canary.12",
   "repository": "quine-global/hyper",
   "engines": {
-    "node": "22.20.0"
+    "node": "22.22.2"
   },
   "scripts": {
     "start": "echo 'please run `pnpm run dev` in one tab and then `pnpm run app` in another one'",
@@ -13,7 +13,8 @@
     "ts": "tsc --build -v --pretty --preserveWatchOutput",
     "build": "cross-env NODE_ENV=production webpack && tsc -b -v && cross-env BABEL_ENV=production babel target/renderer/bundle.js --out-file target/renderer/bundle.js --no-comments --minified",
     "lint": "eslint . --fix --ext .js,.jsx,.ts,.tsx,.json",
-    "test": "pnpm run lint && pnpm run test:unit",
+    "lint:ci": "eslint . --ext .js,.jsx,.ts,.tsx,.json",
+    "test": "pnpm run test:unit",
     "test:unit": "zx test-unit.mjs",
     "test:unit:watch": "pnpm run test:unit -- --watch",
     "test:e2e": "cross-env DEBUG=ava:watcher AVA_IMPORT_FROM_PROJECT_NO_STUB=1 ava --no-cache --config ava-e2e.config.js",
