@@ -35,9 +35,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Enable pnpm
-        run: |
-          corepack enable pnpm
-          corepack prepare pnpm@10.33.0 --activate
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile

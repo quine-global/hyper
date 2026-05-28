@@ -29,10 +29,7 @@ runs:
         node-version: ${{ inputs.node-version }}
 
     - name: Enable pnpm
-      shell: bash
-      run: |
-        corepack enable pnpm
-        corepack prepare pnpm@10.33.0 --activate
+      uses: pnpm/action-setup@v4
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v6.2.0
@@ -91,8 +88,7 @@ runs:
           rm -rf node-v22.11.0-linux-${{ inputs.matrix-name }}.tar.xz node-v22.11.0-linux-${{ inputs.matrix-name }}
 
           cd ..
-          corepack enable pnpm
-          corepack prepare pnpm@10.33.0 --activate
+          npm install -g pnpm@10.33.0
           pnpm run rebuild-node-pty
 
           cd target
