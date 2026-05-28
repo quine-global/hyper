@@ -18,7 +18,12 @@ test.before(async () => {
       break;
 
     case 'darwin':
-      pathToBinary = path.join(__dirname, '../dist/mac/Hyper.app/Contents/MacOS/Hyper');
+      pathToBinary = path.join(
+        __dirname,
+        process.arch === 'arm64'
+          ? '../dist/mac-arm64/Hyper.app/Contents/MacOS/Hyper'
+          : '../dist/mac/Hyper.app/Contents/MacOS/Hyper'
+      );
       break;
 
     case 'win32':

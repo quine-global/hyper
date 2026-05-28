@@ -4,8 +4,7 @@ import {StringDecoder} from 'string_decoder';
 
 import defaultShell from 'default-shell';
 import type {IPty, IWindowsPtyForkOptions, spawn as npSpawn} from 'node-pty';
-import osLocale from 'os-locale';
-import shellEnv from 'shell-env';
+import {shellEnvSync} from 'shell-env';
 
 import * as config from './config';
 import {cliScriptPath} from './config/paths';
@@ -130,10 +129,10 @@ export default class Session extends EventEmitter {
     const shellArgs = _shellArgs || defaultShellArgs;
 
     const cleanEnv =
-      process.env['APPIMAGE'] && process.env['APPDIR'] ? shellEnv.sync(_shell || defaultShell) : process.env;
+      process.env['APPIMAGE'] && process.env['APPDIR'] ? shellEnvSync(_shell || defaultShell) : process.env;
     const baseEnv: Record<string, string> = {
       ...cleanEnv,
-      LANG: `${osLocale.sync().replace(/-/, '_')}.UTF-8`,
+      LANG: `${new Intl.DateTimeFormat().resolvedOptions().locale.replace(/-/, '_')}.UTF-8`,
       TERM: 'xterm-256color',
       COLORTERM: 'truecolor',
       TERM_PROGRAM: productName,

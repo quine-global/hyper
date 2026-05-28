@@ -19,12 +19,15 @@ runs:
   steps:
     - name: Checkout
       uses: actions/checkout@v6.0.2
-    
+
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v6.4.0
       with:
         node-version: ${{ env.NODE_VERSION }}
-    
+
+    - name: Enable pnpm
+      uses: pnpm/action-setup@v4
+
     - name: Set up Python 3.10
       uses: actions/setup-python@v6.2.0
       with:
@@ -39,17 +42,17 @@ runs:
           python3 -m pip install $EXTRA_ARGS packaging setuptools
         fi
 
-    - name: Get yarn cache directory path
+    - name: Get pnpm store directory path
       shell: bash
-      id: yarn-cache-dir-path
-      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+      id: pnpm-store-dir-path
+      run: echo "dir=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
     - uses: actions/cache/restore@v5.0.5
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+        path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-yarn-
+          ${{ runner.os }}-pnpm-
 
     - name: Delete old electron headers
       # These can sometimes be present on a freshly-provisioned github runner, so remove them
@@ -59,7 +62,7 @@ runs:
 
     - name: Install
       shell: bash
-      run: yarn install
+      run: pnpm install --frozen-lockfile
       env:
         npm_config_node_gyp: ${{ github.workspace }}${{ runner.os == 'Windows' && '\node_modules\node-gyp\bin\node-gyp.js' || '/node_modules/node-gyp/bin/node-gyp.js' }}
 
@@ -69,14 +72,14 @@ runs:
       run: |
         sudo apt update
         sudo apt install libarchive-tools
-  
+
     - name: Rebuild native modules for Electron
       shell: bash
       run: npx electron-rebuild
 
     - name: Lint and Run Unit Tests
       shell: bash
-      run: yarn run test
+      run: pnpm run test
 
     - name: Getting Build Icon
       shell: bash
@@ -95,7 +98,7 @@ runs:
         if [ -z "$APPLE_ID" ] ; then unset APPLE_ID ; fi
         if [ -z "$APPLE_APP_SPECIFIC_PASSWORD" ] ; then unset APPLE_APP_SPECIFIC_PASSWORD ; fi
 
-        yarn run dist
+        pnpm run dist
       env:
         GH_TOKEN: ${{ env.GH_TOKEN }}
         CSC_LINK: ${{ env.MAC_CERT_P12_BASE64 }}
@@ -121,12 +124,12 @@ runs:
     - name: Run E2E Tests
       shell: bash
       if: runner.os != 'Linux'
-      run: yarn run test:e2e --verbose
+      run: pnpm run test:e2e --verbose
 
     - name: Run E2E Tests on Linux
       if: runner.os == 'Linux'
       shell: bash
-      run: xvfb-run -a yarn run test:e2e
+      run: xvfb-run -a pnpm run test:e2e
       env:
         SHELL: /bin/bash
         DEBUG: "pw:browser*"
@@ -154,5 +157,5 @@ runs:
     - uses: actions/cache/save@v5.0.5
       if: github.event_name == 'push'
       with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', 'app/yarn.lock') }}
+        path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}

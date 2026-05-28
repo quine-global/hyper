@@ -13,3 +13,10 @@
 [![Node CI](https://github.com/quine-global/hyper/actions/workflows/ci.yml/badge.svg?branch=canary)](https://github.com/quine-global/hyper/actions/workflows/ci.yml)
 
 A terminal built on web technologies, forked from [Vercel's Hyper](https://hyper.is/). We care deeply about aesthetics and a modern feel. Visit [hyper.quineglobal.com](https://hyper.quineglobal.com/) to learn more.
+
+## Development
+
+1. Enable pnpm via Corepack (one-time): `corepack enable pnpm`
+2. Install dependencies: `pnpm install`
+3. Start dev build: `pnpm run dev`
+4. In another terminal: `pnpm run app`

@@ -1,5 +1,3 @@
-require('color-convert');
-require('color-string');
 require('columnify');
 require('lodash');
 require('ms');
@@ -17,7 +15,6 @@ require('@xterm/addon-unicode11');
 if (false) {
   require('args');
   require('mousetrap');
-  require('open');
   require('react-dom');
   require('react-redux');
   require('react');
