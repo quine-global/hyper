@@ -88,4 +88,7 @@ async function main() {
   console.log('result:', res.toString())
 }
 
-main().catch((err) => console.error(err));
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
