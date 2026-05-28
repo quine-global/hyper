@@ -1,5 +1,3 @@
-require('color-convert');
-require('color-string');
 require('columnify');
 require('lodash');
 require('ms');
