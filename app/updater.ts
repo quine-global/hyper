@@ -53,9 +53,18 @@ let isInit = false;
 let canaryUpdates = false;
 
 const buildFeedUrl = (canary: boolean, currentVersion: string) => {
-  const updatePrefix = canary ? 'releases-canary' : 'releases';
-  const archSuffix = process.arch === 'arm64' || app.runningUnderARM64Translation ? '_arm64' : '';
-  return `https://${updatePrefix}.hyper.is/update/${isLinux ? 'deb' : platform}${archSuffix}/${currentVersion}`;
+  const arch = process.arch === 'arm64' || app.runningUnderARM64Translation ? 'arm64' : 'x64';
+  const plat = isLinux ? 'linux' : platform;
+  const channel = canary ? 'canary' : 'stable';
+
+  const params = new URLSearchParams({
+    platform: plat,
+    arch,
+    version: currentVersion,
+    channel,
+  });
+
+  return `https://hyper.quineglobal.com/update?${params.toString()}`;
 };
 
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
