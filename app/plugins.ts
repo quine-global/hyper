@@ -197,9 +197,7 @@ if (cache.get('hyper.plugins') !== id || process.env.HYPER_FORCE_UPDATE) {
   const baseConfig = config.getConfig();
   if (baseConfig['autoUpdatePlugins']) {
     // otherwise update plugins every 5 hours
-    const interval = baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins'];
-    // @ts-expect-error app/@types/ms uses StringValue; root @types/ms uses string
-    setInterval(updatePlugins, ms(interval));
+    setInterval(updatePlugins, ms(baseConfig['autoUpdatePlugins'] === true ? '5h' : baseConfig['autoUpdatePlugins']));
   }
 })();
 
