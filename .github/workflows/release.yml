@@ -194,4 +194,5 @@ jobs:
             artifacts/**/*.AppImage
             artifacts/**/*.deb
             artifacts/**/*.pacman
+            artifacts/**/*.rpm
             artifacts/**/*.exe
