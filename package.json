@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.13",
+  "version": "4.0.0-q-canary.14",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -29,7 +29,8 @@
     "mk-snapshot": "node bin/download-mksnapshot.js && node bin/mk-snapshot.js",
     "cp-snapshot": "node bin/cp-snapshot.js",
     "generate-schema": "typescript-json-schema ./typings/config.d.ts rawConfig -o ./app/config/schema.json --required",
-    "uuaw": "uuaw"
+    "uuaw": "uuaw",
+    "bump-version": "node bin/bump-version.js"
   },
   "license": "MIT",
   "author": {
