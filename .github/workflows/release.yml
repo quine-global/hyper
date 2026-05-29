@@ -23,7 +23,7 @@ env:
 jobs:
   validate-tag:
     name: Validate Tag Matches package.json
-    if: "!contains(github.ref_name, 'canary')"
+    if: "github.ref_type == 'tag' && !contains(github.ref_name, 'canary')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.2
@@ -144,6 +144,7 @@ jobs:
 
   upload-release:
     name: Upload and Create Release
+    if: github.ref_type == 'tag'
     needs:
       - build
       - build-linux-armv7l
