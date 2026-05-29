@@ -50,9 +50,9 @@ runs:
     - uses: actions/cache/restore@v5.0.5
       with:
         path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-pnpm-
+          ${{ runner.os }}-pnpm-store-
 
     - name: Delete old electron headers
       # These can sometimes be present on a freshly-provisioned github runner, so remove them
@@ -155,7 +155,7 @@ runs:
         path: ./pr_num.txt
 
     - uses: actions/cache/save@v5.0.5
-      if: github.event_name == 'push'
+      if: github.event_name != 'pull_request'
       with:
         path: ${{ steps.pnpm-store-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml', 'app/pnpm-lock.yaml') }}
