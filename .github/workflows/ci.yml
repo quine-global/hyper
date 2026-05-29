@@ -35,7 +35,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Enable pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
