@@ -144,12 +144,11 @@ jobs:
 
   upload-release:
     name: Upload and Create Release
-    if: github.ref_type == 'tag'
     needs:
       - build
       - build-linux-armv7l
       - build-linux-arm64
-    if: always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') && !contains(needs.*.result, 'skipped')
+    if: always() && github.ref_type == 'tag' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') && !contains(needs.*.result, 'skipped')
     runs-on: ubuntu-latest
     steps:
       - name: Download all artifacts
