@@ -23,7 +23,7 @@ env:
 jobs:
   validate-tag:
     name: Validate Tag Matches package.json
-    if: "github.ref_type == 'tag' && !contains(github.ref_name, 'canary')"
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.2
