@@ -18,8 +18,8 @@ importers:
         specifier: 2.1.2
         version: 2.1.2(electron@38.6.0)
       '@redux-devtools/extension':
-        specifier: ^3.3.0
-        version: 3.3.0(redux@4.2.1)
+        specifier: ^4.0.0
+        version: 4.0.0(redux@4.2.1)
       '@xterm/addon-canvas':
         specifier: 0.7.0
         version: 0.7.0(@xterm/xterm@5.5.0)
@@ -1015,8 +1015,8 @@ packages:
     resolution: {integrity: sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
-  '@redux-devtools/extension@3.3.0':
-    resolution: {integrity: sha512-X34S/rC8S/M1BIrkYD1mJ5f8vlH0BDqxXrs96cvxSBo4FhMdbhU+GUGsmNYov1xjSyLMHgo8NYrUG8bNX7525g==}
+  '@redux-devtools/extension@4.0.0':
+    resolution: {integrity: sha512-pLIzgo5MvqdDLe5D1pzHLgmr8THra/DOyRf5MvOEPZnKKDn6RhFbNSS5oXZ3Cal0cpx08kx7sR6zD8QgoXEnZA==}
     peerDependencies:
       redux: ^3.1.0 || ^4.0.0 || ^5.0.0
 
@@ -3157,9 +3157,6 @@ packages:
   ignore@7.0.5:
     resolution: {integrity: sha512-Hs59xBNfUIunMFgWAbGX5cq6893IbWg4KnrjbYwX3tx0ztorVgTDA6B2sxf8ejHJ4wz8BqGUMYlnzNBer5NvGg==}
     engines: {node: '>= 4'}
-
-  immutable@4.3.4:
-    resolution: {integrity: sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==}
 
   import-fresh@3.3.0:
     resolution: {integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==}
@@ -6360,10 +6357,8 @@ snapshots:
 
   '@pkgr/core@0.2.9': {}
 
-  '@redux-devtools/extension@3.3.0(redux@4.2.1)':
+  '@redux-devtools/extension@4.0.0(redux@4.2.1)':
     dependencies:
-      '@babel/runtime': 7.23.2
-      immutable: 4.3.4
       redux: 4.2.1
 
   '@rollup/pluginutils@5.3.0':
@@ -8908,8 +8903,6 @@ snapshots:
   ignore@5.3.0: {}
 
   ignore@7.0.5: {}
-
-  immutable@4.3.4: {}
 
   import-fresh@3.3.0:
     dependencies:
