@@ -313,8 +313,8 @@ importers:
         specifier: 1.49.0
         version: 1.49.0
       plist:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 5.0.0
+        version: 5.0.0
       prettier:
         specifier: 3.3.3
         version: 3.3.3
@@ -1451,10 +1451,13 @@ packages:
       webpack-dev-server:
         optional: true
 
-  '@xmldom/xmldom@0.8.8':
-    resolution: {integrity: sha512-0LNz4EY8B/8xXY86wMrQ4tz6zEHZv9ehFMJPm8u2gq5lQ71cfRKdaKyxfJAx5aUoyzx0qzgURblTisPGgz3d+Q==}
+  '@xmldom/xmldom@0.8.13':
+    resolution: {integrity: sha512-KRYzxepc14G/CEpEGc3Yn+JKaAeT63smlDr+vjB8jRfgTBBI9wRj/nkQEO+ucV8p8I9bfKLWp37uHgFrbntPvw==}
     engines: {node: '>=10.0.0'}
-    deprecated: this version has critical issues, please update to the latest version
+
+  '@xmldom/xmldom@0.9.10':
+    resolution: {integrity: sha512-A9gOqLdi6cV4ibazAjcQufGj0B1y/vDqYrcuP6d/6x8P27gRS8643Dj9o1dEKtB6O7fwxb2FgBmJS2mX7gpvdw==}
+    engines: {node: '>=14.6'}
 
   '@xobotyi/scrollbar-width@1.9.5':
     resolution: {integrity: sha512-N8tkAACJx2ww8vFMneJmaAgmjAG1tnVBZJRLRcx061tmsLRZHSEZSLuGWnwPtunsSLvSqXQ2wfp7Mgqg1I+2dQ==}
@@ -4273,6 +4276,10 @@ packages:
     resolution: {integrity: sha512-uysumyrvkUX0rX/dEVqt8gC3sTBzd4zoWfLeS29nb53imdaXVvLINYXTI2GNqzaMuvacNx4uJQ8+b3zXR0pkgQ==}
     engines: {node: '>=10.4.0'}
 
+  plist@5.0.0:
+    resolution: {integrity: sha512-20N+g1DvMm/DFRbsvER7tT4wDryq0WunK7VMkDaiJcKNapAnUMkTsAnacFYf8n420F4Hf6/hefgmJRkMb1M0fg==}
+    engines: {node: '>=18'}
+
   plur@6.0.0:
     resolution: {integrity: sha512-Y9wXQivjRX0REtwpA9+n0bYYypWESn3cWtW2vazymw711qn+AQXxzZjRqhANYGBLIMC1UzVdpwe/1hHQwHfwng==}
     engines: {node: '>=20'}
@@ -6809,7 +6816,9 @@ snapshots:
       webpack: 5.96.1(webpack-cli@6.0.1)
       webpack-cli: 6.0.1(webpack@5.96.1)
 
-  '@xmldom/xmldom@0.8.8': {}
+  '@xmldom/xmldom@0.8.13': {}
+
+  '@xmldom/xmldom@0.9.10': {}
 
   '@xobotyi/scrollbar-width@1.9.5': {}
 
@@ -9957,8 +9966,13 @@ snapshots:
 
   plist@3.1.0:
     dependencies:
-      '@xmldom/xmldom': 0.8.8
+      '@xmldom/xmldom': 0.8.13
       base64-js: 1.5.1
+      xmlbuilder: 15.1.1
+
+  plist@5.0.0:
+    dependencies:
+      '@xmldom/xmldom': 0.9.10
       xmlbuilder: 15.1.1
 
   plur@6.0.0:
