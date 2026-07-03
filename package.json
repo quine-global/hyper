@@ -121,7 +121,7 @@
     "electron-link": "https://github.com/quine-global/electron-link#10fc13cb91f08e3b2a2f791125509db4d84530ff",
     "electron-mksnapshot": "41.5.0",
     "electronmon": "^2.0.3",
-    "eslint": "8.57.0",
+    "eslint": "9.8.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-eslint-comments": "^3.2.0",
