@@ -133,7 +133,7 @@
     "eslint-plugin-react": "7.37.2",
     "husky": "^9.1.7",
     "husky-init": "^8.0.0",
-    "inquirer": "13.4.2",
+    "inquirer": "14.0.2",
     "node-addon-api": "8.2.2",
     "node-gyp": "^12.3.0",
     "null-loader": "4.0.1",
