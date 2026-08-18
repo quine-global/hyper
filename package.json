@@ -117,7 +117,7 @@
     "cpy-cli": "^5.0.0",
     "cross-env": "10.1.0",
     "electron": "38.6.0",
-    "electron-builder": "26.11.1",
+    "electron-builder": "26.15.3",
     "electron-link": "https://github.com/quine-global/electron-link#10fc13cb91f08e3b2a2f791125509db4d84530ff",
     "electron-mksnapshot": "41.5.0",
     "electronmon": "^2.0.3",
