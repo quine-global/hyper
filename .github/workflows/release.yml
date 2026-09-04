@@ -177,7 +177,7 @@ jobs:
 
       - name: Create GitHub Release
         # TODO Pinned to work around https://github.com/softprops/action-gh-release/issues/445
-        uses: softprops/action-gh-release@v3.0.0
+        uses: softprops/action-gh-release@v3.0.3
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
           ACTIONS_STEP_DEBUG: true
