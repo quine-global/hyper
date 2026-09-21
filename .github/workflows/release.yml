@@ -196,3 +196,4 @@ jobs:
             artifacts/**/*.pacman
             artifacts/**/*.rpm
             artifacts/**/*.exe
+            artifacts/**/*.flatpak
