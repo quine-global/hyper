@@ -24,7 +24,8 @@
       "AppImage",
       "rpm",
       "snap",
-      "pacman"
+      "pacman",
+      "flatpak"
     ]
   },
   "win": {
@@ -114,6 +115,22 @@
   "snap": {
     "confinement": "classic",
     "publish": "github"
+  },
+  "flatpak": {
+    "runtimeVersion": "25.08",
+    "baseVersion": "25.08",
+    "useWaylandFlags": true,
+    "finishArgs": [
+      "--socket=wayland",
+      "--socket=x11",
+      "--share=ipc",
+      "--device=dri",
+      "--socket=pulseaudio",
+      "--filesystem=home",
+      "--share=network",
+      "--talk-name=org.freedesktop.Notifications",
+      "--socket=ssh-auth"
+    ]
   },
   "protocols": {
     "name": "ssh URL",

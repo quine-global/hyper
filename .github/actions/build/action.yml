@@ -73,6 +73,20 @@ runs:
         sudo apt update
         sudo apt install libarchive-tools
 
+    - name: Install Flatpak build tools
+      shell: bash
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt install -y flatpak flatpak-builder
+        flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+    - name: Cache Flatpak runtimes
+      if: runner.os == 'Linux'
+      uses: actions/cache@v5.0.5
+      with:
+        path: ~/.local/share/flatpak
+        key: flatpak-runtimes-${{ runner.os }}-25.08
+
     - name: Rebuild native modules for Electron
       shell: bash
       run: npx electron-rebuild
@@ -120,6 +134,7 @@ runs:
           dist/*.pacman
           dist/*.rpm
           dist/*.exe
+          dist/*.flatpak
 
     - name: Run E2E Tests
       shell: bash
