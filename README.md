@@ -10,7 +10,7 @@
   /></a>
 </p>
 
-[![Node CI](https://github.com/quine-global/hyper/actions/workflows/ci.yml/badge.svg?branch=canary)](https://github.com/quine-global/hyper/actions/workflows/ci.yml)
+<a href="https://www.irccloud.com/invite?channel=%23%23quine&amp;hostname=irc.libera.chat&amp;port=6697&amp;ssl=1" target="_blank"><img src="https://img.shields.io/badge/IRC-%23%23quine-1e72ff.svg?style=flat"  height="20"></a> [![Node CI](https://github.com/quine-global/hyper/actions/workflows/ci.yml/badge.svg?branch=canary)](https://github.com/quine-global/hyper/actions/workflows/ci.yml)
 
 A terminal built on web technologies, forked from [Vercel's Hyper](https://hyper.is/). We care deeply about aesthetics and a modern feel. Visit [hyper.quineglobal.com](https://hyper.quineglobal.com/) to learn more.
 
