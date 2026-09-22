@@ -128,6 +128,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6.0.3
 
+      - name: Set up QEMU and binfmt
+        # Needed so flatpak-builder's bwrap sandbox can run aarch64 build
+        # commands on this x86_64 runner.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static binfmt-support
+
+          wget https://github.com/qemu/qemu/raw/master/scripts/qemu-binfmt-conf.sh
+          chmod +x qemu-binfmt-conf.sh
+          sudo ./qemu-binfmt-conf.sh --qemu-path /usr/bin --qemu-suffix -static --debian
+
+          sudo update-binfmts --import qemu-aarch64
+
+          ls -la /proc/sys/fs/binfmt_misc/qemu-aarch64* || true
+
       - name: Build ARM64
         uses: ./.github/actions/build-linux-arm
         env:

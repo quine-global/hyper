@@ -66,6 +66,22 @@ runs:
         sudo apt update
         sudo apt install libarchive-tools
 
+    - name: Install Flatpak build tools
+      # Flathub's Electron BaseApp runtime only ships x86_64/aarch64 builds, so
+      # skip this on armv7l.
+      if: ${{ inputs.matrix-name == 'arm64' }}
+      shell: bash
+      run: |
+        sudo apt install -y flatpak flatpak-builder
+        flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+    - name: Cache Flatpak runtimes
+      if: ${{ inputs.matrix-name == 'arm64' }}
+      uses: actions/cache@v5.0.5
+      with:
+        path: ~/.local/share/flatpak
+        key: flatpak-runtimes-${{ runner.os }}-arm64-25.08
+
     - name: Rebuild node-pty and all native modules for ARM
       uses: pguyot/arm-runner-action@v2.6.5
       with:
@@ -115,7 +131,11 @@ runs:
     - name: Build final Electron App for ARM
       shell: bash
       run: |
-        pnpm exec electron-builder -p never -l deb rpm AppImage pacman --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
+        TARGETS="deb rpm AppImage pacman"
+        if [ "${{ inputs.matrix-name }}" = "arm64" ]; then
+          TARGETS="$TARGETS flatpak"
+        fi
+        pnpm exec electron-builder -p never -l $TARGETS --${{ inputs.matrix-name }} -c electron-builder-linux-ci.json
       env:
         GH_TOKEN: ${{ env.GH_TOKEN }}
 
@@ -130,6 +150,7 @@ runs:
           dist/*.deb
           dist/*.rpm
           dist/*.pacman
+          dist/*.flatpak
 
     - uses: actions/cache/save@v5.0.5
       if: github.event_name != 'pull_request'
