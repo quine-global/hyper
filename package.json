@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@electron/remote": "2.1.2",
-    "@redux-devtools/extension": "^3.3.0",
+    "@redux-devtools/extension": "^4.0.0",
     "@xterm/addon-canvas": "0.7.0",
     "@xterm/addon-fit": "0.10.0",
     "@xterm/addon-image": "0.8.0",
