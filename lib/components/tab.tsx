@@ -51,7 +51,7 @@ function Tab(props: TabProps) {
             {props.text}
           </span>
         </span>
-        <i className="tab_icon" onClick={props.onClose}>
+        <i className="tab_icon" onClick={props.onClose} onMouseUp={handleMouseUp}>
           <svg className="tab_shape">
             <use xlinkHref="./renderer/assets/icons.svg#close-tab" />
           </svg>

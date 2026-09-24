@@ -33,13 +33,26 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
 
   const hide = !isMac && tabs.length === 1;
 
+  const handleWheel = (event: React.WheelEvent<HTMLUListElement>) => {
+    // A plain vertical mouse wheel only ever reports deltaY. macOS trackpads
+    // generate real deltaX for horizontal swipes, but a wheel mouse (common
+    // on Linux/Windows) doesn't, so without this the tab list never scrolls.
+    if (event.deltaX === 0 && event.deltaY !== 0) {
+      event.currentTarget.scrollLeft += event.deltaY;
+    }
+  };
+
   return (
     <nav className={`tabs_nav ${hide ? 'tabs_hiddenNav' : ''}`} ref={ref}>
       {props.customChildrenBefore}
       {tabs.length === 1 && isMac ? <div className="tabs_title">{tabs[0].title}</div> : null}
       {tabs.length > 1 ? (
         <>
-          <ul key="list" className={`tabs_list ${fullScreen && isMac ? 'tabs_fullScreen' : ''}`}>
+          <ul
+            key="list"
+            className={`tabs_list ${fullScreen && isMac ? 'tabs_fullScreen' : ''}`}
+            onWheel={handleWheel}
+          >
             {tabs.map((tab, i) => {
               const {uid, title, isActive, hasActivity} = tab;
               const tabProps = getTabProps(tab, props, {
