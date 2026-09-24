@@ -78,7 +78,7 @@ const useLoaderScriptFix = async (params) => {
 
   const loaderScript = `#!/usr/bin/env bash
 set -u
-SCRIPT_DIR="$( cd "$( dirname "\${BASH_SOURCE[0]}" )" && pwd )"
+SCRIPT_DIR="$( cd "$( dirname "$(readlink -f "\${BASH_SOURCE[0]}")" )" && pwd )"
 exec "$SCRIPT_DIR/${params.packager.executableName}.bin" "--no-sandbox" "$@"
 `
 
