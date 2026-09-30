@@ -10,6 +10,7 @@ import * as config from './config';
 import {cliScriptPath} from './config/paths';
 import {productName, version} from './package.json';
 import {getDecoratedEnv} from './plugins';
+import {isFlatpak} from './utils/flatpak';
 import {getFallBackShellConfig} from './utils/shell-fallback';
 
 const createNodePtyError = () =>
@@ -154,11 +155,28 @@ export default class Session extends EventEmitter {
       delete baseEnv.GOOGLE_API_KEY;
     }
 
+    const ptyEnv = getDecoratedEnv(baseEnv);
+
+    // When running as a Flatpak, this process (and anything node-pty spawns directly)
+    // is confined to the sandbox's mount namespace, where PATH is whatever the runtime
+    // sets (e.g. /app/bin:/usr/bin) and host-only locations like /usr/local or
+    // /home/linuxbrew aren't even mounted. Route the shell through `flatpak-spawn --host`
+    // so it actually runs on the host, like a normal terminal, and drop our sandboxed
+    // PATH so the host login shell computes its own from the host's profile scripts
+    // instead of inheriting the sandbox's.
+    let spawnCommand = shell;
+    let spawnArgs = shellArgs;
+    if (isFlatpak()) {
+      delete ptyEnv['PATH'];
+      spawnCommand = 'flatpak-spawn';
+      spawnArgs = ['--host', '--watch-bus', ...(cwd ? [`--directory=${cwd}`] : []), shell, ...shellArgs];
+    }
+
     const options: IWindowsPtyForkOptions = {
       cols,
       rows,
       cwd,
-      env: getDecoratedEnv(baseEnv)
+      env: ptyEnv
     };
 
     // if config do not set the useConpty, it will be judged by the node-pty
@@ -166,9 +184,16 @@ export default class Session extends EventEmitter {
       options.useConpty = useConpty;
     }
 
-    console.log('[session] spawning pty, shell:', shell, 'args:', shellArgs, 'useConpty:', options.useConpty);
+    console.log(
+      '[session] spawning pty, command:',
+      spawnCommand,
+      'args:',
+      spawnArgs,
+      'useConpty:',
+      options.useConpty
+    );
     try {
-      this.pty = spawn(shell, shellArgs, options);
+      this.pty = spawn(spawnCommand, spawnArgs, options);
       console.log('[session] pty spawned, pid:', this.pty.pid);
     } catch (_err) {
       const err = _err as {message: string; stack?: string};
