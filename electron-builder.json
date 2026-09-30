@@ -129,6 +129,7 @@
       "--filesystem=home",
       "--share=network",
       "--talk-name=org.freedesktop.Notifications",
+      "--talk-name=org.freedesktop.Flatpak",
       "--socket=ssh-auth"
     ]
   },
