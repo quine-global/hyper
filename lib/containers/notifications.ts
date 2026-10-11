@@ -19,6 +19,7 @@ const mapStateToProps = (state: HyperState) => {
     updateNote: string | null;
     updateReleaseUrl: string | null;
     updateCanInstall: boolean | null;
+    updateInstallCommand: string | null;
     messageShowing: boolean;
     messageText: string | null;
     messageURL: string | null;
@@ -55,7 +56,8 @@ const mapStateToProps = (state: HyperState) => {
       updateVersion: ui.updateVersion,
       updateNote: ui.updateNotes!.split('\n')[0],
       updateReleaseUrl: ui.updateReleaseUrl,
-      updateCanInstall: ui.updateCanInstall
+      updateCanInstall: ui.updateCanInstall,
+      updateInstallCommand: ui.updateInstallCommand
     };
   } else if (notifications.message) {
     state_ = {

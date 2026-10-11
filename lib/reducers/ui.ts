@@ -96,6 +96,7 @@ const initial: uiState = Immutable<Mutable<uiState>>({
   updateNotes: null,
   updateReleaseUrl: null,
   updateCanInstall: null,
+  updateInstallCommand: null,
   _lastUpdate: null,
   messageText: null,
   messageURL: null,
@@ -441,7 +442,8 @@ const reducer: IUiReducer = (state = initial, action) => {
         updateVersion: action.version,
         updateNotes: action.notes || '',
         updateReleaseUrl: action.releaseUrl,
-        updateCanInstall: !!action.canInstall
+        updateCanInstall: !!action.canInstall,
+        updateInstallCommand: action.installCommand || null
       });
       break;
 
