@@ -184,14 +184,7 @@ export default class Session extends EventEmitter {
       options.useConpty = useConpty;
     }
 
-    console.log(
-      '[session] spawning pty, command:',
-      spawnCommand,
-      'args:',
-      spawnArgs,
-      'useConpty:',
-      options.useConpty
-    );
+    console.log('[session] spawning pty, command:', spawnCommand, 'args:', spawnArgs, 'useConpty:', options.useConpty);
     try {
       this.pty = spawn(spawnCommand, spawnArgs, options);
       console.log('[session] pty spawned, pid:', this.pty.pid);

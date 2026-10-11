@@ -48,11 +48,7 @@ const Tabs = forwardRef<HTMLElement, TabsProps>((props, ref) => {
       {tabs.length === 1 && isMac ? <div className="tabs_title">{tabs[0].title}</div> : null}
       {tabs.length > 1 ? (
         <>
-          <ul
-            key="list"
-            className={`tabs_list ${fullScreen && isMac ? 'tabs_fullScreen' : ''}`}
-            onWheel={handleWheel}
-          >
+          <ul key="list" className={`tabs_list ${fullScreen && isMac ? 'tabs_fullScreen' : ''}`} onWheel={handleWheel}>
             {tabs.map((tab, i) => {
               const {uid, title, isActive, hasActivity} = tab;
               const tabProps = getTabProps(tab, props, {
