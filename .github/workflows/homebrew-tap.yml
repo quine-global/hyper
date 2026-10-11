@@ -1,0 +1,107 @@
+name: Update Homebrew tap
+
+# Points the quine-hyper cask in quine-global/homebrew-tap (canonical on
+# Forgejo) at a release once it's published. release.yml only creates drafts,
+# so this runs when a draft is published, or by hand for an existing tag.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, e.g. v4.0.0-q-canary.18
+        required: true
+
+concurrency:
+  group: homebrew-tap
+  cancel-in-progress: false
+
+jobs:
+  homebrew-tap:
+    name: Update Homebrew tap
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.release.tag_name || inputs.tag }}
+      # Forgejo's SSH is on 2200; 22 is the host's own sshd.
+      TAP_REPO: ssh://git@forge.quinefoundation.com:2200/quine-global/homebrew-tap.git
+    steps:
+      - name: Write cask
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          VERSION="${TAG#v}"
+          digest() {
+            gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+              --jq ".assets[] | select(.name == \"Hyper-$VERSION-mac-$1.dmg\") | .digest" \
+              | sed 's/^sha256://'
+          }
+          ARM_SHA=$(digest arm64)
+          INTEL_SHA=$(digest x64)
+          if [[ -z "$ARM_SHA" || -z "$INTEL_SHA" ]]; then
+            echo "::error::$TAG has no Hyper-$VERSION-mac-{arm64,x64}.dmg assets"
+            exit 1
+          fi
+          mkdir -p tap/Casks
+          cat > tap/Casks/quine-hyper.rb <<CASK
+          cask "quine-hyper" do
+            arch arm: "arm64", intel: "x64"
+
+            version "$VERSION"
+            sha256 arm:   "$ARM_SHA",
+                   intel: "$INTEL_SHA"
+
+            url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-mac-#{arch}.dmg"
+            name "Hyper"
+            desc "Terminal built on web technologies (Quine fork)"
+            homepage "https://github.com/quine-global/hyper"
+
+            conflicts_with cask: ["hyper", "hyper@canary"]
+            depends_on :macos
+
+            app "Hyper.app"
+            binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
+
+            # Only ad-hoc signed: strip the quarantine flag Homebrew adds, or
+            # Gatekeeper refuses to open it.
+            postflight_steps do
+              run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
+            end
+
+            zap trash: [
+              "~/.config/Hyper",
+              "~/Library/Application Support/Hyper",
+              "~/Library/Caches/com.quineglobal.hyper",
+              "~/Library/Caches/com.quineglobal.hyper.ShipIt",
+              "~/Library/Logs/Hyper",
+              "~/Library/Preferences/com.quineglobal.hyper.plist",
+              "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
+            ]
+          end
+          CASK
+          cat tap/Casks/quine-hyper.rb
+
+      - name: Push to tap
+        env:
+          SSH_KEY: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$SSH_KEY" ]]; then
+            echo "::error::HOMEBREW_TAP_SSH_KEY secret is not set (its public key needs to be a write deploy key on quine-global/homebrew-tap)"
+            exit 1
+          fi
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/tap_key
+          chmod 600 ~/.ssh/tap_key
+          echo "[forge.quinefoundation.com]:2200 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHECXyh0SwRlXikgu919nC9OTmAU7AEcrlbJ/J/H9DTU" > ~/.ssh/known_hosts
+          export GIT_SSH_COMMAND="ssh -i ~/.ssh/tap_key -o IdentitiesOnly=yes"
+          git clone "$TAP_REPO" repo
+          cp tap/Casks/quine-hyper.rb repo/Casks/
+          cd repo
+          git config user.name "Hyper release"
+          git config user.email "noreply@forge.quinefoundation.com"
+          git add Casks/quine-hyper.rb
+          git diff --cached --quiet && { echo "Cask unchanged"; exit 0; }
+          git commit -m "quine-hyper ${TAG#v}"
+          git push
