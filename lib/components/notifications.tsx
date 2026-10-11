@@ -70,7 +70,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
           onDismiss={props.onDismissUpdate}
           userDismissable
         >
-          Version <b>{props.updateVersion}</b> ready.
+          Version <b>{props.updateVersion}</b> {props.updateInstallCommand ? 'available' : 'ready'}.
           {props.updateNote && ` ${props.updateNote.trim().replace(/\.$/, '')}`} (
           <a
             style={{color: '#000'}}
@@ -92,7 +92,7 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
               }}
               onClick={props.onUpdateInstall}
             >
-              Restart
+              {props.updateInstallCommand ? 'Update' : 'Restart'}
             </a>
           ) : (
             <a

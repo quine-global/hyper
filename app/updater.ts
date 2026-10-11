@@ -9,6 +9,7 @@ import ms from 'ms';
 import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
 import {version} from './package.json';
+import {detectPackageManager, PackageManagerUpdater} from './package-manager-updater';
 import {getDecoratedConfig} from './plugins';
 
 // Necessary due to typescript not handling overloads well
@@ -29,7 +30,17 @@ interface AutoUpdater extends Omit<OriginalAutoUpdater, 'on' | 'removeListener'>
 const {platform} = process;
 const isLinux = platform === 'linux';
 
-const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
+// Installed by Homebrew or Flatpak: ask it for updates and let it install them.
+const packageManager = detectPackageManager();
+
+const autoUpdater: AutoUpdater = packageManager
+  ? new PackageManagerUpdater(packageManager)
+  : isLinux
+    ? autoUpdaterLinux
+    : electron.autoUpdater;
+
+// Squirrel downloads the update before announcing it; the others only check.
+const updateEvent = packageManager || isLinux ? 'update-available' : 'update-downloaded';
 
 const getDecoratedConfigWithRetry = async () => {
   return await retry(() => {
@@ -105,14 +116,16 @@ const updater = (win: BrowserWindow) => {
 
   const onupdate = (ev: Event, releaseNotes: string, releaseName: string, date: Date, updateUrl: string) => {
     const releaseUrl = updateUrl || `https://github.com/quine-global/hyper/releases/tag/${releaseName}`;
-    rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !isLinux});
+    rpc.emit('update available', {
+      releaseNotes,
+      releaseName,
+      releaseUrl,
+      canInstall: Boolean(packageManager) || !isLinux,
+      installCommand: packageManager?.upgradeCommand
+    });
   };
 
-  if (isLinux) {
-    autoUpdater.on('update-available', onupdate);
-  } else {
-    autoUpdater.on('update-downloaded', onupdate);
-  }
+  autoUpdater.on(updateEvent, onupdate);
 
   rpc.once('quit and install', () => {
     autoUpdater.quitAndInstall();
@@ -133,11 +146,7 @@ const updater = (win: BrowserWindow) => {
   });
 
   win.on('close', () => {
-    if (isLinux) {
-      autoUpdater.removeListener('update-available', onupdate);
-    } else {
-      autoUpdater.removeListener('update-downloaded', onupdate);
-    }
+    autoUpdater.removeListener(updateEvent, onupdate);
   });
 };
 
