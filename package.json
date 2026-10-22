@@ -146,7 +146,7 @@
     "terser": "5.36.0",
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "10.9.2",
-    "typescript": "5.7.2",
+    "typescript": "6.0.3",
     "uuaw": "^1.2.2",
     "webpack": "5.96.1",
     "zx": "^8.8.5"
