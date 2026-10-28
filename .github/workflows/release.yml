@@ -81,7 +81,8 @@ jobs:
     name: Build Linux ARMv7l
     needs: validate-tag
     if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
-    runs-on: ubuntu-latest
+    # qemu-user-static, used here and by arm-runner-action, is not packaged on Ubuntu 26.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.3
@@ -123,7 +124,8 @@ jobs:
     name: Build Linux ARM64
     needs: validate-tag
     if: always() && (needs.validate-tag.result == 'success' || needs.validate-tag.result == 'skipped')
-    runs-on: ubuntu-latest
+    # qemu-user-static, used here and by arm-runner-action, is not packaged on Ubuntu 26.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v6.0.3

@@ -110,7 +110,8 @@ jobs:
 
   build-linux-armv7l:
     name: Build Linux ARMv7l
-    runs-on: ubuntu-latest
+    # qemu-user-static, used here and by arm-runner-action, is not packaged on Ubuntu 26.04
+    runs-on: ubuntu-24.04
     concurrency:
       group: build-linux-armv7l-${{ github.ref }}
       cancel-in-progress: false
@@ -154,7 +155,8 @@ jobs:
 
   build-linux-arm64:
     name: Build Linux ARM64
-    runs-on: ubuntu-latest
+    # qemu-user-static, used here and by arm-runner-action, is not packaged on Ubuntu 26.04
+    runs-on: ubuntu-24.04
     concurrency:
       group: build-linux-arm64-${{ github.ref }}
       cancel-in-progress: false

@@ -41,6 +41,7 @@
     }
   },
   "nsis": {
+    "artifactName": "${productName}-${version}.${ext}",
     "include": "build/win/installer.nsh",
     "oneClick": false,
     "perMachine": false,
