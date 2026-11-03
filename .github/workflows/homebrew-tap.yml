@@ -1,7 +1,8 @@
 name: Update Homebrew tap
 
 # Points the quine-hyper cask in quine-global/homebrew-tap (canonical on
-# Forgejo) at a release once it's published. release.yml only creates drafts,
+# Forgejo) at a release once it's published: the dmgs on macOS, the AppImages
+# on Homebrew on Linux. release.yml only creates drafts,
 # so this runs when a draft is published, or by hand for an existing tag.
 
 on:
@@ -33,51 +34,64 @@ jobs:
           set -euo pipefail
           VERSION="${TAG#v}"
           digest() {
-            gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
-              --jq ".assets[] | select(.name == \"Hyper-$VERSION-mac-$1.dmg\") | .digest" \
-              | sed 's/^sha256://'
+            local sha
+            sha=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets \
+              --jq ".assets[] | select(.name == \"Hyper-$VERSION-$1\") | .digest" | sed 's/^sha256://')
+            if [[ -z "$sha" ]]; then
+              echo "::error::$TAG has no Hyper-$VERSION-$1 asset" >&2
+              exit 1
+            fi
+            echo "$sha"
           }
-          ARM_SHA=$(digest arm64)
-          INTEL_SHA=$(digest x64)
-          if [[ -z "$ARM_SHA" || -z "$INTEL_SHA" ]]; then
-            echo "::error::$TAG has no Hyper-$VERSION-mac-{arm64,x64}.dmg assets"
-            exit 1
-          fi
+          ARM_SHA=$(digest mac-arm64.dmg)
+          INTEL_SHA=$(digest mac-x64.dmg)
+          ARM_LINUX_SHA=$(digest arm64.AppImage)
+          X86_LINUX_SHA=$(digest x86_64.AppImage)
           mkdir -p tap/Casks
           cat > tap/Casks/quine-hyper.rb <<CASK
           cask "quine-hyper" do
             arch arm: "arm64", intel: "x64"
+            linux_arch = on_arch_conditional arm: "arm64", intel: "x86_64"
+            asset = on_system_conditional macos: "mac-#{arch}.dmg", linux: "#{linux_arch}.AppImage"
 
             version "$VERSION"
-            sha256 arm:   "$ARM_SHA",
-                   intel: "$INTEL_SHA"
+            sha256 arm:          "$ARM_SHA",
+                   intel:        "$INTEL_SHA",
+                   arm64_linux:  "$ARM_LINUX_SHA",
+                   x86_64_linux: "$X86_LINUX_SHA"
 
-            url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-mac-#{arch}.dmg"
+            on_macos do
+              conflicts_with cask: ["hyper", "hyper@canary"]
+
+              app "Hyper.app"
+              binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
+
+              # Only ad-hoc signed: strip the quarantine flag Homebrew adds, or
+              # Gatekeeper refuses to open it.
+              postflight_steps do
+                run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
+              end
+
+              zap trash: [
+                "~/.config/Hyper",
+                "~/Library/Application Support/Hyper",
+                "~/Library/Caches/com.quineglobal.hyper",
+                "~/Library/Caches/com.quineglobal.hyper.ShipIt",
+                "~/Library/Logs/Hyper",
+                "~/Library/Preferences/com.quineglobal.hyper.plist",
+                "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
+              ]
+            end
+            on_linux do
+              app_image "Hyper-#{version}-#{linux_arch}.AppImage"
+
+              zap trash: "~/.config/Hyper"
+            end
+
+            url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-#{asset}"
             name "Hyper"
             desc "Terminal built on web technologies (Quine fork)"
             homepage "https://github.com/quine-global/hyper"
-
-            conflicts_with cask: ["hyper", "hyper@canary"]
-            depends_on :macos
-
-            app "Hyper.app"
-            binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
-
-            # Only ad-hoc signed: strip the quarantine flag Homebrew adds, or
-            # Gatekeeper refuses to open it.
-            postflight_steps do
-              run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
-            end
-
-            zap trash: [
-              "~/.config/Hyper",
-              "~/Library/Application Support/Hyper",
-              "~/Library/Caches/com.quineglobal.hyper",
-              "~/Library/Caches/com.quineglobal.hyper.ShipIt",
-              "~/Library/Logs/Hyper",
-              "~/Library/Preferences/com.quineglobal.hyper.plist",
-              "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
-            ]
           end
           CASK
           cat tap/Casks/quine-hyper.rb
