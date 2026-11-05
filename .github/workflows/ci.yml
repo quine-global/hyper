@@ -1,7 +1,9 @@
 name: Node CI
 on:
   push:
-    branches:
+    # Every branch. An empty `branches:` meant the same on GitHub, but the
+    # forge's mirror (Forgejo) refuses to parse it and never runs CI.
+    branches: ['**']
   workflow_dispatch:
 defaults:
   run:
