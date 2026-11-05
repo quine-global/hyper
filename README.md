@@ -14,6 +14,29 @@
 
 A terminal built on web technologies, forked from [Vercel's Hyper](https://hyper.is/). We care deeply about aesthetics and a modern feel. Visit [hyper.quineglobal.com](https://hyper.quineglobal.com/) to learn more.
 
+## Install
+
+With [Homebrew](https://brew.sh), on macOS or Linux (x86_64 and arm64):
+
+```sh
+brew tap quine/tap https://git.quineglobal.com/quine-global/homebrew-tap.git
+brew trust quine/tap
+brew install --cask quine-hyper
+```
+
+The tap URL is required: without one, `brew tap` assumes a GitHub repo. Homebrew
+refuses to load casks from a tap you haven't trusted, hence `brew trust`. On
+macOS this installs `Hyper.app` and the `hyper` command, like the official
+`hyper` cask, so only one of the two can be installed. Update with
+`brew upgrade --cask quine-hyper`.
+
+Tapped it from the old address (`forge.quinefoundation.com`)? Point it at the
+new one:
+
+```sh
+brew tap --custom-remote quine/tap https://git.quineglobal.com/quine-global/homebrew-tap.git
+```
+
 ## Development
 
 1. Enable pnpm via Corepack (one-time): `corepack enable pnpm`
