@@ -8,7 +8,10 @@
 import {execFile} from 'child_process';
 import {existsSync, readFileSync, readdirSync} from 'fs';
 import {homedir} from 'os';
-import {dirname, join} from 'path';
+import {posix} from 'path';
+
+// Linux paths, also when the tests run on Windows.
+const {dirname, join} = posix;
 
 export type LinuxUpdates = {check: false} | {check: true; command?: string};
 
