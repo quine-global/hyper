@@ -15,7 +15,8 @@ arm64). Not built yet: Linux arm64/armv7l, snap, flatpak, e2e tests.
 3. Edit the draft's notes if you like (Sparkle shows them), then run
    **Publish release** (`publish.yml`) with the tag: it publishes the draft
    (a pre-release if the tag has `canary` in it), updates the `quine-hyper`
-   cask and writes the Sparkle appcasts ([updates.md](updates.md)).
+   cask (macOS dmg, Linux x86_64 AppImage)
+   and writes the Sparkle appcasts ([updates.md](updates.md)).
 
 **Secrets:** `GH_RELEASE_TOKEN` (GitHub token, Contents read/write on
 quine-global/hyper), `SPARKLE_PRIVATE_KEY`, `HOMEBREW_TAP_SSH_KEY` (write

@@ -46,9 +46,9 @@ jobs:
           export GIT_SSH_COMMAND="ssh -i $T/tap_key -o IdentitiesOnly=yes -o UserKnownHostsFile=$T/known_hosts"
           rm -rf tap && git clone -q "ssh://git@$HOST:2200/quine-global/homebrew-tap.git" tap && mkdir -p tap/appcasts
 
-          sha() { jq -er --arg n "Hyper-$V-mac-$1.dmg" '.assets[] | select(.name == $n) | .digest | ltrimstr("sha256:")' <<<"$REL"; }
-          ARM=$(sha arm64); INTEL=$(sha x64)
-          sed -e "s/@VERSION@/$V/; s/@ARM_SHA@/$ARM/; s/@INTEL_SHA@/$INTEL/" build/mac/quine-hyper.rb.in > tap/Casks/quine-hyper.rb
+          sha() { jq -er --arg n "Hyper-$V-$1" '.assets[] | select(.name == $n) | .digest | ltrimstr("sha256:")' <<<"$REL" || { echo "$TAG has no Hyper-$V-$1" >&2; exit 1; }; }
+          ARM=$(sha mac-arm64.dmg); INTEL=$(sha mac-x64.dmg); LINUX=$(sha x86_64.AppImage)
+          sed -e "s/@VERSION@/$V/; s/@ARM_SHA@/$ARM/; s/@INTEL_SHA@/$INTEL/; s/@X86_LINUX_SHA@/$LINUX/" build/mac/quine-hyper.rb.in > tap/Casks/quine-hyper.rb
 
           # Sparkle compares CFBundleVersion (the CI run number on tags), and
           # only installs updates signed with SUPublicEDKey's private half.
