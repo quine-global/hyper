@@ -3,6 +3,8 @@
 import {app} from 'electron';
 import type {BrowserWindow, MenuItemConstructorOptions} from 'electron';
 
+import {checkForUpdatesNow} from '../../updater';
+
 const darwinMenu = (
   commandKeys: Record<string, string>,
   execCommand: (command: string, focusedWindow?: BrowserWindow) => void,
@@ -15,6 +17,12 @@ const darwinMenu = (
         label: 'About Hyper',
         click() {
           showAbout();
+        }
+      },
+      {
+        label: 'Check for Updates…',
+        click() {
+          checkForUpdatesNow();
         }
       },
       {

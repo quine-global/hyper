@@ -1,0 +1,81 @@
+name: CI
+
+# Lint, tests and packaged builds on every push. On a v* tag, the builds also
+# go into a draft GitHub release, which publish.yml publishes. docs/releasing.md.
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux x64
+    # x64 (the forge's ubuntu-latest is arm64); host mode, so the build runs
+    # in a Debian container with the checkout mounted in.
+    runs-on: runner-x86-linux
+    steps:
+      - uses: actions/checkout@v4
+      - run: podman run --rm -e GITHUB_REF -v "$PWD:/w" -w /w docker.io/library/node:22-bookworm bin/ci/build.sh linux
+      - if: startsWith(github.ref, 'refs/tags/v')
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with: {name: linux, path: "dist/*.deb\ndist/*.rpm\ndist/*.AppImage\ndist/*.pacman"}
+
+  macos:
+    name: macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22.22.2}
+      - run: bin/ci/build.sh mac
+      - if: startsWith(github.ref, 'refs/tags/v')
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with: {name: macos, path: "dist/*.dmg\ndist/*-mac-*.zip"}
+
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22.22.2}
+      # Git's bash by its full path ("bash" alone could be WSL's), from cmd:
+      # Windows' default execution policy refuses PowerShell step scripts.
+      - shell: cmd
+        run: '"C:\Program Files\Git\bin\bash.exe" bin/ci/build.sh win'
+      - if: startsWith(github.ref, 'refs/tags/v')
+        uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with: {name: windows, path: dist/*.exe}
+
+  # GitHub, not the forge, is where people download Hyper.
+  draft-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [linux, macos, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: https://code.forgejo.org/forgejo/download-artifact@v4
+        with: {path: artifacts}
+      - env:
+          TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+        run: |
+          set -euo pipefail
+          gh() { curl -fsS -H "Authorization: Bearer $TOKEN" "$@"; }
+          API=https://api.github.com/repos/quine-global/hyper
+          # A re-run finds its draft (drafts aren't served by /releases/tags/).
+          REL=$(gh "$API/releases?per_page=100" | jq --arg t "$GITHUB_REF_NAME" 'first(.[] | select(.tag_name == $t)) // empty')
+          [[ -n "$REL" ]] || REL=$(jq -n --arg t "$GITHUB_REF_NAME" --arg sha "$GITHUB_SHA" \
+            '{tag_name: $t, target_commitish: $sha, name: ("Release " + $t), draft: true}' | gh -X POST "$API/releases" -d @-)
+          ID=$(jq .id <<<"$REL")
+          for f in $(find artifacts -type f -size +0); do
+            for old in $(jq --arg n "${f##*/}" '.assets[] | select(.name == $n) | .id' <<<"$REL"); do gh -X DELETE "$API/releases/assets/$old"; done
+            gh -o /dev/null -H "Content-Type: application/octet-stream" --data-binary @"$f" \
+              "https://uploads.github.com/repos/quine-global/hyper/releases/$ID/assets?name=${f##*/}"
+          done
+          jq -r .html_url <<<"$REL"

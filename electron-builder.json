@@ -1,7 +1,7 @@
 {
   "appId": "com.quineglobal.hyper",
   "afterSign": "./bin/notarize.js",
-  "afterPack": "./bin/cp-snapshot.js",
+  "afterPack": "./bin/after-pack.js",
   "directories": {
     "app": "target"
   },
@@ -98,7 +98,9 @@
       "NSRemindersUsageDescription": "An application in Hyper wants to access your reminders.",
       "NSRemovableVolumesUsageDescription": "An application in Hyper wants to access files on a removable volume.",
       "NSSpeechRecognitionUsageDescription": "An application in Hyper wants to send user data to Apple’s speech recognition servers.",
-      "NSSystemAdministrationUsageDescription": "The operation being performed by an application in Hyper requires elevated permission."
+      "NSSystemAdministrationUsageDescription": "The operation being performed by an application in Hyper requires elevated permission.",
+      "SUPublicEDKey": "PasstyI8TVmTzH+i0ICnqwn2Z6BpqwOjcMwpyKhSFXk=",
+      "SUEnableAutomaticChecks": true
     },
     "darkModeSupport": true
   },
