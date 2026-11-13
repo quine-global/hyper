@@ -2,7 +2,10 @@
 // a daily background check and Hyper › Check for Updates…),
 // reading appcasts that .forgejo/workflows/publish.yml writes into the
 // Homebrew tap (docs/updates.md). Elsewhere, Electron's autoUpdater (Windows)
-// or a notification only (Linux), against hyper.quineglobal.com/update.
+// or a notification only (Linux), against hyper.quineglobal.com/update. On
+// Linux the notification depends on how Hyper was installed
+// (utils/linux-install.ts): none for snap and Flatpak, the command that
+// updates it for our apt/dnf repos and Homebrew, a download link otherwise.
 
 // Packages
 import {join} from 'path';
@@ -18,6 +21,7 @@ import autoUpdaterLinux from './auto-updater-linux';
 import {getDefaultProfile} from './config';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
+import {linuxUpdates, realLinuxSystem} from './utils/linux-install';
 
 // Necessary due to typescript not handling overloads well
 type AutoUpdaterEvent =
@@ -58,6 +62,8 @@ const checkForUpdates = async () => {
 };
 
 let isInit = false;
+// Linux: the command that updates this install, if a package manager does.
+let updateCommand: string | undefined;
 // Default to the "stable" update channel
 let canaryUpdates = false;
 
@@ -132,6 +138,15 @@ export const checkForUpdatesNow = () => {
 };
 
 async function init() {
+  isInit = true;
+  if (isLinux) {
+    const updates = await linuxUpdates(realLinuxSystem);
+    if (!updates.check) {
+      return;
+    }
+    updateCommand = updates.command;
+  }
+
   autoUpdater.on('error', (err: Error) => {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
   });
@@ -154,8 +169,6 @@ async function init() {
   setInterval(() => {
     void checkForUpdates();
   }, ms('30m'));
-
-  isInit = true;
 }
 
 const updater = (win: BrowserWindow) => {
@@ -176,7 +189,7 @@ const updater = (win: BrowserWindow) => {
 
   const onupdate = (ev: Event, releaseNotes: string, releaseName: string, date: Date, updateUrl: string) => {
     const releaseUrl = updateUrl || `https://github.com/quine-global/hyper/releases/tag/${releaseName}`;
-    rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !isLinux});
+    rpc.emit('update available', {releaseNotes, releaseName, releaseUrl, canInstall: !isLinux, updateCommand});
   };
 
   if (isLinux) {

@@ -83,7 +83,18 @@ const Notifications = forwardRef<HTMLDivElement, NotificationsProps>((props, ref
             notes
           </a>
           ).{' '}
-          {props.updateCanInstall ? (
+          {props.updateCommand ? (
+            <>
+              Update with{' '}
+              <a
+                style={{color: '#000', cursor: 'pointer', fontFamily: 'monospace', fontWeight: 'bold'}}
+                title="Copy"
+                onClick={() => window.require('electron').clipboard.writeText(props.updateCommand!)}
+              >
+                {props.updateCommand}
+              </a>
+            </>
+          ) : props.updateCanInstall ? (
             <a
               style={{
                 cursor: 'pointer',

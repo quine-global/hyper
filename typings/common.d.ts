@@ -58,7 +58,14 @@ export type MainEvents = {
 export type RendererEvents = {
   ready: never;
   'add notification': {text: string; url: string; dismissable: boolean};
-  'update available': {releaseNotes: string; releaseName: string; releaseUrl: string; canInstall: boolean};
+  'update available': {
+    releaseNotes: string;
+    releaseName: string;
+    releaseUrl: string;
+    canInstall: boolean;
+    // Linux: the command that updates it, when a package manager installed it.
+    updateCommand?: string;
+  };
   'open ssh': SSHDestination;
   'open file': {path: string};
   'move jump req': number | 'last';
