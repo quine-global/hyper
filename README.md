@@ -16,7 +16,7 @@ A terminal built on web technologies, forked from [Vercel's Hyper](https://hyper
 
 ## Install
 
-With [Homebrew](https://brew.sh), on macOS or Linux (x86_64 and arm64):
+With [Homebrew](https://brew.sh), on macOS or x86_64 Linux:
 
 ```sh
 brew tap quine/tap https://git.quineglobal.com/quine-global/homebrew-tap.git
@@ -36,6 +36,31 @@ new one:
 ```sh
 brew tap --custom-remote quine/tap https://git.quineglobal.com/quine-global/homebrew-tap.git
 ```
+
+### Debian and Ubuntu
+
+From Quine Global's apt repo, signed with key
+`06249465F4C6A0A851211266772797169CE1D647`:
+
+```sh
+sudo install -d /etc/apt/keyrings
+sudo curl -fsSLo /etc/apt/keyrings/quine-packages.asc https://packages.quineglobal.com/quine-packages.asc
+sudo curl -fsSLo /etc/apt/sources.list.d/hyper.sources https://packages.quineglobal.com/hyper.sources
+sudo apt update && sudo apt install hyper
+```
+
+### Fedora and RHEL
+
+```sh
+sudo curl -fsSLo /etc/yum.repos.d/hyper.repo https://packages.quineglobal.com/hyper.repo
+sudo dnf install hyper
+```
+
+On Fedora Atomic (Silverblue, Kinoite, Aurora…), put the same file in
+`/etc/yum.repos.d/` and run `rpm-ostree install hyper`.
+
+Updates then come with the rest of the system (`apt upgrade`, `dnf upgrade`).
+For canary builds, use `hyper-canary.sources` or `hyper-canary.repo` instead.
 
 ## Development
 
