@@ -1,4 +1,12 @@
+// Updates: Sparkle on macOS (the standard native updater: its own window,
+// a daily background check and Hyper › Check for Updates…),
+// reading appcasts that .forgejo/workflows/publish.yml writes into the
+// Homebrew tap; docs/updates.md. Elsewhere, Electron's autoUpdater (Windows)
+// or a notification only (Linux), against hyper.quineglobal.com/update.
+
 // Packages
+import {join} from 'path';
+
 import electron, {app} from 'electron';
 import type {BrowserWindow, AutoUpdater as OriginalAutoUpdater} from 'electron';
 
@@ -28,6 +36,7 @@ interface AutoUpdater extends Omit<OriginalAutoUpdater, 'on' | 'removeListener'>
 
 const {platform} = process;
 const isLinux = platform === 'linux';
+const isMac = platform === 'darwin';
 
 const autoUpdater: AutoUpdater = isLinux ? autoUpdaterLinux : electron.autoUpdater;
 
@@ -69,6 +78,59 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
 
 const isCanary = (updateChannel: string) => updateChannel === 'canary';
 
+// sparkle.node (build/mac/sparkle/hyper-sparkle.m), which bin/embed-sparkle.js
+// puts in the packaged app.
+interface Sparkle {
+  start(feedURL: string, automaticChecks: boolean): void;
+  setFeedURL(feedURL: string): void;
+  setAutomaticChecks(on: boolean): void;
+  checkForUpdates(): void;
+}
+
+let sparkle: Sparkle | null = null;
+
+// One appcast per channel and architecture. An Intel build running under
+// Rosetta reads the arm64 one, so its next update is the native build.
+const sparkleFeedURL = (canary: boolean) => {
+  const arch = process.arch === 'arm64' || app.runningUnderARM64Translation ? 'arm64' : 'x64';
+  const name = canary ? `hyper-canary-${arch}` : `hyper-${arch}`;
+  return `https://git.quineglobal.com/quine-global/homebrew-tap.git/tree/appcasts/${name}.xml?raw=true`;
+};
+
+async function initSparkle() {
+  try {
+    const module = {exports: {}};
+    process.dlopen(module, join(process.resourcesPath, 'sparkle.node'));
+    sparkle = module.exports as Sparkle;
+  } catch (err) {
+    // Not the packaged app (`pnpm run app`).
+    console.error('Updates are only available in the packaged app:', err);
+    return;
+  }
+
+  const config = await getDecoratedConfigWithRetry();
+  let canary = isCanary(config.updateChannel);
+  sparkle.start(sparkleFeedURL(canary), !config.disableAutoUpdates);
+
+  app.config.subscribe(async () => {
+    const {updateChannel, disableAutoUpdates} = await getDecoratedConfigWithRetry();
+    if (isCanary(updateChannel) !== canary) {
+      canary = isCanary(updateChannel);
+      sparkle?.setFeedURL(sparkleFeedURL(canary));
+    }
+    sparkle?.setAutomaticChecks(!disableAutoUpdates);
+  });
+}
+
+// Hyper › Check for Updates… (macOS).
+export const checkForUpdatesNow = () => {
+  if (sparkle) {
+    sparkle.checkForUpdates();
+  } else {
+    console.error('Updates are only available in the packaged app');
+  }
+};
+
 async function init() {
   autoUpdater.on('error', (err: Error) => {
     console.error('Error fetching updates', `${err.message} (${err.stack})`);
@@ -97,6 +159,15 @@ async function init() {
 }
 
 const updater = (win: BrowserWindow) => {
+  // Sparkle is the app's, not a window's: started once, with its own window.
+  if (isMac) {
+    if (!isInit) {
+      isInit = true;
+      void initSparkle();
+    }
+    return;
+  }
+
   if (!isInit) {
     void init();
   }

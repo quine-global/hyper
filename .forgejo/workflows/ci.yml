@@ -1,0 +1,49 @@
+name: CI
+
+# Lint, unit tests and a packaged build, on Linux x64 and macOS, for every
+# push. ARM Linux has no runner here yet (docs/releasing.md).
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux x64
+    # An x64 runner (the forge's ubuntu-latest is arm64). It runs jobs on
+    # its own host, so the build gets a Debian container (podman), with the
+    # checkout mounted in.
+    runs-on: runner-x86-linux
+    steps:
+      - uses: actions/checkout@v4
+      - run: podman run --rm -v "$PWD:/w" -w /w docker.io/library/node:22-bookworm bin/ci/build.sh linux
+
+  macos:
+    name: macOS
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+      - run: bin/ci/build.sh mac
+
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+      # Git's own bash, by its full path ("bash" alone could be WSL's), from
+      # cmd: PowerShell steps run as .ps1 scripts, which Windows' default
+      # execution policy refuses.
+      - shell: cmd
+        run: '"C:\Program Files\Git\bin\bash.exe" bin/ci/build.sh win'

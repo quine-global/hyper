@@ -1,0 +1,137 @@
+name: Release
+
+# On a v* tag: builds macOS, Windows and Linux x64, and puts them in a draft GitHub
+# release (the forge isn't public; GitHub is where people download Hyper).
+# Publishing it is the "Publish release" workflow (publish.yml), which also
+# updates the Homebrew cask and the Sparkle appcasts. docs/releasing.md.
+
+on:
+  push:
+    tags: ['v*']
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Tag matches package.json
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -euo pipefail
+          FAILED=0
+          for f in package.json app/package.json; do
+            V="v$(node -p "require('./$f').version")"
+            if [[ "$V" != "$GITHUB_REF_NAME" ]]; then
+              echo "::error::tag $GITHUB_REF_NAME doesn't match $f's $V"
+              FAILED=1
+            fi
+          done
+          exit $FAILED
+
+  linux:
+    name: Linux x64
+    needs: validate
+    # An x64 runner (the forge's ubuntu-latest is arm64). It runs jobs on
+    # its own host, so the build gets a Debian container (podman), with the
+    # checkout mounted in.
+    runs-on: runner-x86-linux
+    steps:
+      - uses: actions/checkout@v4
+      - run: podman run --rm -v "$PWD:/w" -w /w docker.io/library/node:22-bookworm bin/ci/build.sh linux
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: linux-x64
+          path: |
+            dist/*.deb
+            dist/*.rpm
+            dist/*.AppImage
+            dist/*.pacman
+          retention-days: 7
+
+  macos:
+    name: macOS
+    needs: validate
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+      - run: bin/ci/build.sh mac
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: macos
+          path: |
+            dist/*.dmg
+            dist/*-mac-*.zip
+          retention-days: 7
+
+  windows:
+    name: Windows
+    needs: validate
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
+      # Git's own bash, by its full path ("bash" alone could be WSL's), from
+      # cmd: PowerShell steps run as .ps1 scripts, which Windows' default
+      # execution policy refuses.
+      - shell: cmd
+        run: '"C:\Program Files\Git\bin\bash.exe" bin/ci/build.sh win'
+      - uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+        with:
+          name: windows
+          path: dist/*.exe
+          retention-days: 7
+
+  github-release:
+    name: Draft GitHub release
+    needs: [linux, macos, windows]
+    runs-on: ubuntu-latest
+    container:
+      image: node:22-bookworm
+    steps:
+      - uses: https://code.forgejo.org/forgejo/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Create the draft and upload
+        env:
+          GH_RELEASE_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+          GH_REPO: quine-global/hyper
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_RELEASE_TOKEN" ]]; then
+            echo "::error::GH_RELEASE_TOKEN secret is not set (docs/releasing.md)"
+            exit 1
+          fi
+          apt-get update -qq && apt-get install -y -qq jq >/dev/null
+          gh() { curl -fsS -H "Authorization: Bearer $GH_RELEASE_TOKEN" -H "Accept: application/vnd.github+json" "$@"; }
+          API="https://api.github.com/repos/$GH_REPO"
+          # A re-run finds the draft an earlier attempt made (drafts aren't
+          # served by /releases/tags/…), and replaces its files.
+          RELEASE=$(gh "$API/releases?per_page=100" | jq --arg t "$GITHUB_REF_NAME" '[.[] | select(.tag_name == $t)][0] // empty')
+          if [[ -z "$RELEASE" ]]; then
+            # The tag may not have reached GitHub yet (the push mirror runs
+            # after the push): target_commitish makes it there if not.
+            RELEASE=$(jq -n --arg tag "$GITHUB_REF_NAME" --arg sha "$GITHUB_SHA" \
+                '{tag_name: $tag, target_commitish: $sha, name: ("Release " + $tag), draft: true}' \
+              | gh -X POST "$API/releases" --data-binary @-)
+          fi
+          ID=$(jq -r .id <<<"$RELEASE")
+          find artifacts -type f -size +0 | while read -r f; do
+            NAME=$(basename "$f")
+            for old in $(jq -r --arg n "$NAME" '.assets[]? | select(.name == $n) | .id' <<<"$RELEASE"); do
+              gh -X DELETE "$API/releases/assets/$old"
+            done
+            gh -o /dev/null -X POST -H "Content-Type: application/octet-stream" \
+              "https://uploads.github.com/repos/$GH_REPO/releases/$ID/assets?name=$NAME" --data-binary @"$f"
+            echo "uploaded $NAME"
+          done
+          echo "Draft: $(jq -r .html_url <<<"$RELEASE")"

@@ -1,0 +1,239 @@
+name: Publish release
+
+# Publishes a draft GitHub release that release.yml made, then points the
+# quine-hyper cask in quine-global/homebrew-tap at it and writes the Sparkle
+# appcasts the Mac app updates from, signing each update with the
+# SPARKLE_PRIVATE_KEY secret. docs/releasing.md, docs/updates.md.
+#
+# Channels: a tag with "canary" in it, or "prerelease" ticked, is a GitHub
+# pre-release and goes to the canary appcasts only; anything else is a full
+# release, on both stable and canary, so canary users get it too when it's
+# newer than what they have. One appcast per architecture: Sparkle can't pick
+# an architecture's download out of one feed.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, e.g. v4.0.0-q-canary.20
+        required: true
+      prerelease:
+        description: Pre-release (canary only), even without "canary" in the tag
+        type: boolean
+        default: false
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish ${{ inputs.tag }}
+    # sign_update and plutil are macOS tools. Host mode: keys and clones stay
+    # in $RUNNER_TEMP and the job's directory, never the Mac account's own.
+    runs-on: macos-latest
+    env:
+      TAG: ${{ inputs.tag }}
+      GH_REPO: quine-global/hyper
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish the GitHub release
+        env:
+          GH_RELEASE_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+          PRERELEASE_INPUT: ${{ inputs.prerelease }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_RELEASE_TOKEN" ]]; then
+            echo "::error::GH_RELEASE_TOKEN secret is not set (docs/releasing.md)"
+            exit 1
+          fi
+          gh() { curl -fsS -H "Authorization: Bearer $GH_RELEASE_TOKEN" -H "Accept: application/vnd.github+json" "$@"; }
+          API="https://api.github.com/repos/$GH_REPO"
+          RELEASE=$(gh "$API/releases?per_page=100" | jq --arg t "$TAG" '[.[] | select(.tag_name == $t)][0] // empty')
+          if [[ -z "$RELEASE" ]]; then
+            echo "::error::GitHub has no release for $TAG: has release.yml finished for it?"
+            exit 1
+          fi
+          PRERELEASE=false
+          if [[ "$PRERELEASE_INPUT" == true || "$TAG" == *canary* ]]; then
+            PRERELEASE=true
+          fi
+          # A pre-release never becomes "Latest" (the download people land on).
+          jq -n --argjson pre "$PRERELEASE" \
+              '{draft: false, prerelease: $pre, make_latest: (if $pre then "false" else "true" end)}' \
+            | gh -X PATCH "$API/releases/$(jq -r .id <<<"$RELEASE")" --data-binary @- > "$RUNNER_TEMP/release.json"
+          echo "Published $(jq -r .html_url "$RUNNER_TEMP/release.json") (pre-release: $PRERELEASE)"
+
+      - name: Clone tap
+        env:
+          SSH_KEY: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$SSH_KEY" ]]; then
+            echo "::error::HOMEBREW_TAP_SSH_KEY secret is not set (its public key needs write access on quine-global/homebrew-tap)"
+            exit 1
+          fi
+          (umask 077; printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/tap_key")
+          # The tap lives on the same forge as this repo, reached at the
+          # address this runner uses for it; its SSH is on port 2200.
+          FORGE_HOST=${GITHUB_SERVER_URL#*://}
+          FORGE_HOST=${FORGE_HOST%%/*}
+          FORGE_HOST=${FORGE_HOST%%:*}
+          TAP_REPO="ssh://git@$FORGE_HOST:2200/quine-global/homebrew-tap.git"
+          echo "TAP_REPO=$TAP_REPO" >> "$GITHUB_ENV"
+          echo "[$FORGE_HOST]:2200 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHECXyh0SwRlXikgu919nC9OTmAU7AEcrlbJ/J/H9DTU" > "$RUNNER_TEMP/tap_known_hosts"
+          export GIT_SSH_COMMAND="ssh -i $RUNNER_TEMP/tap_key -o IdentitiesOnly=yes -o UserKnownHostsFile=$RUNNER_TEMP/tap_known_hosts -o StrictHostKeyChecking=yes"
+          rm -rf repo
+          git clone -q "$TAP_REPO" repo
+          mkdir -p repo/Casks repo/appcasts
+
+      - name: Write cask
+        run: |
+          set -euo pipefail
+          VERSION="${TAG#v}"
+          digest() {
+            jq -r --arg n "Hyper-$VERSION-mac-$1.dmg" '.assets[] | select(.name == $n) | .digest' "$RUNNER_TEMP/release.json" \
+              | sed 's/^sha256://'
+          }
+          ARM_SHA=$(digest arm64)
+          INTEL_SHA=$(digest x64)
+          if [[ -z "$ARM_SHA" || -z "$INTEL_SHA" || "$ARM_SHA" == null || "$INTEL_SHA" == null ]]; then
+            echo "::error::$TAG has no Hyper-$VERSION-mac-{arm64,x64}.dmg assets"
+            exit 1
+          fi
+          cat > repo/Casks/quine-hyper.rb <<CASK
+          cask "quine-hyper" do
+            arch arm: "arm64", intel: "x64"
+
+            version "$VERSION"
+            sha256 arm:   "$ARM_SHA",
+                   intel: "$INTEL_SHA"
+
+            url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-mac-#{arch}.dmg"
+            name "Hyper"
+            desc "Terminal built on web technologies (Quine fork)"
+            homepage "https://github.com/quine-global/hyper"
+
+            conflicts_with cask: ["hyper", "hyper@canary"]
+            # The app updates itself (Sparkle), so \`brew upgrade\` leaves it
+            # be unless asked with --greedy.
+            auto_updates true
+            depends_on :macos
+
+            app "Hyper.app"
+            binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
+
+            # Only ad-hoc signed: strip the quarantine flag Homebrew adds, or
+            # Gatekeeper refuses to open it.
+            postflight_steps do
+              run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
+            end
+
+            zap trash: [
+              "~/.config/Hyper",
+              "~/Library/Application Support/Hyper",
+              "~/Library/Caches/com.quineglobal.hyper",
+              "~/Library/Caches/com.quineglobal.hyper.ShipIt",
+              "~/Library/Logs/Hyper",
+              "~/Library/Preferences/com.quineglobal.hyper.plist",
+              "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
+            ]
+          end
+          CASK
+          cat repo/Casks/quine-hyper.rb
+
+      # Sparkle only installs updates signed with the key whose public half
+      # is the app's SUPublicEDKey (electron-builder.json), and compares
+      # CFBundleVersion, which release builds set to the run number
+      # (bin/ci/build.sh): it ignores everything after a "-", so the versions
+      # themselves (4.0.0-q-canary.18, ….19) are all the same to it.
+      - name: Sign updates and write appcasts
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$SPARKLE_PRIVATE_KEY" ]]; then
+            echo "::error::SPARKLE_PRIVATE_KEY secret is not set (docs/updates.md)"
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          if [[ "$(jq -r .prerelease "$RUNNER_TEMP/release.json")" == true ]]; then
+            CHANNELS=(canary)
+          else
+            CHANNELS=(stable canary)
+          fi
+          echo "Channels: ${CHANNELS[*]}"
+
+          build/mac/sparkle/download-sparkle.sh "$RUNNER_TEMP/sparkle"
+          KEY_FILE="$RUNNER_TEMP/sparkle_key"
+          trap 'rm -f "$KEY_FILE"' EXIT
+          (umask 077; printf '%s\n' "$SPARKLE_PRIVATE_KEY" > "$KEY_FILE")
+          rm -rf zips && mkdir zips
+          for ARCH in arm64 x64; do
+            NAME="Hyper-$VERSION-mac-$ARCH.zip"
+            curl -fsSL -o "zips/$NAME" "https://github.com/$GH_REPO/releases/download/$TAG/$NAME"
+          done
+
+          # Sparkle shows the notes in its update window: the release's, as
+          # HTML (escaped, one line per line).
+          NOTES_HTML=$(jq -r '.body // ""' "$RUNNER_TEMP/release.json" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -e 's/$/<br>/')
+          # RFC 822, in English whatever the locale (BSD date has no -R).
+          PUB_DATE=$(LC_ALL=C date -u '+%a, %d %b %Y %H:%M:%S +0000')
+          for ARCH in arm64 x64; do
+            ZIP="zips/Hyper-$VERSION-mac-$ARCH.zip"
+            BUILD=$(unzip -p "$ZIP" Hyper.app/Contents/Info.plist | plutil -extract CFBundleVersion raw -o - -)
+            if ! [[ "$BUILD" =~ ^[0-9]+$ ]]; then
+              echo "::error::$ZIP's CFBundleVersion is '$BUILD', not a run number: not built by release.yml from a tag?"
+              exit 1
+            fi
+            # Prints: sparkle:edSignature="..." length="..."
+            SIGNATURE=$("$RUNNER_TEMP/sparkle/sparkle-bin/sign_update" "$ZIP" -f "$KEY_FILE")
+            for CHANNEL in "${CHANNELS[@]}"; do
+              FEED="repo/appcasts/hyper-$ARCH.xml"
+              [[ "$CHANNEL" == canary ]] && FEED="repo/appcasts/hyper-canary-$ARCH.xml"
+              # Never move a channel back to an older build (a draft published
+              # late); the same build again (a re-run) rewrites it.
+              CURRENT=""
+              if [[ -f "$FEED" ]]; then
+                CURRENT=$(sed -n 's:.*<sparkle\:version>\([0-9]*\)</sparkle\:version>.*:\1:p' "$FEED" | head -1)
+              fi
+              if [[ -n "$CURRENT" && "$BUILD" -lt "$CURRENT" ]]; then
+                echo "::notice::$FEED already has build $CURRENT, newer than $TAG's $BUILD; left as is"
+                continue
+              fi
+              cat > "$FEED" <<APPCAST
+          <?xml version="1.0" encoding="utf-8"?>
+          <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+            <channel>
+              <title>Hyper ($CHANNEL)</title>
+              <item>
+                <title>Hyper $VERSION</title>
+                <sparkle:version>$BUILD</sparkle:version>
+                <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
+                <pubDate>$PUB_DATE</pubDate>
+                <description><![CDATA[$NOTES_HTML]]></description>
+                <enclosure url="https://github.com/$GH_REPO/releases/download/$TAG/Hyper-$VERSION-mac-$ARCH.zip" type="application/octet-stream" $SIGNATURE/>
+              </item>
+            </channel>
+          </rss>
+          APPCAST
+              cat "$FEED"
+            done
+          done
+
+      - name: Push to tap
+        run: |
+          set -euo pipefail
+          export GIT_SSH_COMMAND="ssh -i $RUNNER_TEMP/tap_key -o IdentitiesOnly=yes -o UserKnownHostsFile=$RUNNER_TEMP/tap_known_hosts -o StrictHostKeyChecking=yes"
+          cd repo
+          git config user.name "Hyper release"
+          git config user.email "noreply@quineglobal.com"
+          git add Casks/quine-hyper.rb appcasts/hyper-*.xml
+          git diff --cached --quiet && { echo "Cask and appcasts unchanged"; exit 0; }
+          git commit -q -m "quine-hyper ${TAG#v}"
+          git push -q
+
+      - name: Clean up keys
+        if: always()
+        run: rm -f "$RUNNER_TEMP/tap_key" "$RUNNER_TEMP/tap_known_hosts" "$RUNNER_TEMP/sparkle_key"
