@@ -41,6 +41,13 @@ case "$PLATFORM" in
   *) echo "unknown platform $PLATFORM" >&2; exit 1 ;;
 esac
 
+# A release tag must match the version it builds.
+if [[ "${GITHUB_REF:-}" == refs/tags/v* ]]; then
+  for f in package.json app/package.json; do
+    grep -q "\"version\": \"${GITHUB_REF#refs/tags/v}\"" "$f" || { echo "${GITHUB_REF#refs/tags/} doesn't match $f's version" >&2; exit 1; }
+  done
+fi
+
 pnpm install --frozen-lockfile
 # Lint once, on Linux: Git for Windows checks out with CRLF line endings,
 # which the linter would flag everywhere.

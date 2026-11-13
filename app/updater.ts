@@ -1,7 +1,7 @@
 // Updates: Sparkle on macOS (the standard native updater: its own window,
 // a daily background check and Hyper › Check for Updates…),
 // reading appcasts that .forgejo/workflows/publish.yml writes into the
-// Homebrew tap; docs/updates.md. Elsewhere, Electron's autoUpdater (Windows)
+// Homebrew tap (docs/updates.md). Elsewhere, Electron's autoUpdater (Windows)
 // or a notification only (Linux), against hyper.quineglobal.com/update.
 
 // Packages
