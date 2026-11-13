@@ -11,12 +11,19 @@ export function installUpdate(): HyperActions {
   };
 }
 
-export function updateAvailable(version: string, notes: string, releaseUrl: string, canInstall: boolean): HyperActions {
+export function updateAvailable(
+  version: string,
+  notes: string,
+  releaseUrl: string,
+  canInstall: boolean,
+  command?: string
+): HyperActions {
   return {
     type: UPDATE_AVAILABLE,
     version,
     notes,
     releaseUrl,
-    canInstall
+    canInstall,
+    command
   };
 }

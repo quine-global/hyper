@@ -10,6 +10,7 @@ export interface UpdateAvailableAction {
   notes: string | null;
   releaseUrl: string;
   canInstall: boolean;
+  command?: string;
 }
 
 export type UpdateActions = UpdateInstallAction | UpdateAvailableAction;
