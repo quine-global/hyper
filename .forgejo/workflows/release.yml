@@ -24,33 +24,12 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          CUR=$(node -p "require('./package.json').version")
-          # canary: 4.0.0-q-canary.19 → .20, or 4.0.0-q → 4.0.1-q-canary.1;
-          # production: 4.0.0-q-canary.19 → 4.0.0-q.
-          if [ -z "$VERSION" ]; then
-            case "$CHANNEL:$CUR" in
-              canary:*-canary.*) VERSION=${CUR%.*}.$((${CUR##*.} + 1)) ;;
-              canary:*-*) IFS=. read -r MA MI PA <<<"${CUR%%-*}"; VERSION=$MA.$MI.$((PA + 1))-${CUR#*-}-canary.1 ;;
-              production:*-canary.*) VERSION=${CUR%-canary.*} ;;
-              *) echo "::error::can't work out the next $CHANNEL version after $CUR; give one"; exit 1 ;;
-            esac
-          fi
-          # Publish release takes the channel from the tag, so they must agree.
-          if [[ "$CHANNEL" == canary && "$VERSION" != *canary* || "$CHANNEL" == production && "$VERSION" == *canary* ]]; then
-            echo "::error::a $CHANNEL release can't be $VERSION"; exit 1
-          fi
-          git rev-parse -q --verify "refs/tags/v$VERSION" >/dev/null && { echo "::error::v$VERSION already exists"; exit 1; }
-          echo "$CUR → $VERSION"
-          node -e 'const fs = require("fs");
-            for (const f of ["package.json", "app/package.json"]) {
-              const p = JSON.parse(fs.readFileSync(f, "utf8")); p.version = process.argv[1];
-              fs.writeFileSync(f, JSON.stringify(p, null, 2) + "\n");
-            }' "$VERSION"
-          git -c user.name="Hyper release" -c user.email=noreply@quineglobal.com commit -qam "Release v$VERSION"
-          git tag "v$VERSION"
-          git push -q origin HEAD:canary "v$VERSION"
-          # Pushes made by a workflow start no workflows (Forgejo's guard against
-          # loops), so start CI on the tag directly.
+          V=$(node bin/ci/release-version.js "$CHANNEL" $VERSION)
+          git rev-parse -q --verify "refs/tags/v$V" >/dev/null && { echo "::error::v$V already exists"; exit 1; }
+          git -c user.name="Hyper release" -c user.email=noreply@quineglobal.com commit -qam "Release v$V"
+          git tag "v$V" && git push -q origin HEAD:canary "v$V"
+          # A workflow's own pushes start no workflows (Forgejo's loop guard),
+          # so start CI on the tag directly.
           curl -fsS -o /dev/null -X POST -H "Authorization: token $TOKEN" -H "Content-Type: application/json" \
-            -d "{\"ref\": \"v$VERSION\"}" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/dispatches"
-          echo "CI started on v$VERSION; when its draft release is ready, run Publish release."
+            -d "{\"ref\": \"v$V\"}" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/dispatches"
+          echo "v$V tagged and building; when its draft release is ready, run Publish release."
