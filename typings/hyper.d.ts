@@ -102,6 +102,7 @@ export type uiState = Immutable<{
   termCSS: string;
   uiFontFamily: string;
   updateCanInstall: null | boolean;
+  updateInstallCommand: string | null;
   updateNotes: string | null;
   updateReleaseUrl: string | null;
   updateVersion: string | null;

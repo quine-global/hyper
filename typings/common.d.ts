@@ -50,7 +50,14 @@ export type MainEvents = {
 export type RendererEvents = {
   ready: never;
   'add notification': {text: string; url: string; dismissable: boolean};
-  'update available': {releaseNotes: string; releaseName: string; releaseUrl: string; canInstall: boolean};
+  'update available': {
+    releaseNotes: string;
+    releaseName: string;
+    releaseUrl: string;
+    canInstall: boolean;
+    // Set when a package manager installed Hyper: the shell command that upgrades it.
+    installCommand?: string;
+  };
   'open ssh': ReturnType<typeof parseUrl>;
   'open file': {path: string};
   'move jump req': number | 'last';

@@ -218,8 +218,8 @@ rpc.on('open ssh', (parsedUrl) => {
   store_.dispatch(uiActions.openSSH(parsedUrl));
 });
 
-rpc.on('update available', ({releaseName, releaseNotes, releaseUrl, canInstall}) => {
-  store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes, releaseUrl, canInstall));
+rpc.on('update available', ({releaseName, releaseNotes, releaseUrl, canInstall, installCommand}) => {
+  store_.dispatch(updaterActions.updateAvailable(releaseName, releaseNotes, releaseUrl, canInstall, installCommand));
 });
 
 rpc.on('move', (window) => {
