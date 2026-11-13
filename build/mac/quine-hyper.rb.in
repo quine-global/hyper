@@ -1,4 +1,4 @@
-# The quine-hyper Homebrew cask; .forgejo/workflows/publish.yml fills in the
+# The quine-hyper Homebrew cask; bin/ci/publish.mjs (publish.yml) fills in the
 # @…@ values and writes it into quine-global/homebrew-tap. macOS gets the dmg,
 # Linux the AppImage (x86_64 only: CI doesn't build Linux arm64 yet).
 cask "quine-hyper" do

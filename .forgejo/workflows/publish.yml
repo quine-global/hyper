@@ -4,7 +4,7 @@ name: Publish release
 # quine-hyper Homebrew cask at it, and signs and writes the Sparkle appcasts
 # the Mac app updates from (docs/updates.md). A tag with "canary" in it, or
 # "prerelease" ticked, is a pre-release: canary appcasts only. A full release
-# goes to stable and canary.
+# goes to stable and canary. The work is in bin/ci/publish.mjs.
 
 on:
   workflow_dispatch:
@@ -20,63 +20,12 @@ jobs:
     runs-on: macos-latest # sign_update and plutil; host mode: keys stay in $RUNNER_TEMP
     steps:
       - uses: actions/checkout@v4
-      - env:
+      - uses: actions/setup-node@v4
+        with: {node-version: 22.22.2}
+      - run: bin/ci/publish.mjs
+        env:
           TAG: ${{ inputs.tag }}
           PRERELEASE: ${{ inputs.prerelease || contains(inputs.tag, 'canary') }}
-          TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
-          TAP_KEY: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
-          SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
-        run: |
-          set -euo pipefail
-          : "${TOKEN:?GH_RELEASE_TOKEN secret not set}" "${TAP_KEY:?HOMEBREW_TAP_SSH_KEY secret not set}" "${SPARKLE_KEY:?SPARKLE_PRIVATE_KEY secret not set}"
-          V=${TAG#v} T=$RUNNER_TEMP DL=https://github.com/quine-global/hyper/releases/download/$TAG
-          trap 'rm -f "$T/tap_key" "$T/sparkle_key"' EXIT
-          (umask 077; printf '%s\n' "$TAP_KEY" > "$T/tap_key"; printf '%s\n' "$SPARKLE_KEY" > "$T/sparkle_key")
-
-          # Publish the draft; a pre-release never becomes "Latest".
-          gh() { curl -fsS -H "Authorization: Bearer $TOKEN" "$@"; }
-          API=https://api.github.com/repos/quine-global/hyper
-          ID=$(gh "$API/releases?per_page=100" | jq -e --arg t "$TAG" 'first(.[] | select(.tag_name == $t)) | .id')
-          REL=$(jq -n --argjson pre "$PRERELEASE" '{draft: false, prerelease: $pre, make_latest: ($pre | not | tostring)}' \
-            | gh -X PATCH "$API/releases/$ID" -d @-)
-
-          # The tap is on this forge, at the address this runner uses; SSH on 2200.
-          HOST=${GITHUB_SERVER_URL#*://}; HOST=${HOST%%[:/]*}
-          echo "[$HOST]:2200 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHECXyh0SwRlXikgu919nC9OTmAU7AEcrlbJ/J/H9DTU" > "$T/known_hosts"
-          export GIT_SSH_COMMAND="ssh -i $T/tap_key -o IdentitiesOnly=yes -o UserKnownHostsFile=$T/known_hosts"
-          rm -rf tap && git clone -q "ssh://git@$HOST:2200/quine-global/homebrew-tap.git" tap && mkdir -p tap/appcasts
-
-          sha() { jq -er --arg n "Hyper-$V-$1" '.assets[] | select(.name == $n) | .digest | ltrimstr("sha256:")' <<<"$REL" || { echo "$TAG has no Hyper-$V-$1" >&2; exit 1; }; }
-          ARM=$(sha mac-arm64.dmg); INTEL=$(sha mac-x64.dmg); LINUX=$(sha x86_64.AppImage)
-          sed -e "s/@VERSION@/$V/; s/@ARM_SHA@/$ARM/; s/@INTEL_SHA@/$INTEL/; s/@X86_LINUX_SHA@/$LINUX/" build/mac/quine-hyper.rb.in > tap/Casks/quine-hyper.rb
-
-          # Sparkle compares CFBundleVersion (the CI run number on tags), and
-          # only installs updates signed with SUPublicEDKey's private half.
-          build/mac/sparkle/download-sparkle.sh "$T/sparkle"
-          NOTES=$(jq -r '.body // ""' <<<"$REL" | sed -e 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/$/<br>/')
-          DATE=$(LC_ALL=C date -u '+%a, %d %b %Y %H:%M:%S +0000')
-          FEEDS=(hyper-canary); [[ "$PRERELEASE" == true ]] || FEEDS+=(hyper)
-          for ARCH in arm64 x64; do
-            ZIP=Hyper-$V-mac-$ARCH.zip
-            curl -fsSL -o "$T/$ZIP" "$DL/$ZIP"
-            BUILD=$(unzip -p "$T/$ZIP" Hyper.app/Contents/Info.plist | plutil -extract CFBundleVersion raw -o - -)
-            [[ "$BUILD" =~ ^[0-9]+$ ]] || { echo "$ZIP: CFBundleVersion $BUILD isn't a CI run number"; exit 1; }
-            SIG=$("$T/sparkle/sparkle-bin/sign_update" "$T/$ZIP" -f "$T/sparkle_key")
-            for FEED in "${FEEDS[@]}"; do
-              F=tap/appcasts/$FEED-$ARCH.xml
-              # Never move a channel back to an older build (a draft published late).
-              OLD=$(sed -n 's:.*<sparkle\:version>\([0-9]*\)<.*:\1:p' "$F" 2>/dev/null || true)
-              [[ -n "$OLD" && "$BUILD" -lt "$OLD" ]] && { echo "$F already has newer build $OLD"; continue; }
-              printf '%s\n' '<?xml version="1.0" encoding="utf-8"?>' \
-                '<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"><channel><item>' \
-                "<title>Hyper $V</title><sparkle:version>$BUILD</sparkle:version><sparkle:shortVersionString>$V</sparkle:shortVersionString>" \
-                "<pubDate>$DATE</pubDate><description><![CDATA[$NOTES]]></description>" \
-                "<enclosure url=\"$DL/$ZIP\" type=\"application/octet-stream\" $SIG/>" \
-                '</item></channel></rss>' > "$F"
-            done
-          done
-
-          cd tap
-          git add -A && git diff --cached --quiet && exit 0
-          git -c user.name="Hyper release" -c user.email=noreply@quineglobal.com commit -qm "quine-hyper $V"
-          git push -q
+          GH_RELEASE_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+          HOMEBREW_TAP_SSH_KEY: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
