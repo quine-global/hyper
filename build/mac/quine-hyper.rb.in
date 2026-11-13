@@ -1,36 +1,47 @@
-# The quine-hyper Homebrew cask; .forgejo/workflows/publish.yml fills in the
-# @…@ values and writes it into quine-global/homebrew-tap.
+# The quine-hyper Homebrew cask; bin/ci/publish.mjs (publish.yml) fills in the
+# @…@ values and writes it into quine-global/homebrew-tap. macOS gets the dmg,
+# Linux the AppImage (x86_64 only: CI doesn't build Linux arm64 yet).
 cask "quine-hyper" do
   arch arm: "arm64", intel: "x64"
+  asset = on_system_conditional macos: "mac-#{arch}.dmg", linux: "x86_64.AppImage"
 
   version "@VERSION@"
-  sha256 arm:   "@ARM_SHA@",
-         intel: "@INTEL_SHA@"
+  sha256 arm:          "@ARM_SHA@",
+         intel:        "@INTEL_SHA@",
+         x86_64_linux: "@X86_LINUX_SHA@"
 
-  url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-mac-#{arch}.dmg"
+  on_macos do
+    auto_updates true # Sparkle; `brew upgrade --greedy` still upgrades it
+    conflicts_with cask: ["hyper", "hyper@canary"]
+
+    app "Hyper.app"
+    binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
+
+    # Only ad-hoc signed: without this, Gatekeeper refuses to open it.
+    postflight_steps do
+      run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
+    end
+
+    zap trash: [
+      "~/.config/Hyper",
+      "~/Library/Application Support/Hyper",
+      "~/Library/Caches/com.quineglobal.hyper",
+      "~/Library/Caches/com.quineglobal.hyper.ShipIt",
+      "~/Library/Logs/Hyper",
+      "~/Library/Preferences/com.quineglobal.hyper.plist",
+      "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
+    ]
+  end
+  on_linux do
+    depends_on arch: :x86_64
+
+    app_image "Hyper-#{version}-x86_64.AppImage"
+
+    zap trash: "~/.config/Hyper"
+  end
+
+  url "https://github.com/quine-global/hyper/releases/download/v#{version}/Hyper-#{version}-#{asset}"
   name "Hyper"
   desc "Terminal built on web technologies (Quine fork)"
   homepage "https://github.com/quine-global/hyper"
-
-  conflicts_with cask: ["hyper", "hyper@canary"]
-  auto_updates true # Sparkle; `brew upgrade --greedy` still upgrades it
-  depends_on :macos
-
-  app "Hyper.app"
-  binary "#{appdir}/Hyper.app/Contents/Resources/bin/hyper"
-
-  # Only ad-hoc signed: without this, Gatekeeper refuses to open it.
-  postflight_steps do
-    run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{appdir}}/Hyper.app"]
-  end
-
-  zap trash: [
-    "~/.config/Hyper",
-    "~/Library/Application Support/Hyper",
-    "~/Library/Caches/com.quineglobal.hyper",
-    "~/Library/Caches/com.quineglobal.hyper.ShipIt",
-    "~/Library/Logs/Hyper",
-    "~/Library/Preferences/com.quineglobal.hyper.plist",
-    "~/Library/Saved Application State/com.quineglobal.hyper.savedState",
-  ]
 end
