@@ -8,10 +8,8 @@
 import {execFile} from 'child_process';
 import {existsSync, readFileSync, readdirSync} from 'fs';
 import {homedir} from 'os';
+// posix: Linux paths, also when the tests run on Windows.
 import {posix} from 'path';
-
-// Linux paths, also when the tests run on Windows.
-const {dirname, join} = posix;
 
 export type LinuxUpdates = {check: false} | {check: true; command?: string};
 
@@ -42,14 +40,16 @@ export async function linuxUpdates(sys: LinuxSystem): Promise<LinuxUpdates> {
       .filter((p): p is string => !!p)
       .map((p) => p.replace(/^~/, sys.home));
     const fromBrew =
-      dirname(appImage) === join(sys.home, 'Applications') &&
-      prefixes.some((p) => sys.exists(join(p, 'Caskroom/quine-hyper')));
+      posix.dirname(appImage) === posix.join(sys.home, 'Applications') &&
+      prefixes.some((p) => sys.exists(posix.join(p, 'Caskroom/quine-hyper')));
     return fromBrew ? {check: true, command: 'brew upgrade --cask quine-hyper'} : {check: true};
   }
 
   // Configured anywhere in this directory's files with one of these endings.
   const hasRepo = (dir: string, endings: string[]) =>
-    sys.list(dir).some((f) => endings.some((e) => f.endsWith(e)) && (sys.read(join(dir, f)) ?? '').includes(REPO));
+    sys
+      .list(dir)
+      .some((f) => endings.some((e) => f.endsWith(e)) && (sys.read(posix.join(dir, f)) ?? '').includes(REPO));
 
   const dpkgFiles = sys.read('/var/lib/dpkg/info/hyper.list');
   if (dpkgFiles?.split('\n').includes(sys.execPath)) {
