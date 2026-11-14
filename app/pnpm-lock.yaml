@@ -27,8 +27,8 @@ importers:
         specifier: 5.0.3
         version: 5.0.3
       default-shell:
-        specifier: 1.0.1
-        version: 1.0.1
+        specifier: 2.2.0
+        version: 2.2.0
       electron-devtools-installer:
         specifier: 4.0.0
         version: 4.0.0
@@ -210,10 +210,6 @@ packages:
   debounce-fn@4.0.0:
     resolution: {integrity: sha512-8pYCQiL9Xdcg0UPSD3d+0KMlOjp+KGU5EPwYddgzQ7DATsg4fuUDjQtsYLmWjnk2obnNHgV3vE2Y4jejSOJVBQ==}
     engines: {node: '>=10'}
-
-  default-shell@1.0.1:
-    resolution: {integrity: sha512-/Os8tTMPSriNHCsVj3VLjMZblIl1sIg8EXz3qg7C5K+y9calfTA/qzlfPvCQ+LEgLWmtZ9wCnzE1w+S6TPPFyQ==}
-    engines: {node: '>=4'}
 
   default-shell@2.2.0:
     resolution: {integrity: sha512-sPpMZcVhRQ0nEMDtuMJ+RtCxt7iHPAMBU+I4tAlo5dU1sjRpNax0crj6nR3qKpvVnckaQ9U38enXcwW9nZJeCw==}
@@ -759,8 +755,6 @@ snapshots:
   debounce-fn@4.0.0:
     dependencies:
       mimic-fn: 3.1.0
-
-  default-shell@1.0.1: {}
 
   default-shell@2.2.0: {}
 
