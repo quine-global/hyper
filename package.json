@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -148,7 +148,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.7.2",
     "uuaw": "^1.2.2",
-    "webpack": "5.96.1",
+    "webpack": "5.112.2",
     "zx": "^8.8.5"
   },
   "electronmon": {
