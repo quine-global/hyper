@@ -8,6 +8,14 @@ password). **Hyper › Check for Updates…** checks on demand and shows Sparkle
 window. Windows and Linux keep
 Electron's `autoUpdater` and a notification, against `hyper.quineglobal.com/update`.
 
+**Channels:** a stable build follows `updateChannel` (`stable` by default); a
+**canary build always follows canary**, whatever `updateChannel` says
+(`app/utils/update-channel.ts`). Installing a canary is the opt-in, and the
+config Hyper writes on first run spells out `"stable"` whether or not anyone
+chose it, so canary installs that followed it never saw an update (the
+stable channel only gets stable releases). A canary build also writes
+`"canary"` into a new config. To move to stable, install a stable build.
+
 **Linux** never updates itself; what its notification offers depends on how
 Hyper was installed (`app/utils/linux-install.ts`):
 
