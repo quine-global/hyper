@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -129,7 +129,7 @@
     "eslint-plugin-json-schema-validator": "^4.8.3",
     "eslint-plugin-jsonc": "^2.21.1",
     "eslint-plugin-lodash": "^7.4.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-prettier": "^5.5.7",
     "eslint-plugin-react": "7.37.2",
     "husky": "^9.1.7",
     "husky-init": "^8.0.0",
