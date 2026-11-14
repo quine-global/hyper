@@ -54,7 +54,7 @@
     "clsx": "2.1.1",
     "color": "5.0.3",
     "columnify": "1.6.0",
-    "css-loader": "7.1.2",
+    "css-loader": "7.1.5",
     "got": "12.4.1",
     "json-loader": "0.5.7",
     "lodash": "4.17.21",
