@@ -100,7 +100,8 @@
       "NSSpeechRecognitionUsageDescription": "An application in Hyper wants to send user data to Apple’s speech recognition servers.",
       "NSSystemAdministrationUsageDescription": "The operation being performed by an application in Hyper requires elevated permission.",
       "SUPublicEDKey": "PasstyI8TVmTzH+i0ICnqwn2Z6BpqwOjcMwpyKhSFXk=",
-      "SUEnableAutomaticChecks": true
+      "SUEnableAutomaticChecks": true,
+      "SUAutomaticallyUpdate": true
     },
     "darkModeSupport": true
   },
