@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -134,7 +134,7 @@
     "husky": "^9.1.7",
     "husky-init": "^8.0.0",
     "inquirer": "13.4.2",
-    "node-addon-api": "8.2.2",
+    "node-addon-api": "8.9.2",
     "node-gyp": "^12.3.0",
     "null-loader": "4.0.1",
     "parse-url": "11.1.0",
