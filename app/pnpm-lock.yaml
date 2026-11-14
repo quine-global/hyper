@@ -81,8 +81,8 @@ importers:
         specifier: 0.23.11
         version: 0.23.11
       semver:
-        specifier: 7.8.1
-        version: 7.8.1
+        specifier: 7.8.6
+        version: 7.8.6
       shell-env:
         specifier: 4.0.3
         version: 4.0.3
@@ -540,12 +540,12 @@ packages:
   scheduler@0.27.0:
     resolution: {integrity: sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==}
 
-  semver@5.7.2:
-    resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
+  semver@5.7.3:
+    resolution: {integrity: sha512-kM18BPOqTi0+TB68703/GJRpAML5Me+IDQsR1J26YB3EFKKNEyHIVZuWDX7+WKQB3tHwDwgk24BfhdpWUbytvQ==}
     hasBin: true
 
-  semver@7.8.1:
-    resolution: {integrity: sha512-rkVq3IXh+4FDGch+KwzX3aV9W3kO54GyEgpvBzSyctDA6Xtd7RJQV1xmXbeQp5v7+VzLOfVqiutSE6GICgPFvg==}
+  semver@7.8.6:
+    resolution: {integrity: sha512-9lpSSU4Mly3mrtruwLs1eLK6+gzbzqeBFwRNjIjE+9LuDpWdYctrQlQ3ej1Ilgi7gknpsTRnPoLP8DpCHqHIJw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -746,7 +746,7 @@ snapshots:
       json-schema-typed: 7.0.3
       onetime: 5.1.2
       pkg-up: 3.1.0
-      semver: 7.8.1
+      semver: 7.8.6
 
   core-util-is@1.0.3: {}
 
@@ -839,7 +839,7 @@ snapshots:
       '@types/semver': 7.7.1
       lodash: 4.18.1
     optionalDependencies:
-      semver: 5.7.2
+      semver: 5.7.3
 
   glob-parent@5.1.2:
     dependencies:
@@ -950,7 +950,7 @@ snapshots:
       graceful-fs: 4.2.11
       nopt: 9.0.0
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.6
       tar: 7.5.15
       tinyglobby: 0.2.16
       undici: 6.26.0
@@ -1060,10 +1060,10 @@ snapshots:
 
   scheduler@0.27.0: {}
 
-  semver@5.7.2:
+  semver@5.7.3:
     optional: true
 
-  semver@7.8.1: {}
+  semver@7.8.6: {}
 
   setimmediate@1.0.5: {}
 
