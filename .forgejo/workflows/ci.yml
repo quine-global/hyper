@@ -5,7 +5,9 @@ name: CI
 
 on:
   push:
-    branches: ['**']
+    # Not Dependabot's branches: their pull_request run covers them, and
+    # both would run (different refs, so concurrency doesn't fold them).
+    branches: ['**', '!dependabot/**']
     tags: ['v*']
   pull_request:
   workflow_dispatch:
