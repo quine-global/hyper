@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -138,7 +138,7 @@
     "node-gyp": "^12.3.0",
     "null-loader": "4.0.1",
     "parse-url": "11.1.0",
-    "playwright": "1.49.0",
+    "playwright": "1.65.0",
     "plist": "3.1.0",
     "prettier": "3.3.3",
     "proxyquire": "2.1.3",
