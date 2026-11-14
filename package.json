@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -78,7 +78,7 @@
     "stylis": "3.5.4",
     "typescript-json-schema": "0.65.1",
     "use-device-pixel-ratio": "^1.1.2",
-    "uuid": "14.0.0",
+    "uuid": "14.0.3",
     "webpack-cli": "6.0.1"
   },
   "devDependencies": {
