@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.21",
+  "version": "4.0.0-q-canary.22",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
