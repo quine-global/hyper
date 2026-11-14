@@ -10,11 +10,10 @@ Hyper was installed (`app/utils/linux-install.ts`):
 
 | Installed | Notification |
 |---|---|
-| snap, Flatpak | none: their stores update it |
 | deb, with Quine Global's apt repo configured | `sudo apt update && sudo apt upgrade hyper` (click to copy) |
 | rpm, with the dnf repo configured | `sudo dnf upgrade hyper`, or `rpm-ostree upgrade` on Fedora Atomic |
 | Homebrew's cask (an AppImage in `~/Applications`) | `brew upgrade --cask quine-hyper` |
-| anything else: an AppImage, a package installed by hand | a Download link |
+| anything else: an AppImage, a package installed by hand, a snap or Flatpak (Hyper is in no store or Flatpak repo yet) | a Download link |
 
 The repos are at `packages.quineglobal.com`, filled from each GitHub release
 (the README has the install lines).

@@ -4,8 +4,8 @@
 // Homebrew tap (docs/updates.md). Elsewhere, Electron's autoUpdater (Windows)
 // or a notification only (Linux), against hyper.quineglobal.com/update. On
 // Linux the notification depends on how Hyper was installed
-// (utils/linux-install.ts): none for snap and Flatpak, the command that
-// updates it for our apt/dnf repos and Homebrew, a download link otherwise.
+// (utils/linux-install.ts): the command that updates it for our apt/dnf
+// repos and Homebrew, a download link otherwise.
 
 // Packages
 import {join} from 'path';

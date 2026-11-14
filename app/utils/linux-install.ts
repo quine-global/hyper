@@ -1,10 +1,10 @@
 // How Hyper was installed on Linux, which decides what its update
 // notification says (app/updater.ts):
-// - snap, Flatpak: their stores update it, so no checks at all;
 // - from Quine Global's apt or dnf repo (packages.quineglobal.com), or from
 //   Homebrew: the command that updates it;
 // - anything else (an AppImage on its own, a package installed by hand from a
-//   release): a download link.
+//   release, a snap or Flatpak: Hyper is in no store or Flatpak repo yet):
+//   a download link.
 import {execFile} from 'child_process';
 import {existsSync, readFileSync, readdirSync} from 'fs';
 import {homedir} from 'os';
@@ -29,10 +29,6 @@ const REPO = 'packages.quineglobal.com/hyper/';
 const BREW_PREFIXES = ['/home/linuxbrew/.linuxbrew', '~/.linuxbrew'];
 
 export async function linuxUpdates(sys: LinuxSystem): Promise<LinuxUpdates> {
-  if (sys.env.SNAP || sys.env.FLATPAK_ID || sys.exists('/.flatpak-info')) {
-    return {check: false};
-  }
-
   // An AppImage: Homebrew's cask moves it into ~/Applications.
   const appImage = sys.env.APPIMAGE;
   if (appImage) {

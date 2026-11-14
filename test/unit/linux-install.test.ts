@@ -22,10 +22,11 @@ const system = (files: Record<string, string>, extra: Partial<LinuxSystem> = {})
   ...extra
 });
 
-test('snap and Flatpak installs are left to their stores', async (t) => {
-  t.deepEqual(await linuxUpdates(system({}, {env: {SNAP: '/snap/hyper/1'}})), {check: false});
-  t.deepEqual(await linuxUpdates(system({}, {env: {FLATPAK_ID: 'com.quineglobal.hyper'}})), {check: false});
-  t.deepEqual(await linuxUpdates(system({'/.flatpak-info': ''})), {check: false});
+// Hyper is in no store or Flatpak repo, so nothing else updates these.
+test('snap and Flatpak installs get a download link', async (t) => {
+  t.deepEqual(await linuxUpdates(system({}, {env: {SNAP: '/snap/hyper/1'}})), {check: true});
+  t.deepEqual(await linuxUpdates(system({}, {env: {FLATPAK_ID: 'com.quineglobal.hyper'}})), {check: true});
+  t.deepEqual(await linuxUpdates(system({'/.flatpak-info': ''})), {check: true});
 });
 
 test('an AppImage on its own gets a download link', async (t) => {
