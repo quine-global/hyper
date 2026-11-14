@@ -38,7 +38,7 @@
     "email": "team@zeit.co"
   },
   "dependencies": {
-    "@electron/remote": "2.1.2",
+    "@electron/remote": "2.1.4",
     "@redux-devtools/extension": "^3.3.0",
     "@xterm/addon-canvas": "0.7.0",
     "@xterm/addon-fit": "0.10.0",
