@@ -1,8 +1,11 @@
 # Updates
 
 **macOS** uses [Sparkle](https://sparkle-project.org/): it checks daily (unless
-`disableAutoUpdates`), shows its own update window and installs the update;
-**Hyper › Check for Updates…** checks on demand. Windows and Linux keep
+`disableAutoUpdates`), downloads an update in the background and installs it
+when Hyper quits, without asking (`SUAutomaticallyUpdate` in
+`electron-builder.json`; Sparkle still asks if installing needs an admin
+password). **Hyper › Check for Updates…** checks on demand and shows Sparkle's
+window. Windows and Linux keep
 Electron's `autoUpdater` and a notification, against `hyper.quineglobal.com/update`.
 
 **Linux** never updates itself; what its notification offers depends on how
