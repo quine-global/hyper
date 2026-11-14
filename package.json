@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -74,7 +74,7 @@
     "seamless-immutable": "7.1.4",
     "semver": "7.6.3",
     "shebang-loader": "0.0.1",
-    "styled-jsx": "5.1.6",
+    "styled-jsx": "5.1.7",
     "stylis": "3.5.4",
     "typescript-json-schema": "0.65.1",
     "use-device-pixel-ratio": "^1.1.2",
