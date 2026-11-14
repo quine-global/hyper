@@ -66,8 +66,8 @@ importers:
         specifier: 11.1.0
         version: 11.1.0
       queue:
-        specifier: 6.0.2
-        version: 6.0.2
+        specifier: 7.0.0
+        version: 7.0.0
       quine-electron-drag-click:
         specifier: 2.0.0
         version: 2.0.0
@@ -497,8 +497,8 @@ packages:
   protocols@2.0.2:
     resolution: {integrity: sha512-hHVTzba3wboROl0/aWRRG9dMytgH6ow//STBZh43l/wQgmMhYhOFi0EHWAPtoCz9IAUymsyP0TSBHkhgMEGNnQ==}
 
-  queue@6.0.2:
-    resolution: {integrity: sha512-iHZWu+q3IdFZFX36ro/lKBkSvfkztY5Y7HMiPlOUjhupPcG2JMfst2KKEpu5XndviX/3UhFbRngUPNKtgvtZiA==}
+  queue@7.0.0:
+    resolution: {integrity: sha512-sphwS7HdfQnvrJAXUNAUgpf9H/546IE3p/5Lf2jr71O4udEYlqAhkevykumas2FYuMkX/29JMOgrRdRoYZ/X9w==}
 
   quine-electron-drag-click@2.0.0:
     resolution: {integrity: sha512-pieh1HawezFDn+cpBgs+RQXeR8wj0h/gZafB3sB9rYRQAHTs9V1R8gIq6u7SjGrn1esiM+iP4cknpzsbk/KQ9w==}
@@ -1012,9 +1012,7 @@ snapshots:
 
   protocols@2.0.2: {}
 
-  queue@6.0.2:
-    dependencies:
-      inherits: 2.0.4
+  queue@7.0.0: {}
 
   quine-electron-drag-click@2.0.0:
     dependencies:
