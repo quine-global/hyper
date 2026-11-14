@@ -1,6 +1,6 @@
 {
   "name": "hyper-root",
-  "version": "4.0.0-q-canary.20",
+  "version": "4.0.0-q-canary.19",
   "repository": "quine-global/hyper",
   "engines": {
     "node": "22.22.2"
@@ -109,7 +109,7 @@
     "@types/styled-jsx": "2.2.9",
     "@types/uuid": "10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.59.2",
-    "@typescript-eslint/parser": "^8.59.2",
+    "@typescript-eslint/parser": "^8.72.2",
     "ava": "https://github.com/quine-global/ava#ad77c3bc92de51a3436c1be1acbb3da594e3251e",
     "babel-loader": "10.1.1",
     "concurrently": "9.1.0",
