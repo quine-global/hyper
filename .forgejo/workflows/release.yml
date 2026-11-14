@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       channel: {description: Channel, type: choice, options: [canary, production], default: canary}
-      version: {description: 'Version (empty: the next one for the channel)', required: false}
+      version: {description: 'Version (empty: the next one for the channel)', type: string, required: false}
 
 concurrency: {group: release, cancel-in-progress: false}
 

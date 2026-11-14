@@ -9,7 +9,7 @@ name: Publish release
 on:
   workflow_dispatch:
     inputs:
-      tag: {description: 'Release tag, e.g. v4.0.0-q-canary.20', required: true}
+      tag: {description: 'Release tag, e.g. v4.0.0-q-canary.20', type: string, required: true}
       prerelease: {description: 'Pre-release (canary only)', type: boolean, default: false}
 
 concurrency: {group: publish-release, cancel-in-progress: false}
