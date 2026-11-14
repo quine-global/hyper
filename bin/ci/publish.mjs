@@ -14,6 +14,7 @@
 // push the tap: try it on an already published tag.
 import { execFileSync } from "node:child_process";
 import {
+  existsSync,
   mkdirSync,
   mkdtempSync,
   readFileSync,
@@ -199,6 +200,20 @@ try {
 `,
       );
     }
+  }
+
+  // The stable feeds only get an item from a full release. Until one exists
+  // they'd be missing, and a Mac on the stable channel (the default) shows
+  // "Update Error!"; an empty feed says it's up to date instead.
+  for (const arch of ["arm64", "x64"]) {
+    const file = join(tap, "appcasts", `hyper-${arch}.xml`);
+    if (!existsSync(file))
+      writeFileSync(
+        file,
+        `<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"><channel></channel></rss>
+`,
+      );
   }
 
   git("add", "-A");
