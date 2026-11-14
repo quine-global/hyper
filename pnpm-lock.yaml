@@ -25,8 +25,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0(@xterm/xterm@5.5.0)
       '@xterm/addon-fit':
-        specifier: 0.10.0
-        version: 0.10.0(@xterm/xterm@5.5.0)
+        specifier: 0.11.0
+        version: 0.11.0
       '@xterm/addon-image':
         specifier: 0.8.0
         version: 0.8.0(@xterm/xterm@5.5.0)
@@ -1457,10 +1457,8 @@ packages:
     peerDependencies:
       '@xterm/xterm': ^5.0.0
 
-  '@xterm/addon-fit@0.10.0':
-    resolution: {integrity: sha512-UFYkDm4HUahf2lnEyHvio51TNGiLK66mqP2JoATy7hRZeXaGMRDr00JiSF7m63vR5WKATF605yEggJKsw0JpMQ==}
-    peerDependencies:
-      '@xterm/xterm': ^5.0.0
+  '@xterm/addon-fit@0.11.0':
+    resolution: {integrity: sha512-jYcgT6xtVYhnhgxh3QgYDnnNMYTcf8ElbxxFzX0IZo+vabQqSPAjC3c1wJrKB5E19VwQei89QCiZZP86DCPF7g==}
 
   '@xterm/addon-image@0.8.0':
     resolution: {integrity: sha512-b/dqpFn3jUad2pUP5UpF4scPIh0WdxRQL/1qyiahGfUI85XZTCXo0py9G6AcOR2QYUw8eJ8EowGspT7BQcgw6A==}
@@ -2823,6 +2821,10 @@ packages:
     resolution: {integrity: sha512-eKpRKAovdpZtR1WopLHxlBWvAgPny3c4gX1G5Jhwmmw4XJj0ifSD5qB5TOo8hmA0wlRKDAOAhEE1yVPgs6Fgcg==}
     engines: {node: '>=14.14'}
 
+  fs-extra@11.4.1:
+    resolution: {integrity: sha512-KYAb4c9BJQI6QqGKthV68OHe0badztdXJWKo0WtBA9IuCFPTKvE5ZdUBglP833aMjhaSPNO4A5j/EkzZtGlKjA==}
+    engines: {node: '>=14.14'}
+
   fs-extra@7.0.1:
     resolution: {integrity: sha512-YJDaCJZEnBmcbw13fvdAM9AwNOJwOzrE4pqMqBq5nFiEqXUqHwlK4B+3pUw6JNvfSPtX05xFHtYy/1ni01eGCw==}
     engines: {node: '>=6 <7 || >=8'}
@@ -3066,8 +3068,8 @@ packages:
   hyphenate-style-name@1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
 
-  iconv-lite@0.6.2:
-    resolution: {integrity: sha512-2y91h5OpQlolefMPmUlivelittSWy0rP+oYVpn6A7GwVHNE8AWzoYOBNmlwks3LobaJxgHCYZAnyNo2GgpNRNQ==}
+  iconv-lite@0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
   iconv-lite@0.7.2:
@@ -3527,6 +3529,9 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
+
+  jsonfile@6.2.1:
+    resolution: {integrity: sha512-zwOTdL3rFQ/lRdBnntKVOX6k5cKJwEc1HdilT71BWEu7J41gXIB2MRp+vxduPSwZJPWBxEzv4yH1wYLJGUHX4Q==}
 
   jsx-ast-utils@3.2.0:
     resolution: {integrity: sha512-EIsmt3O3ljsU6sot/J4E1zDRxfBNrhjyf/OKjlydwgEimQuznlM4Wv7U+ueONJMyEn1WRE0K8dhi3dVAXYT24Q==}
@@ -5097,6 +5102,10 @@ packages:
     resolution: {integrity: sha512-hAZsKq7Yy11Zu1DE0OzWjw7nnLZmJZYTDZZyEFHZdUhV8FkH5MCfoU1XMaxXovpyW5nq5scPqq0ZDP9Zyl04oQ==}
     engines: {node: '>= 10.0.0'}
 
+  universalify@2.0.1:
+    resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
+    engines: {node: '>= 10.0.0'}
+
   unixify@1.0.0:
     resolution: {integrity: sha512-6bc58dPYhCMHHuwxldQxO3RRNZ4eCogZ/st++0+fcC1nr0jiGUtAdBJ2qzmLQWSxbtz42pWt4QQMiZ9HvZf5cg==}
     engines: {node: '>=0.10.0'}
@@ -5837,7 +5846,7 @@ snapshots:
     dependencies:
       cross-dirname: 0.1.0
       debug: 4.4.3
-      fs-extra: 11.3.5
+      fs-extra: 11.4.1
       minimist: 1.2.8
       postject: 1.0.0-alpha.6
     transitivePeerDependencies:
@@ -6603,9 +6612,7 @@ snapshots:
     dependencies:
       '@xterm/xterm': 5.5.0
 
-  '@xterm/addon-fit@0.10.0(@xterm/xterm@5.5.0)':
-    dependencies:
-      '@xterm/xterm': 5.5.0
+  '@xterm/addon-fit@0.11.0': {}
 
   '@xterm/addon-image@0.8.0(@xterm/xterm@5.5.0)':
     dependencies:
@@ -7680,7 +7687,7 @@ snapshots:
 
   encoding@0.1.13:
     dependencies:
-      iconv-lite: 0.6.2
+      iconv-lite: 0.6.3
     optional: true
 
   end-of-stream@1.4.4:
@@ -8313,6 +8320,13 @@ snapshots:
       jsonfile: 6.1.0
       universalify: 2.0.0
 
+  fs-extra@11.4.1:
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.2.1
+      universalify: 2.0.1
+    optional: true
+
   fs-extra@7.0.1:
     dependencies:
       graceful-fs: 4.2.11
@@ -8596,7 +8610,7 @@ snapshots:
 
   hyphenate-style-name@1.0.4: {}
 
-  iconv-lite@0.6.2:
+  iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
     optional: true
@@ -9007,6 +9021,13 @@ snapshots:
       universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  jsonfile@6.2.1:
+    dependencies:
+      universalify: 2.0.1
+    optionalDependencies:
+      graceful-fs: 4.2.11
+    optional: true
 
   jsx-ast-utils@3.2.0:
     dependencies:
@@ -10609,6 +10630,9 @@ snapshots:
   universalify@0.1.2: {}
 
   universalify@2.0.0: {}
+
+  universalify@2.0.1:
+    optional: true
 
   unixify@1.0.0:
     dependencies:
