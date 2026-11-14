@@ -22,6 +22,7 @@ import {getDefaultProfile} from './config';
 import {version} from './package.json';
 import {getDecoratedConfig} from './plugins';
 import {linuxUpdates, realLinuxSystem} from './utils/linux-install';
+import {followsCanary} from './utils/update-channel';
 
 // Necessary due to typescript not handling overloads well
 type AutoUpdaterEvent =
@@ -82,7 +83,8 @@ const buildFeedUrl = (canary: boolean, currentVersion: string) => {
   return `https://hyper.quineglobal.com/update?${params.toString()}`;
 };
 
-const isCanary = (updateChannel: string) => updateChannel === 'canary';
+// A canary build follows canary whatever updateChannel says (utils/update-channel.ts).
+const isCanary = (updateChannel: string) => followsCanary(updateChannel, version);
 
 // sparkle.node (build/mac/sparkle/hyper-sparkle.m), which bin/embed-sparkle.js
 // puts in the packaged app.
@@ -153,8 +155,8 @@ async function init() {
 
   const config = await getDecoratedConfigWithRetry();
 
-  // If defined in the config, switch to the "canary" channel
-  if (config.updateChannel && isCanary(config.updateChannel)) {
+  // The "canary" channel if the config says so, or this is a canary build
+  if (isCanary(config.updateChannel)) {
     canaryUpdates = true;
   }
 

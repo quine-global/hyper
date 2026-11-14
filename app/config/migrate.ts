@@ -8,6 +8,8 @@ import {parse, prettyPrint} from 'recast';
 import * as babelParser from 'recast/parsers/babel';
 
 import notify from '../notify';
+import {version} from '../package.json';
+import {isCanaryBuild} from '../utils/update-channel';
 
 import {_extractDefault} from './init';
 import {cfgDir, cfgPath, defaultCfg, legacyCfgPath, plugs, schemaFile, schemaPath} from './paths';
@@ -156,7 +158,13 @@ export const migrateHyper3Config = () => {
   }
 
   if (!existsSync(legacyCfgPath)) {
-    copySync(defaultCfg, cfgPath);
+    // A canary build writes "canary": it follows that channel anyway
+    // (utils/update-channel.ts), and the file should say what Hyper does.
+    const firstCfg = JSON.parse(readFileSync(defaultCfg, 'utf8'));
+    if (isCanaryBuild(version) && firstCfg.config) {
+      firstCfg.config.updateChannel = 'canary';
+    }
+    _write(cfgPath, JSON.stringify(firstCfg, null, 2));
     return;
   }
 
