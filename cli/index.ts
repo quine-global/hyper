@@ -105,7 +105,8 @@ const lsRemote = (pattern?: string) => {
     (pattern && `${pattern}+`) || ''
   }keywords:hyper-plugin,hyper-theme&size=250`;
   type npmResult = {package: {name: string; description: string}};
-  return got(URL)
+  const rejectUnauthorized = process.env.NODE_TLS_REJECT_UNAUTHORIZED !== '0';
+  return got(URL, {https: {rejectUnauthorized}})
     .then((response) => JSON.parse(response.body).results as npmResult[])
     .then((entries) => entries.map((entry) => entry.package))
     .then((entries) =>
@@ -135,9 +136,14 @@ args.command(
           console.log(msg);
         }
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         spinner.fail();
-        console.error(chalk.red(err)); // TODO
+        if (err.message.includes('certificate') || err.message.includes('self signed')) {
+          console.error(chalk.red('SSL certificate error: ' + err.message));
+          console.error(chalk.yellow('If you are behind a corporate proxy, try: NODE_TLS_REJECT_UNAUTHORIZED=0 hyper search'));
+        } else {
+          console.error(chalk.red(err.message));
+        }
       });
   },
   ['s']
@@ -155,9 +161,14 @@ args.command(
         spinner.succeed();
         console.log(msg);
       })
-      .catch((err) => {
+      .catch((err: Error) => {
         spinner.fail();
-        console.error(chalk.red(err)); // TODO
+        if (err.message.includes('certificate') || err.message.includes('self signed')) {
+          console.error(chalk.red('SSL certificate error: ' + err.message));
+          console.error(chalk.yellow('If you are behind a corporate proxy, try: NODE_TLS_REJECT_UNAUTHORIZED=0 hyper ls-remote'));
+        } else {
+          console.error(chalk.red(err.message));
+        }
       });
   },
   ['lsr', 'ls-remote']
