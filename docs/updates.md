@@ -1,12 +1,12 @@
 # Updates
 
-**macOS** uses [Sparkle](https://sparkle-project.org/): it checks daily (unless
+**macOS** uses [Sparkle](https://sparkle-project.org/): it checks at launch and daily (unless
 `disableAutoUpdates`), downloads an update in the background and installs it
 when Hyper quits, without asking (`SUAutomaticallyUpdate` in
 `electron-builder.json`; Sparkle still asks if installing needs an admin
 password). **Hyper › Check for Updates…** checks on demand and shows Sparkle's
 window. Windows and Linux keep
-Electron's `autoUpdater` and a notification, against `hyper.quineglobal.com/update`.
+Electron's `autoUpdater` (checking at launch and every 30 minutes) and a notification, against `hyper.quineglobal.com/update`.
 
 **Channels:** a stable build follows `updateChannel` (`stable` by default); a
 **canary build always follows canary**, whatever `updateChannel` says

@@ -10,6 +10,7 @@
 - (instancetype)initWithStartingUpdater:(BOOL)start updaterDelegate:(id)d userDriverDelegate:(id)u;
 - (void)startUpdater;
 - (void)checkForUpdates:(id)sender;
+- (void)checkForUpdatesInBackground;
 - (id)updater;
 - (void)setAutomaticallyChecksForUpdates:(BOOL)on;
 @end
@@ -89,13 +90,22 @@ static napi_value CheckForUpdates(napi_env env, napi_callback_info info) {
   return NULL;
 }
 
+// checkForUpdatesInBackground(): a check without Sparkle's window, like its
+// daily one; only an update shows anything.
+static napi_value CheckForUpdatesInBackground(napi_env env, napi_callback_info info) {
+  if (!controller) return fail(env, "sparkle: not started");
+  [[controller updater] checkForUpdatesInBackground];
+  return NULL;
+}
+
 NAPI_MODULE_INIT() {
   napi_property_descriptor fns[] = {
       {"start", NULL, Start, NULL, NULL, NULL, napi_default, NULL},
       {"setFeedURL", NULL, SetFeedURL, NULL, NULL, NULL, napi_default, NULL},
       {"setAutomaticChecks", NULL, SetAutomaticChecks, NULL, NULL, NULL, napi_default, NULL},
       {"checkForUpdates", NULL, CheckForUpdates, NULL, NULL, NULL, napi_default, NULL},
+      {"checkForUpdatesInBackground", NULL, CheckForUpdatesInBackground, NULL, NULL, NULL, napi_default, NULL},
   };
-  napi_define_properties(env, exports, 4, fns);
+  napi_define_properties(env, exports, 5, fns);
   return exports;
 }

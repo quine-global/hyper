@@ -93,6 +93,7 @@ interface Sparkle {
   setFeedURL(feedURL: string): void;
   setAutomaticChecks(on: boolean): void;
   checkForUpdates(): void;
+  checkForUpdatesInBackground(): void;
 }
 
 let sparkle: Sparkle | null = null;
@@ -119,6 +120,10 @@ async function initSparkle() {
   const config = await getDecoratedConfigWithRetry();
   let canary = isCanary(config.updateChannel);
   sparkle.start(sparkleFeedURL(canary), !config.disableAutoUpdates);
+  // Sparkle's own schedule checks once a day; check at every launch as well.
+  if (!config.disableAutoUpdates) {
+    sparkle.checkForUpdatesInBackground();
+  }
 
   app.config.subscribe(async () => {
     const {updateChannel, disableAutoUpdates} = await getDecoratedConfigWithRetry();
@@ -164,9 +169,7 @@ async function init() {
 
   autoUpdater.setFeedURL({url: feedURL});
 
-  setTimeout(() => {
-    void checkForUpdates();
-  }, ms('10s'));
+  void checkForUpdates();
 
   setInterval(() => {
     void checkForUpdates();
